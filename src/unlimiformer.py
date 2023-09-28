@@ -34,7 +34,8 @@ class Unlimiformer(Generic[ModelType]):
             index_devices=(0,), datastore_device=0,
             ):
         super().__init__()
-        self.csv_unlimiformer = False
+        self.csv_unlimiformer = True
+        self.num_retrieved = 0
         self.model = model
         model.unlimiformer = self
         self.layer_begin = layer_begin
@@ -373,10 +374,8 @@ class Unlimiformer(Generic[ModelType]):
         self.prompt_attention_mask = []
         
         if self.csv_unlimiformer:
-            prefix = "JSON Data: {"
-            prefix_input_id = self.tokenizer.encode(prefix, add_special_tokens=False, return_tensors="pt")
+            prefix_input_id = self.tokenizer.encode(self.prefix(), add_special_tokens=False, return_tensors="pt")
             prefix_len = len(prefix_input_id[0])
-            
             window_indices = self.window_indices(input_ids.shape[-1], prefix_len)
         else:
             window_indices = self.window_indices(input_ids.shape[-1])
@@ -433,34 +432,28 @@ class Unlimiformer(Generic[ModelType]):
                     self.prompt_values[i].append(layer_value) # (num_layers, batch, head, chunked_source_len, dim)
                 self.prompt_attention_mask.append(chunk_attention_mask) # (batch, chunked_source_len)
         
-        if self.csv_unlimiformer:
-            logger.info(f'Encoding The Suffix')
-            input_id_suffix = self.tokenizer.encode('\n END OF TEXT\nNow, Answer the following question: What did Harry Potter Want for his friends?[\INST]', add_special_tokens=False, return_tensors="pt")
-            chunk = input_id_suffix.to(self.device)
-            # chunk = input_ids[:, context_start_ind:context_end_ind].to(self.device)
-            # chunk_attention_mask = attention_mask[:, context_start_ind:context_end_ind].to(self.device)
-            chunk_attention_mask = torch.ones_like(input_id_suffix).to(self.device)
-            with torch.inference_mode():
-                _ = self.model(chunk, attention_mask=chunk_attention_mask, labels=dummy_labels) # , return_dict=True, output_hidden_states=True)
-            if self.use_datastore:
-                # TODO: verify with BART as well
-                # hidden_states_to_index = [hidden_states.encoder_last_hidden_state] # list of length 1 of (batch, chunked_source_len, dim)
-                hidden_states_to_index = [
-                    layer_capturer.captured for layer_capturer in self.activation_capturer
-                ] 
-                # hidden_states_to_index = list(hidden_states.hidden_states)[:-1][self.layer_begin:self.layer_end]
-                to_add = [state[:, :len(input_id_suffix[0])].detach() for state in hidden_states_to_index]
-                to_apply_mask = chunk_attention_mask[:, :len(input_id_suffix[0])]
-                # to_apply_mask = to_apply_mask.log().to(to_add[0].dtype)
-                to_apply_mask = to_apply_mask.to(to_add[0].dtype)
-                if not self.reconstruct_embeddings:
-                    to_add_embeddings = to_add
-                    if not self.gpu_datastore:
-                        to_add_embeddings = [states.cpu() for states in to_add_embeddings]
-                        to_apply_mask = to_apply_mask.cpu()
-                    for i, layer_states in enumerate(to_add_embeddings):
-                        layer_states = layer_states * to_apply_mask.unsqueeze(-1)
-                        self.hidden_states[i].append(layer_states.to(self.datastore_device))
+        # if self.csv_unlimiformer:
+        #     logger.info(f'Encoding The Suffix')
+        #     input_id_suffix = self.tokenizer.encode(self.suffix_enc(), add_special_tokens=False, return_tensors="pt")
+        #     chunk = input_id_suffix.to(self.device)
+        #     chunk_attention_mask = torch.ones_like(input_id_suffix).to(self.device)
+        #     with torch.inference_mode():
+        #         _ = self.model(chunk, attention_mask=chunk_attention_mask, labels=dummy_labels) # , return_dict=True, output_hidden_states=True)
+        #     hidden_states_to_index = [
+        #         layer_capturer.captured for layer_capturer in self.activation_capturer
+        #     ] 
+        #     to_add = [state[:, :len(input_id_suffix[0])].detach() for state in hidden_states_to_index]
+        #     to_apply_mask = chunk_attention_mask[:, :len(input_id_suffix[0])]
+        #     # to_apply_mask = to_apply_mask.log().to(to_add[0].dtype)
+        #     to_apply_mask = to_apply_mask.to(to_add[0].dtype)
+        #     if not self.reconstruct_embeddings:
+        #         to_add_embeddings = to_add
+        #         if not self.gpu_datastore:
+        #             to_add_embeddings = [states.cpu() for states in to_add_embeddings]
+        #             to_apply_mask = to_apply_mask.cpu()
+        #         for i, layer_states in enumerate(to_add_embeddings):
+        #             layer_states = layer_states * to_apply_mask.unsqueeze(-1)
+        #             self.hidden_states[i].append(layer_states.to(self.datastore_device))
         
         if self.use_datastore:
             # keys are all in datastore already!
@@ -521,14 +514,14 @@ class Unlimiformer(Generic[ModelType]):
     def window_indices(self, total_seq_len, prefix_len=None):
         # Copied from SLED (Ivgy et al., 2022)
         # https://github.com/Mivg/SLED/blob/main/sled/modeling_sled.py#L467
-        if total_seq_len <= self.model_encoder_max_len:
+        if not self.csv_unlimiformer and total_seq_len <= self.model_encoder_max_len:
             return [(0, total_seq_len, 0, total_seq_len)]
         else:
             results = []
             # if self.chunk_overlap == 0:
             #     stride = self.model_encoder_max_len
             if self.csv_unlimiformer:
-                with open("dataset_key_value/config_data_75_kv.txt.json", "r") as f:
+                with open("data1/config_data.json", "r") as f:
                     text = f.read()
                     import json
                     parsed_data = json.loads(text)
@@ -576,6 +569,16 @@ class Unlimiformer(Generic[ModelType]):
 
                 results.append((cs, ce, us, ue))
             return results
+    
+    def suffix(self, val):
+        return '[INST] Extract the value for the key from the JSON data given above. Print only the value. Nothing else.\nKey: "' + val + '"\nCorresponding value: [\INST]'
+    
+    def suffix_enc(self):
+        return '<</SYS>> [INST] Extract the value for the key from the JSON data given above. Print only the value. Nothing else.[\INST]'
+    
+    def prefix(self):
+        return "<<SYS>> JSON data: {"
+
 
     def pre_generate_hook(self, input_ids, **kwargs):
         if 'attention_mask' not in kwargs:
@@ -584,15 +587,25 @@ class Unlimiformer(Generic[ModelType]):
         new_kwargs = kwargs
         if 'attention_mask' in kwargs:
             new_kwargs = {k: v for k, v in kwargs.items() if k != 'attention_mask'}
+            new_kwargs['attention_mask'] = kwargs['attention_mask'][:, :self.actual_model_window_size].to(self.device)
         new_kwargs['use_cache'] = True
         if self.is_encoder_decoder:
             input_ids_prefix = input_ids[:, :self.actual_model_window_size]
         else:
-            question = 
-            input_ids_prefix = self.tokenizer.encode('\n END OF TEXT\nNow, Answer the following question: What did Harry Potter Want for his friends?[\INST]', add_special_tokens=False, return_tensors="pt")
-            new_kwargs["attention_mask"] = torch.cat((torch.zeros_like(input_ids)[:, :self.actual_model_window_size - len(input_ids_prefix[0])], torch.ones_like(input_ids)[:, -len(input_ids_prefix[0]):]), dim = 1).to(self.device)
-            input_ids_prefix = torch.cat((torch.ones_like(input_ids), input_ids_prefix), dim = 1)[:, -self.actual_model_window_size:]
-        input_ids_prefix = input_ids_prefix.to(self.device)
+            if self.csv_unlimiformer:
+                with open("data1/sampled_keys.txt", "r") as f:
+                    key_vals = f.read().split("\n")
+                vals_pred = []
+                for key_val in key_vals:
+                    input_ids_prefix = self.tokenizer.encode(self.suffix(key_val), add_special_tokens=False, return_tensors="pt")
+                    new_kwargs["attention_mask"] = torch.cat((torch.zeros_like(input_ids)[:, :self.num_retrieved], torch.ones_like(input_ids)[:, -len(input_ids_prefix[0]):]), dim = 1).to(self.device)
+                    input_ids_prefix = torch.cat((torch.ones_like(input_ids), input_ids_prefix), dim = 1)[:, -(self.num_retrieved + len(input_ids_prefix[0])):]
+                    input_ids_prefix = input_ids_prefix.to(self.device)
+                    vals_pred.append(self.original_generate_func(input_ids_prefix, **new_kwargs))
+                return vals_pred
+            else:
+                input_ids_prefix = input_ids[:, -self.actual_model_window_size:]	
+        input_ids_prefix = input_ids_prefix.to(self.device)	
         return self.original_generate_func(input_ids_prefix, **new_kwargs)
 
     def pre_forward_hook(self, input_ids=None, attention_mask=None, labels=None, **kwargs):
@@ -608,15 +621,23 @@ class Unlimiformer(Generic[ModelType]):
             else:
                 if kwargs.get('past_key_values') is None:
                     self.is_first_test_decoding_step = True
-                    input_ids_prefix = self.tokenizer.encode('\n END OF TEXT\nNow, Answer the following question: What did Harry Potter Want for his friends?[\INST]', add_special_tokens=False, return_tensors="pt")
-                    kwargs["position_ids"] = torch.cat((torch.zeros(len(input_ids[0]))[ :self.actual_model_window_size - len(input_ids_prefix[0])], torch.arange(0, len(input_ids_prefix[0])))).to(self.device)
-
+                    if self.csv_unlimiformer:
+                        question_len = (attention_mask[0] == 1).sum(dim=0)
+                        kwargs["position_ids"] = torch.cat((torch.zeros(len(input_ids[0]))[ :self.num_retrieved], torch.arange(1, question_len + 1))).to(self.device)
+                else:
+                    # From the next generation take in all the values, they are now not padded but retrieved hidden states
+                    if self.csv_unlimiformer:
+                        attention_mask = torch.ones_like(attention_mask)
+                # print(attention_mask, kwargs["position_ids"])
                 if input_ids is not None:
                     # self.input_ids_size += input_ids.shape[-1]
                     self.input_ids_size += 1
+                    self.num_retrieved += 1
                 if kwargs.get('decoder_input_ids') is not None:
                     self.generated_input_ids = torch.cat([self.generated_input_ids, kwargs['decoder_input_ids']], axis=-1)
                 print("Pre Forward Hook", self.tokenizer.decode(input_ids[0]), len(input_ids[0]))
+        # the position id is used to calculate by how much to rotate the key and query newly added
+        # So according to our thing, we can start the position ids to start from any number
         result = self.original_forward_func(input_ids=input_ids, labels=labels, attention_mask=attention_mask, **kwargs)
         self.is_first_test_decoding_step = False
         return result
@@ -670,11 +691,10 @@ class Unlimiformer(Generic[ModelType]):
             if not self.is_encoder_decoder:
                 topk = min(topk, window_size - generated_size + 1)
             if self.gpu_index:
-                topk = min(topk, 2048)
+                topk = min(topk, self.num_retrieved)
 
             query = self.process_query(output)[:,-1] # (batch * beam, head, dim)
             query = query[:, self.head_nums] # (batch * beam, head, dim)
-
             if self.use_datastore:
                 # query: (batch, beam, head, dim)
                 # need to multiply by key vector
@@ -1151,15 +1171,15 @@ class UnlimiformerLLaMa(Unlimiformer[LlamaModel]):
         # query: (batch * time, head, dim)
         attention = self.model.base_model.layers[-1].self_attn
         num_generated = min(self.input_ids_size - self.prompt_input_ids.shape[1], self.actual_model_window_size)
-        cos, sin = attention.rotary_emb(query, seq_len=num_generated)
+        cos, sin = attention.rotary_emb(query, seq_len=self.num_retrieved)
         # Experiment 1
-        # cos, sin = attention.rotary_emb(query, seq_len = 60 + num_generated)
+        # cos, sin = attention.rotary_emb(query, seq_len = 1)
         cos = cos[:,:,-1]  # [1, 1, dim]
         sin = sin[:,:,-1]  # [1, 1, dim]
         # cos = cos[-1].unsqueeze(0).unsqueeze(0)  # [bs, 1, seq_len, dim]
         # sin = sin[-1].unsqueeze(0)  # [bs, 1, seq_len, dim]
         query = (query * cos) + (self.rotate_half(query) * sin)
-        
+
         k_proj = k_proj_weight.view(1, self.num_heads, query.shape[-1], k_proj_weight.shape[0]) # (1, num_heads, attn_dim, embed_dim)
         k_proj_l = k_proj[..., :k_proj.shape[-2] // 2, :]
         k_proj_r = k_proj[..., k_proj.shape[-2] // 2:, :]
