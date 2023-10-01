@@ -404,6 +404,7 @@ def main():
     parser.add_argument("--xlm_language", type=str, default="", help="Optional language when used with the XLM model.")
 
     parser.add_argument("--seed", type=int, default=42, help="random seed for initialization")
+    parser.add_argument("--data_folder", type=int, default=42, help="random seed for initialization")
     parser.add_argument("--no_cuda", action="store_true", help="Avoid using CUDA when available")
     parser.add_argument("--stream_output", action="store_true")
     parser.add_argument("--num_return_sequences", type=int, default=1, help="The number of samples to generate.")
@@ -423,7 +424,7 @@ def main():
     if len(set(unknown_args) & set(unknown_unlimiformer_args)) > 0:
         raise ValueError(f"Unknown arguments detected: {set(unknown_args) & set(unknown_unlimiformer_args)}")
 
-    args.device = torch.device("cuda" if torch.cuda.is_available() and not args.no_cuda else "cpu")
+    args.device = torch.device("cuda:6" if torch.cuda.is_available() and not args.no_cuda else "cpu")
     args.n_gpu = 0 if args.no_cuda else torch.cuda.device_count()
 
     logger.warning(f"device: {args.device}, n_gpu: {args.n_gpu}, 16-bits training: {args.fp16}")
@@ -543,33 +544,37 @@ def main():
     )
 
     # Remove the batch dimension when returning multiple sequences
-    if len(output_sequences.shape) > 2:
-        output_sequences.squeeze_()
+    for i in range(len(output_sequences)):
+        if len(output_sequences[i].shape) > 2:
+            output_sequences[i].squeeze_()
 
     generated_sequences = []
 
-    for generated_sequence_idx, generated_sequence in enumerate(output_sequences):
-        print(f"=== GENERATED SEQUENCE {generated_sequence_idx + 1} (input length: {input_ids.shape[-1]}) ===")
-        generated_sequence = generated_sequence.tolist()
-        # generated_sequence = generated_sequence[len(encoded_prompt[0]):] + tokenizer.encode(' <end_of_prompt> ') + generated_sequence[:len(encoded_prompt[0])]
+    for output_sequence in output_sequences:
+        for generated_sequence_idx, generated_sequence in enumerate(output_sequence):
+            print(f"=== GENERATED SEQUENCE {generated_sequence_idx + 1} (input length: {input_ids.shape[-1]}) ===")
+            generated_sequence = generated_sequence.tolist()
+            # generated_sequence = generated_sequence[len(encoded_prompt[0]):] + tokenizer.encode(' <end_of_prompt> ') + generated_sequence[:len(encoded_prompt[0])]
 
-        # Decode text
-        # text = tokenizer.decode(generated_sequence, clean_up_tokenization_spaces=True)
-        prompt_length = min(input_ids.shape[-1], model.unlimiformer.window_size()) if unlimiformer_args.test_unlimiformer else input_ids.shape[-1]
-        completion = tokenizer.decode(generated_sequence[prompt_length:])
+            # Decode text
+            # text = tokenizer.decode(generated_sequence, clean_up_tokenization_spaces=True)
+            prompt_length = min(input_ids.shape[-1], model.unlimiformer.window_size()) if unlimiformer_args.test_unlimiformer else input_ids.shape[-1]
+            completion = tokenizer.decode(generated_sequence[prompt_length:])
 
-        # Remove all text after the stop token
-        # text = text[: text.find(args.stop_token) if args.stop_token else None]
+            # Remove all text after the stop token
+            # text = text[: text.find(args.stop_token) if args.stop_token else None]
 
-        # Add the prompt at the beginning of the sequence. Remove the excess text that was used for pre-processing
-        total_sequence = (
-            # prompt_text + 
-            '|||' + completion
-        )
+            # Add the prompt at the beginning of the sequence. Remove the excess text that was used for pre-processing
+            total_sequence = (
+                # prompt_text + 
+                '|||' + completion
+            )
 
-        generated_sequences.append(total_sequence)
-        print(total_sequence)
-
+            generated_sequences.append(total_sequence)
+            print(total_sequence)
+    with open('data1/predictions.txt', 'w') as file:
+        import json
+        json.dump(generated_sequences, file)
     return generated_sequences
 
 
