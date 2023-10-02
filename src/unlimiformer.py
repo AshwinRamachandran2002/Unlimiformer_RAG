@@ -13,7 +13,8 @@ from transformers import BartModel, BartForConditionalGeneration, \
 from typing import TypeVar, Generic
 
 from index_building import Datastore, DatastoreBatch
-
+import os
+os.environ["CUDA_LAUNCH_BLOCKING"] = "1"
 logger = logging.getLogger('Unlimiformer')
 logger.setLevel(20)
 
@@ -36,8 +37,10 @@ class Unlimiformer(Generic[ModelType]):
         super().__init__()
         self.csv_unlimiformer = True
         self.my_method = False
-        # self.num_retrieved = 1000
-        self.num_retrieved = 100
+        self.apply_boundary = False
+        self.one_by_one = True
+        self.num_retrieved = 138
+        self.gap = 5
         self.model = model
         model.unlimiformer = self
         self.layer_begin = layer_begin
@@ -64,12 +67,13 @@ class Unlimiformer(Generic[ModelType]):
         self.datastore_device = torch.device(f'cuda:{datastore_device}' if torch.cuda.is_available() and gpu_datastore else 'cpu')
         self.test_datastore = test_datastore # flag for debugging
 
-        self.device = torch.device('cuda:6' if torch.cuda.is_available() else 'cpu')
+        self.device = torch.device('cuda:1' if torch.cuda.is_available() else 'cpu')
         self.activation_capturer = None
         self.is_encoder_decoder = model.config.is_encoder_decoder
         self.hook_handles = []
         self.is_input_encoding_pass = False
         self.is_first_test_decoding_step = False
+        self.is_second_test_decoding_step = False
         self.prev_tokens = None
         self.last_beam_idx = None
         self.heatmap = None
@@ -382,16 +386,36 @@ class Unlimiformer(Generic[ModelType]):
         else:
             window_indices = self.window_indices(input_ids.shape[-1])
 
+        # Experiment result: Putting just a single JSON data through and collecting the exact amount worked
+        # Experiment result: Putting two JSON data? it gave a value but not the correct one
+        # Experiment result: Putting three JSON data? it gave a value that is a mix and match of several different values
+        # Looking at this from a different angle, it might be due to the fact that hidden states saved in datastore havent learned to 
+        # distinguish themselves or 
+        # we have established that the model can attend to the padded spaces, so that isnt a problem, problem is the retrieval step
+        # if we get all the json data out?
         for context_start_ind, context_end_ind, update_start_ind, update_end_ind in window_indices:
             logger.info(f'Encoding {context_start_ind} to {context_end_ind} out of {input_ids.shape[-1]}')
             if self.csv_unlimiformer:
-                chunk = torch.cat((prefix_input_id, input_ids[:, context_start_ind:context_end_ind]), dim = 1).to(self.device)
-                chunk_attention_mask = torch.cat((torch.ones_like(prefix_input_id), attention_mask[:, context_start_ind:context_end_ind]), dim = 1).to(self.device)
+                # FAILIURE: An experiment to see if hidden states can link better if they are spaced more widely
+                if self.apply_boundary:
+                    self.boundary = 40
+                    chunk = torch.cat((torch.ones(1, self.boundary).to(torch.int64), prefix_input_id, input_ids[:, context_start_ind:context_end_ind]), dim = 1).to(self.device)
+                    chunk_attention_mask = torch.cat((torch.zeros(1, self.boundary), torch.ones_like(prefix_input_id), attention_mask[:, context_start_ind:context_end_ind]), dim = 1).to(self.device)
+                    chunk_position_ids = torch.cat((torch.zeros(1, self.boundary), torch.linspace(1, self.boundary, len(chunk[0]) - self.boundary).to(torch.int64).unsqueeze(0)), dim=1).to(self.device)
+                    update_start_ind += self.boundary
+                    update_end_ind += self.boundary
+                else:
+                    # Encode each segment of the data seperately: position ids start from 0 to len(segment) (Assumption doesnt matter)
+                    chunk = torch.cat((prefix_input_id, input_ids[:, context_start_ind:context_end_ind]), dim = 1).to(self.device)
+                    chunk_attention_mask = torch.cat((torch.ones_like(prefix_input_id), attention_mask[:, context_start_ind:context_end_ind]), dim = 1).to(self.device)
+                    chunk_position_ids = None
+                # print(chunk_attention_mask, chunk_position_ids)
             else:
                 chunk = input_ids[:, context_start_ind:context_end_ind].to(self.device)
                 chunk_attention_mask = attention_mask[:, context_start_ind:context_end_ind].to(self.device)
+                chunk_position_ids = None
             with torch.inference_mode():
-                _ = self.model(chunk, attention_mask=chunk_attention_mask, labels=dummy_labels) # , return_dict=True, output_hidden_states=True)
+                _ = self.model(chunk, attention_mask=chunk_attention_mask, labels=dummy_labels, position_ids=chunk_position_ids) # , return_dict=True, output_hidden_states=True)
             if self.use_datastore:
                 # TODO: verify with BART as well
                 # hidden_states_to_index = [hidden_states.encoder_last_hidden_state] # list of length 1 of (batch, chunked_source_len, dim)
@@ -572,14 +596,17 @@ class Unlimiformer(Generic[ModelType]):
         # return '[INST] Extract the value for the key from the JSON data given above. Print only the value. Nothing else.\nKey: "' + val + '"\nCorresponding value: [\INST]'
         # return '<<SYS>>\n You are a helpful assistant. Answer with detailed responses according to the entire instruction or question. \n<</SYS>>\n\n[INST] Extract the value for the key from the JSON data given above. Print only the value. Nothing else.\nKey: "' + val + '"\nCorresponding value: [\INST]'
         # return '<<SYS>>\n You are a helpful assistant. Answer with detailed responses according to the entire instruction or question. \n<</SYS>>\n\n[INST] Extract the value corresponding to the specified key in the JSON object below.\nKey: "a"\nCorresponding value: [\INST]'
-        return '<s>[INST] <<SYS>>\nYou are a helpful assistant. Answer with detailed responses according to the entire instruction or question. \n<</SYS>>\n\n'
+        # return '<s>[INST] <<SYS>>\nYou are a helpful assistant. Answer with concise and very very short responses according to the instruction. \n<</SYS>>\n\nFrom the JSON data above, key "' + val + '", value: \n[/INST]'
+        return '<s>[INST] <<SYS>>\nYou are a helpful assistant. Answer with concise and very very short responses according to the instruction. \n<</SYS>>\n\n'
         # return '<s>[INST] <<SYS>>\nYou are a helpful assistant. Answer with detailed responses according to the entire instruction or question.\n<</SYS>>\n\nExtract the value corresponding to the key "' + val + '" in the JSON object below.\n [/INST' # intentionally deleted ']'
         # return '<s>[INST] <<SYS>>\nYou are a helpful assistant. Answer with detailed responses according to the entire instruction or question.\n<</SYS>>\n\nExtract the value corresponding to the key "' + val + '" in the JSON object below.\n [/INST]' # intentionally deleted ']'
         # return '<s>[INST] <<SYS>>\nYou are a helpful assistant. Answer with detailed responses according to the entire instruction or question.\n<</SYS>>\n\nExtract the value corresponding to the specified key in the JSON object below.\nKey: "' + val + '"\nCorresponding value: [/INST]'
         # return '<<SYS>>\n You are a helpful assistant. Answer with detailed responses according to the entire instruction or question. \n<</SYS>>\n\n[INST] How do I read a map? [\INST]'
     
+    # format copied from https://huggingface.co/spaces/huggingface-projects/llama-2-13b-chat/blob/main/model.py
     def suffix2(self, val):
-        return 'From the JSON data above, extract the value corresponding to the key "' + val + '" .\n[/INST]'
+        return 'From the JSON data above, key "' + val + '", value: \n[/INST]'
+        # return 'From the JSON data above, key "' + val + '", value: \n[/INST] Sure! Here is the value associated with the key "' + val + '"'
         # return 'Read the above JSON object and tell the value corresponding to the specified key in the given JSON object above\nKey: "' + val + '"\nCorresponding value: [\INST]'
         # return 'Can you tell me, from the JSON key-value pairs given above, the value for the key "'+ val + '"?[\INST]'
         
@@ -611,14 +638,13 @@ class Unlimiformer(Generic[ModelType]):
                     # prepare the attention mask for it; we additionally also prepare space for retrieved tokens since the suffix is short
                     # if we do not consider initial padding, then we would not have enough space for retrieval space
                     # this space allocated for retrieved keys is given by self.num_retrieved
-                    new_kwargs["attention_mask"] = torch.cat((torch.zeros_like(input_ids)[:, :self.num_retrieved], torch.ones_like(input_ids)[:, -len(input_ids_prefix[0]):]), dim = 1).to(self.device)
+                    new_kwargs["attention_mask"] = torch.cat((torch.zeros(1, self.num_retrieved), torch.ones(1, len(input_ids_prefix[0]))), dim = 1).to(self.device)
                     # pad the input (doesnt matter with which since attention mask is 0)
-                    input_ids_prefix = torch.cat((torch.ones_like(input_ids), input_ids_prefix), dim = 1)[:, -(self.num_retrieved + len(input_ids_prefix[0])):]
+                    input_ids_prefix = torch.cat((torch.ones(1, self.num_retrieved).to(torch.int64), input_ids_prefix), dim = 1)
                     input_ids_prefix = input_ids_prefix.to(self.device)
                     vals_pred.append(self.original_generate_func(input_ids_prefix, **new_kwargs))
                 return vals_pred
-            else:
-                input_ids_prefix = input_ids[:, -self.actual_model_window_size:]	
+            input_ids_prefix = input_ids[:, -self.actual_model_window_size:]	
         input_ids_prefix = input_ids_prefix.to(self.device)
         return self.original_generate_func(input_ids_prefix, **new_kwargs)
 
@@ -638,10 +664,12 @@ class Unlimiformer(Generic[ModelType]):
                     if self.csv_unlimiformer:
                         # in the initial forward pass, also set the position ids to indicate padding and then input
                         question_len = (attention_mask[0] == 1).sum(dim=0)
+                        self.is_second_test_decoding_step = False
                         self.num_generated = 0
                         # The initial position ids will determine
-                        kwargs["position_ids"] = torch.cat((torch.zeros(len(input_ids[0]))[ :self.num_retrieved], torch.arange(1, question_len + 1))).unsqueeze(0).to(self.device)
-                        self.rotation_retrieved = question_len + 10
+                        kwargs["position_ids"] = torch.cat((torch.zeros(self.num_retrieved), torch.arange(1, question_len + 1))).unsqueeze(0).to(self.device)
+                        self.rotation_retrieved = question_len + self.gap
+
                 # else:
                     # From the next generation take in all the values, they are now not padded but retrieved hidden states
                     # Issue: Need this to be done only after a particular number of layers when we fetch the retrieved keys
@@ -653,19 +681,8 @@ class Unlimiformer(Generic[ModelType]):
                 # from prefix to the queries, we now use this accumulated-info query to get relevant keys and store in
                 # We assume previously it was just building up context
                 # can experiment with putting everything here only, since we are leaving space for retrieved keys
-                if self.csv_unlimiformer and self.is_second_test_decoding_step:
-                    input_ids = self.tokenizer.encode(self.suffix2(self.curr_key), add_special_tokens=False, return_tensors="pt").to(self.device)
-                    attention_mask = torch.cat((attention_mask[:, :-1], torch.ones_like(input_ids).to(self.device)), dim=1)
-                    kwargs["position_ids"] = torch.arange(20 + int(kwargs["position_ids"][0]) + 1, 20 + int(kwargs["position_ids"][0]) + len(input_ids[0]) + 1).unsqueeze(0).to(self.device)
-                if self.csv_unlimiformer and not self.is_second_test_decoding_step and not self.is_first_test_decoding_step:
-                    input_ids_temp = self.tokenizer.encode(self.suffix2(self.curr_key), add_special_tokens=False, return_tensors="pt").to(self.device)
-                    attention_mask = torch.cat((attention_mask[:, :-1], torch.ones_like(input_ids_temp).to(self.device)), dim=1)
-                    kwargs["position_ids"] = torch.arange(20 + int(kwargs["position_ids"][0]) + len(input_ids_temp[0]), 20 + int(kwargs["position_ids"][0]) + len(input_ids_temp[0]) + 1).unsqueeze(0).to(self.device)
-                
                 # if self.csv_unlimiformer and self.is_second_test_decoding_step:
                 #     input_ids = self.tokenizer.encode(self.suffix2(self.curr_key), add_special_tokens=False, return_tensors="pt").to(self.device)
-                #     if self.num_generated == len(input_ids[0]):
-                #         self.is_second_test_decoding_step =
                 #     attention_mask = torch.cat((attention_mask[:, :-1], torch.ones_like(input_ids).to(self.device)), dim=1)
                 #     kwargs["position_ids"] = torch.arange(20 + int(kwargs["position_ids"][0]) + 1, 20 + int(kwargs["position_ids"][0]) + len(input_ids[0]) + 1).unsqueeze(0).to(self.device)
                 # if self.csv_unlimiformer and not self.is_second_test_decoding_step and not self.is_first_test_decoding_step:
@@ -673,6 +690,28 @@ class Unlimiformer(Generic[ModelType]):
                 #     attention_mask = torch.cat((attention_mask[:, :-1], torch.ones_like(input_ids_temp).to(self.device)), dim=1)
                 #     kwargs["position_ids"] = torch.arange(20 + int(kwargs["position_ids"][0]) + len(input_ids_temp[0]), 20 + int(kwargs["position_ids"][0]) + len(input_ids_temp[0]) + 1).unsqueeze(0).to(self.device)
                 
+                # Here we send all the suffix that we need to push and expect attention to retrieved keys
+                if self.csv_unlimiformer and self.is_second_test_decoding_step:
+                    input_ids_suffix = self.tokenizer.encode(self.suffix2(self.curr_key), add_special_tokens=False, return_tensors="pt")
+                    self.curr_suffix_len = len(input_ids_suffix[0])
+                    if self.one_by_one:
+                        if self.num_generated == (len(input_ids_suffix[0]) + 1):
+                            self.is_second_test_decoding_step = False
+                        else:
+                            input_ids = input_ids_suffix[:, self.num_generated - 1].unsqueeze(0).to(self.device)
+                            kwargs["position_ids"] = torch.arange(self.gap * 2 + int(kwargs["position_ids"][0]), self.gap * 2 + int(kwargs["position_ids"][0]) + 1).unsqueeze(0).to(self.device)
+                    else:
+                        input_ids = input_ids_suffix.to(self.device)
+                        kwargs["position_ids"] = torch.arange(int(kwargs["position_ids"][0]), int(kwargs["position_ids"][0]) + len(input_ids[0])).unsqueeze(0).to(self.device)
+                        attention_mask = torch.cat((attention_mask, torch.ones(1, len(input_ids[0]) - 1).to(self.device)), dim = 1)
+
+                if self.csv_unlimiformer and not self.is_second_test_decoding_step and not self.is_first_test_decoding_step:
+                    if self.one_by_one:
+                        kwargs["position_ids"] = torch.arange(self.gap * 2 + int(kwargs["position_ids"][0]), self.gap * 2 + int(kwargs["position_ids"][0]) + 1).unsqueeze(0).to(self.device)
+                    else:
+                        attention_mask = torch.cat((attention_mask, torch.ones(1, self.curr_suffix_len - 1).to(self.device)), dim = 1)
+                        kwargs["position_ids"] = torch.arange(int(kwargs["position_ids"][0]) + self.curr_suffix_len, int(kwargs["position_ids"][0]) + self.curr_suffix_len + 1).unsqueeze(0).to(self.device)
+
                 # print(attention_mask, kwargs["position_ids"])
                 if input_ids is not None:
                     self.input_ids_size += 1
@@ -686,7 +725,10 @@ class Unlimiformer(Generic[ModelType]):
         # So according to our thing, we can start the position ids to start from any number
         result = self.original_forward_func(input_ids=input_ids, labels=labels, attention_mask=attention_mask, **kwargs)
         if self.csv_unlimiformer:
-            self.is_second_test_decoding_step = False
+            # self.is_second_test_decoding_step = False
+            if not self.one_by_one:
+                if self.is_second_test_decoding_step:
+                    self.is_second_test_decoding_step = False
             if self.is_first_test_decoding_step:
                 self.is_second_test_decoding_step = True
         self.is_first_test_decoding_step = False
@@ -1232,17 +1274,17 @@ class UnlimiformerLLaMa(Unlimiformer[LlamaModel]):
     def preprocess_query(self, query, k_proj_weight):
         # query: (batch * time, head, dim)
         ####### The rotation given to q should not matter
-        # attention = self.model.base_model.layers[-1].self_attn
-        # num_generated = min(self.input_ids_size - self.prompt_input_ids.shape[1], self.actual_model_window_size)
+        attention = self.model.base_model.layers[-1].self_attn
+        num_generated = min(self.input_ids_size - self.prompt_input_ids.shape[1], self.actual_model_window_size)
         # cos, sin = attention.rotary_emb(query, seq_len=self.num_generated)
-        # # cos, sin = attention.rotary_emb(query, seq_len=num_generated)
+        cos, sin = attention.rotary_emb(query, seq_len=num_generated)
         # # Experiment 1
-        # # cos, sin = attention.rotary_emb(query, seq_len = 1)
-        # cos = cos[:,:,-1]  # [1, 1, dim]
-        # sin = sin[:,:,-1]  # [1, 1, dim]
+        # cos, sin = attention.rotary_emb(query, seq_len = 1)
+        cos = cos[:,:,-1]  # [1, 1, dim]
+        sin = sin[:,:,-1]  # [1, 1, dim]
         # # cos = cos[-1].unsqueeze(0).unsqueeze(0)  # [bs, 1, seq_len, dim]
         # # sin = sin[-1].unsqueeze(0)  # [bs, 1, seq_len, dim]
-        # query = (query * cos) + (self.rotate_half(query) * sin)
+        query = (query * cos) + (self.rotate_half(query) * sin)
 
         k_proj = k_proj_weight.view(1, self.num_heads, query.shape[-1], k_proj_weight.shape[0]) # (1, num_heads, attn_dim, embed_dim)
         k_proj_l = k_proj[..., :k_proj.shape[-2] // 2, :]
@@ -1250,9 +1292,9 @@ class UnlimiformerLLaMa(Unlimiformer[LlamaModel]):
         k_proj_rotated = torch.cat([-k_proj_l, k_proj_r], dim=-2)
 
         datastore_query = query.unsqueeze(-2) # (batch * beam, num_heads, 1, attn_dim)
-        # datastore_query = torch.matmul(datastore_query, k_proj + k_proj_rotated) # (batch * beam, num_heads, 1, embed_dim)
+        datastore_query = torch.matmul(datastore_query, k_proj + k_proj_rotated) # (batch * beam, num_heads, 1, embed_dim)
         # Experiment 1
-        datastore_query = torch.matmul(datastore_query, k_proj) # (batch * beam, num_heads, 1, embed_dim)
+        # datastore_query = torch.matmul(datastore_query, k_proj) # (batch * beam, num_heads, 1, embed_dim)
         datastore_query = datastore_query.squeeze(-2)  # (batch * beam, num_heads, embed_dim)
         return datastore_query
 
@@ -1284,7 +1326,7 @@ class UnlimiformerLLaMa(Unlimiformer[LlamaModel]):
         # scaled_key_indices = scaled_key_indices.to(cos.device)
         # cos = cos[scaled_key_indices]  # [bs, 1, seq_len, dim]
         # sin = sin[scaled_key_indices]  # [bs, 1, seq_len, dim]
-        # # retrieved_keys = (retrieved_keys * cos) + (self.rotate_half(retrieved_keys) * sin)
+        # retrieved_keys = (retrieved_keys * cos) + (self.rotate_half(retrieved_keys) * sin)
         # retrieved_keys = retrieved_keys
         
         # Experiment: We provide all the retrieved keys a constant rotation between prefix and suffix
