@@ -1,0 +1,1 @@
+CREATE TABLE stadium (stadium_id number, location text, name text, capacity number); CREATE TABLE singer (singer_id number, name text, country text, song_name text, song_release_year text, age number, is_male others); 

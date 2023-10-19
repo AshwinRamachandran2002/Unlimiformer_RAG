@@ -1,0 +1,113 @@
+10/15/2023 19:23:34 - WARNING - __main__ - device: cuda:7, n_gpu: 8, 16-bits training: True
+Using pad_token, but it is not set yet.
+
+Loading checkpoint shards:   0%|          | 0/3 [00:00<?, ?it/s]
+Loading checkpoint shards:  33%|███▎      | 1/3 [00:04<00:09,  4.56s/it]
+Loading checkpoint shards:  67%|██████▋   | 2/3 [00:08<00:04,  4.21s/it]
+Loading checkpoint shards: 100%|██████████| 3/3 [00:10<00:00,  3.09s/it]
+Loading checkpoint shards: 100%|██████████| 3/3 [00:10<00:00,  3.43s/it]
+10/15/2023 19:25:54 - INFO - __main__ - Namespace(model_type='llama', model_name_or_path='meta-llama/Llama-2-13b-chat-hf', prompt='data9/original_data.txt', length=300, num_hidden_layers=None, stop_token=None, temperature=1.0, repetition_penalty=1.0, k=0, p=0, prefix='', suffix='', padding_text='', xlm_language='', seed=42, data_folder=42, no_cuda=False, stream_output=False, num_return_sequences=1, fp16=True, jit=False, device=device(type='cuda', index=7), n_gpu=8)
+10/15/2023 19:25:54 - INFO - Unlimiformer - Encoding 0 to 33 out of 188
+10/15/2023 19:25:54 - INFO - Unlimiformer - {"9476a6a0-bb39-4" : "007537f3-2ca9-4"},
+10/15/2023 19:26:00 - INFO - Unlimiformer - {"9476a6a0-bb39-4" : "007537f3-2ca9-4"},
+10/15/2023 19:26:00 - INFO - Unlimiformer - Encoding 33 to 66 out of 188
+10/15/2023 19:26:00 - INFO - Unlimiformer - {"A" : "B"}, {"9ee4d726-6e49-4" : "9614e599-44ad-4"},
+10/15/2023 19:26:04 - INFO - Unlimiformer - {"9ee4d726-6e49-4" : "9614e599-44ad-4"},
+10/15/2023 19:26:04 - INFO - Unlimiformer - Encoding 66 to 95 out of 188
+10/15/2023 19:26:04 - INFO - Unlimiformer - ,{"A" : "B"}, {"4f4abe82-b199-4" : "f77ae3ff-7bbe-4"},
+10/15/2023 19:26:08 - INFO - Unlimiformer - {"4f4abe82-b199-4" : "f77ae3ff-7bbe-4"},
+10/15/2023 19:26:08 - INFO - Unlimiformer - Encoding 95 to 125 out of 188
+10/15/2023 19:26:08 - INFO - Unlimiformer - ,,{"A" : "B"}, {"ec86f8fc-cc5f-4" : "d33cd8a3-9ad0-4"},
+10/15/2023 19:26:11 - INFO - Unlimiformer - {"ec86f8fc-cc5f-4" : "d33cd8a3-9ad0-4"},
+10/15/2023 19:26:11 - INFO - Unlimiformer - Encoding 125 to 156 out of 188
+10/15/2023 19:26:11 - INFO - Unlimiformer - ,,,{"A" : "B"}, {"eaa0927f-fc52-4" : "df0d029e-cb88-4"},
+10/15/2023 19:26:14 - INFO - Unlimiformer - {"eaa0927f-fc52-4" : "df0d029e-cb88-4"},
+10/15/2023 19:26:14 - INFO - Unlimiformer - Encoding 156 to 188 out of 188
+10/15/2023 19:26:14 - INFO - Unlimiformer - ,,,,{"A" : "B"}, {"ecc45f50-8d76-4" : "7a2fffd4-6a6d-4"}
+10/15/2023 19:26:17 - INFO - Unlimiformer - {"ecc45f50-8d76-4" : "7a2fffd4-6a6d-4"}
+10/15/2023 19:26:18 - INFO - Unlimiformer - "Pre Forward Hook", <s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s>[INST] <<SYS>>
+You are a helpful assistant. Answer with short responses according to the question. 
+<</SYS>>
+
+, 221
+10/15/2023 19:26:21 - INFO - Unlimiformer - "Pre Forward Hook", Based, 1
+/raid/infolab/ashwinr/anaconda3/envs/btp/lib/python3.11/site-packages/faiss/contrib/torch_utils.py:44: UserWarning: TypedStorage is deprecated. It will be removed in the future and UntypedStorage will be the only storage class. This should only matter to you if you are using storages directly.  To access UntypedStorage directly, use tensor.untyped_storage() instead of tensor.storage()
+  x.storage().data_ptr() + x.storage_offset() * 2)
+10/15/2023 19:26:48 - INFO - Unlimiformer - "Pre Forward Hook", on, 1
+10/15/2023 19:27:06 - INFO - Unlimiformer - "Pre Forward Hook", the, 1
+10/15/2023 19:27:27 - INFO - Unlimiformer - "Pre Forward Hook", above, 1
+10/15/2023 19:27:45 - INFO - Unlimiformer - "Pre Forward Hook", information, 1
+10/15/2023 19:28:04 - INFO - Unlimiformer - "Pre Forward Hook", ,, 1
+10/15/2023 19:28:27 - INFO - Unlimiformer - "Pre Forward Hook", can, 1
+10/15/2023 19:28:45 - INFO - Unlimiformer - "Pre Forward Hook", you, 1
+10/15/2023 19:29:08 - INFO - Unlimiformer - "Pre Forward Hook", tell, 1
+10/15/2023 19:29:27 - INFO - Unlimiformer - "Pre Forward Hook", me, 1
+10/15/2023 19:29:49 - INFO - Unlimiformer - "Pre Forward Hook", what, 1
+10/15/2023 19:30:07 - INFO - Unlimiformer - "Pre Forward Hook", the, 1
+10/15/2023 19:30:27 - INFO - Unlimiformer - "Pre Forward Hook", value, 1
+10/15/2023 19:30:45 - INFO - Unlimiformer - "Pre Forward Hook", is, 1
+10/15/2023 19:31:02 - INFO - Unlimiformer - "Pre Forward Hook", for, 1
+10/15/2023 19:31:26 - INFO - Unlimiformer - "Pre Forward Hook", ", 1
+10/15/2023 19:31:42 - INFO - Unlimiformer - "Pre Forward Hook", e, 1
+10/15/2023 19:32:05 - INFO - Unlimiformer - "Pre Forward Hook", cc, 1
+10/15/2023 19:32:21 - INFO - Unlimiformer - "Pre Forward Hook", 4, 1
+10/15/2023 19:32:42 - INFO - Unlimiformer - "Pre Forward Hook", 5, 1
+10/15/2023 19:33:02 - INFO - Unlimiformer - "Pre Forward Hook", f, 1
+10/15/2023 19:33:23 - INFO - Unlimiformer - "Pre Forward Hook", 5, 1
+10/15/2023 19:33:43 - INFO - Unlimiformer - "Pre Forward Hook", 0, 1
+10/15/2023 19:34:01 - INFO - Unlimiformer - "Pre Forward Hook", -, 1
+10/15/2023 19:34:24 - INFO - Unlimiformer - "Pre Forward Hook", 8, 1
+10/15/2023 19:34:39 - INFO - Unlimiformer - "Pre Forward Hook", d, 1
+10/15/2023 19:35:01 - INFO - Unlimiformer - "Pre Forward Hook", 7, 1
+10/15/2023 19:35:19 - INFO - Unlimiformer - "Pre Forward Hook", 6, 1
+10/15/2023 19:35:35 - INFO - Unlimiformer - "Pre Forward Hook", -, 1
+10/15/2023 19:35:53 - INFO - Unlimiformer - "Pre Forward Hook", 4, 1
+10/15/2023 19:36:10 - INFO - Unlimiformer - "Pre Forward Hook", "?, 1
+10/15/2023 19:36:28 - INFO - Unlimiformer - "Pre Forward Hook", [, 1
+10/15/2023 19:36:44 - INFO - Unlimiformer - "Pre Forward Hook", /, 1
+10/15/2023 19:37:03 - INFO - Unlimiformer - "Pre Forward Hook", INST, 1
+10/15/2023 19:37:17 - INFO - Unlimiformer - "Pre Forward Hook", ], 1
+10/15/2023 19:37:35 - INFO - Unlimiformer - "Pre Forward Hook", , 1
+10/15/2023 19:37:52 - INFO - Unlimiformer - "Pre Forward Hook", Sure, 1
+10/15/2023 19:38:06 - INFO - Unlimiformer - "Pre Forward Hook", !, 1
+10/15/2023 19:38:25 - INFO - Unlimiformer - "Pre Forward Hook", Based, 1
+10/15/2023 19:38:39 - INFO - Unlimiformer - "Pre Forward Hook", on, 1
+10/15/2023 19:38:56 - INFO - Unlimiformer - "Pre Forward Hook", the, 1
+10/15/2023 19:39:12 - INFO - Unlimiformer - "Pre Forward Hook", information, 1
+10/15/2023 19:39:28 - INFO - Unlimiformer - "Pre Forward Hook", provided, 1
+10/15/2023 19:39:46 - INFO - Unlimiformer - "Pre Forward Hook", ,, 1
+10/15/2023 19:40:01 - INFO - Unlimiformer - "Pre Forward Hook", the, 1
+10/15/2023 19:40:17 - INFO - Unlimiformer - "Pre Forward Hook", value, 1
+10/15/2023 19:40:32 - INFO - Unlimiformer - "Pre Forward Hook", for, 1
+10/15/2023 19:40:46 - INFO - Unlimiformer - "Pre Forward Hook", ", 1
+10/15/2023 19:41:03 - INFO - Unlimiformer - "Pre Forward Hook", e, 1
+10/15/2023 19:41:19 - INFO - Unlimiformer - "Pre Forward Hook", cc, 1
+10/15/2023 19:41:34 - INFO - Unlimiformer - "Pre Forward Hook", 4, 1
+10/15/2023 19:41:49 - INFO - Unlimiformer - "Pre Forward Hook", 5, 1
+10/15/2023 19:42:02 - INFO - Unlimiformer - "Pre Forward Hook", f, 1
+10/15/2023 19:42:19 - INFO - Unlimiformer - "Pre Forward Hook", 5, 1
+10/15/2023 19:42:35 - INFO - Unlimiformer - "Pre Forward Hook", 0, 1
+10/15/2023 19:42:49 - INFO - Unlimiformer - "Pre Forward Hook", -, 1
+10/15/2023 19:43:06 - INFO - Unlimiformer - "Pre Forward Hook", 8, 1
+10/15/2023 19:43:20 - INFO - Unlimiformer - "Pre Forward Hook", d, 1
+10/15/2023 19:43:33 - INFO - Unlimiformer - "Pre Forward Hook", 7, 1
+10/15/2023 19:43:49 - INFO - Unlimiformer - "Pre Forward Hook", 6, 1
+10/15/2023 19:44:03 - INFO - Unlimiformer - "Pre Forward Hook", -, 1
+10/15/2023 19:44:19 - INFO - Unlimiformer - "Pre Forward Hook", 4, 1
+10/15/2023 19:44:35 - INFO - Unlimiformer - "Pre Forward Hook", ", 1
+10/15/2023 19:44:49 - INFO - Unlimiformer - "Pre Forward Hook", is, 1
+10/15/2023 19:45:04 - INFO - Unlimiformer - "Pre Forward Hook", ", 1
+10/15/2023 19:45:19 - INFO - Unlimiformer - "Pre Forward Hook", df, 1
+10/15/2023 19:45:32 - INFO - Unlimiformer - "Pre Forward Hook", 0, 1
+10/15/2023 19:45:49 - INFO - Unlimiformer - "Pre Forward Hook", d, 1
+10/15/2023 19:46:03 - INFO - Unlimiformer - "Pre Forward Hook", 0, 1
+10/15/2023 19:46:18 - INFO - Unlimiformer - "Pre Forward Hook", 2, 1
+10/15/2023 19:46:34 - INFO - Unlimiformer - "Pre Forward Hook", 9, 1
+10/15/2023 19:46:46 - INFO - Unlimiformer - "Pre Forward Hook", e, 1
+10/15/2023 19:47:01 - INFO - Unlimiformer - "Pre Forward Hook", -, 1
+10/15/2023 19:47:17 - INFO - Unlimiformer - "Pre Forward Hook", cb, 1
+10/15/2023 19:47:32 - INFO - Unlimiformer - "Pre Forward Hook", 8, 1
+10/15/2023 19:47:48 - INFO - Unlimiformer - "Pre Forward Hook", 8, 1
+10/15/2023 19:48:01 - INFO - Unlimiformer - "Pre Forward Hook", -, 1
+10/15/2023 19:48:14 - INFO - Unlimiformer - "Pre Forward Hook", 4, 1
+10/15/2023 19:48:30 - INFO - Unlimiformer - "Pre Forward Hook", "., 1

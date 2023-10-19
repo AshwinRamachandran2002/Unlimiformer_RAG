@@ -1,0 +1,158 @@
+10/12/2023 09:08:26 - WARNING - __main__ - device: cuda:3, n_gpu: 8, 16-bits training: True
+Using pad_token, but it is not set yet.
+Loading checkpoint shards:   0%|          | 0/3 [00:00<?, ?it/s]Loading checkpoint shards:  33%|███▎      | 1/3 [00:02<00:05,  2.73s/it]Loading checkpoint shards:  67%|██████▋   | 2/3 [00:05<00:02,  2.71s/it]Loading checkpoint shards: 100%|██████████| 3/3 [00:07<00:00,  2.22s/it]Loading checkpoint shards: 100%|██████████| 3/3 [00:07<00:00,  2.36s/it]
+10/12/2023 09:10:27 - INFO - __main__ - Namespace(model_type='llama', model_name_or_path='meta-llama/Llama-2-13b-chat-hf', prompt='data5/original_data.txt', length=300, num_hidden_layers=None, stop_token=None, temperature=1.0, repetition_penalty=1.0, k=0, p=0, prefix='', suffix='', padding_text='', xlm_language='', seed=42, data_folder=42, no_cuda=False, stream_output=False, num_return_sequences=1, fp16=True, jit=False, device=device(type='cuda', index=3), n_gpu=8)
+10/12/2023 09:10:27 - INFO - Unlimiformer - Encoding 0 to 5 out of 12
+10/12/2023 09:10:27 - INFO - Unlimiformer -   Williamson is baking
+10/12/2023 09:10:35 - INFO - Unlimiformer -   Williamson is baking
+10/12/2023 09:10:38 - INFO - Unlimiformer - Encoding 6 to 12 out of 12
+10/12/2023 09:10:38 - INFO - Unlimiformer -   Oppenheimer is cycling
+10/12/2023 09:10:43 - INFO - Unlimiformer -   Oppenheimer is cycling
+10/12/2023 09:10:43 - INFO - Unlimiformer - "Pre Forward Hook", <s><s><s><s><s><s><s><s><s><s><s><s><s><s>[INST] <<SYS>>
+You are a helpful assistant. Answer with detailed responses according to the entire instruction or question. 
+<</SYS>>
+
+, 49
+10/12/2023 09:10:48 - INFO - Unlimiformer - "Pre Forward Hook", Based, 1
+/raid/infolab/ashwinr/anaconda3/envs/btp/lib/python3.11/site-packages/faiss/contrib/torch_utils.py:44: UserWarning: TypedStorage is deprecated. It will be removed in the future and UntypedStorage will be the only storage class. This should only matter to you if you are using storages directly.  To access UntypedStorage directly, use tensor.untyped_storage() instead of tensor.storage()
+  x.storage().data_ptr() + x.storage_offset() * 2)
+10/12/2023 09:11:26 - INFO - Unlimiformer - "Pre Forward Hook", on, 1
+10/12/2023 09:11:42 - INFO - Unlimiformer - "Pre Forward Hook", the, 1
+10/12/2023 09:12:08 - INFO - Unlimiformer - "Pre Forward Hook", above, 1
+10/12/2023 09:12:26 - INFO - Unlimiformer - "Pre Forward Hook", information, 1
+10/12/2023 09:12:53 - INFO - Unlimiformer - "Pre Forward Hook", ,, 1
+10/12/2023 09:13:10 - INFO - Unlimiformer - "Pre Forward Hook", can, 1
+10/12/2023 09:13:38 - INFO - Unlimiformer - "Pre Forward Hook", you, 1
+10/12/2023 09:13:54 - INFO - Unlimiformer - "Pre Forward Hook", tell, 1
+10/12/2023 09:14:21 - INFO - Unlimiformer - "Pre Forward Hook", me, 1
+10/12/2023 09:14:37 - INFO - Unlimiformer - "Pre Forward Hook", what, 1
+10/12/2023 09:15:01 - INFO - Unlimiformer - "Pre Forward Hook", William, 1
+10/12/2023 09:15:21 - INFO - Unlimiformer - "Pre Forward Hook", son, 1
+10/12/2023 09:15:37 - INFO - Unlimiformer - "Pre Forward Hook", is, 1
+10/12/2023 09:16:04 - INFO - Unlimiformer - "Pre Forward Hook", doing, 1
+10/12/2023 09:16:21 - INFO - Unlimiformer - "Pre Forward Hook", ?, 1
+10/12/2023 09:16:47 - INFO - Unlimiformer - "Pre Forward Hook", [, 1
+10/12/2023 09:17:04 - INFO - Unlimiformer - "Pre Forward Hook", /, 1
+10/12/2023 09:17:31 - INFO - Unlimiformer - "Pre Forward Hook", INST, 1
+10/12/2023 09:17:49 - INFO - Unlimiformer - "Pre Forward Hook", ], 1
+10/12/2023 09:18:17 - INFO - Unlimiformer - "Pre Forward Hook", , 1
+10/12/2023 09:18:36 - INFO - Unlimiformer - "Pre Forward Hook", C, 1
+10/12/2023 09:19:04 - INFO - Unlimiformer - "Pre Forward Hook", ertain, 1
+10/12/2023 09:19:23 - INFO - Unlimiformer - "Pre Forward Hook", ly, 1
+10/12/2023 09:19:51 - INFO - Unlimiformer - "Pre Forward Hook", !, 1
+10/12/2023 09:20:10 - INFO - Unlimiformer - "Pre Forward Hook", Based, 1
+10/12/2023 09:20:39 - INFO - Unlimiformer - "Pre Forward Hook", on, 1
+10/12/2023 09:20:58 - INFO - Unlimiformer - "Pre Forward Hook", the, 1
+10/12/2023 09:21:27 - INFO - Unlimiformer - "Pre Forward Hook", information, 1
+10/12/2023 09:21:47 - INFO - Unlimiformer - "Pre Forward Hook", provided, 1
+10/12/2023 09:22:15 - INFO - Unlimiformer - "Pre Forward Hook", ,, 1
+10/12/2023 09:22:34 - INFO - Unlimiformer - "Pre Forward Hook", William, 1
+10/12/2023 09:23:02 - INFO - Unlimiformer - "Pre Forward Hook", son, 1
+10/12/2023 09:23:22 - INFO - Unlimiformer - "Pre Forward Hook", is, 1
+10/12/2023 09:23:50 - INFO - Unlimiformer - "Pre Forward Hook", b, 1
+10/12/2023 09:24:19 - INFO - Unlimiformer - "Pre Forward Hook", aking, 1
+10/12/2023 09:24:38 - INFO - Unlimiformer - "Pre Forward Hook", a, 1
+10/12/2023 09:25:07 - INFO - Unlimiformer - "Pre Forward Hook", c, 1
+10/12/2023 09:25:25 - INFO - Unlimiformer - "Pre Forward Hook", ake, 1
+10/12/2023 09:25:45 - INFO - Unlimiformer - "Pre Forward Hook", ., 1
+10/12/2023 09:26:09 - INFO - Unlimiformer - "Pre Forward Hook", The, 1
+10/12/2023 09:26:27 - INFO - Unlimiformer - "Pre Forward Hook", instruction, 1
+10/12/2023 09:26:54 - INFO - Unlimiformer - "Pre Forward Hook", given, 1
+10/12/2023 09:27:13 - INFO - Unlimiformer - "Pre Forward Hook", is, 1
+10/12/2023 09:27:41 - INFO - Unlimiformer - "Pre Forward Hook", ", 1
+10/12/2023 09:28:00 - INFO - Unlimiformer - "Pre Forward Hook", Will, 1
+10/12/2023 09:28:28 - INFO - Unlimiformer - "Pre Forward Hook", iam, 1
+10/12/2023 09:28:46 - INFO - Unlimiformer - "Pre Forward Hook", son, 1
+10/12/2023 09:29:14 - INFO - Unlimiformer - "Pre Forward Hook", is, 1
+10/12/2023 09:29:32 - INFO - Unlimiformer - "Pre Forward Hook", cy, 1
+10/12/2023 09:29:59 - INFO - Unlimiformer - "Pre Forward Hook", cling, 1
+10/12/2023 09:30:17 - INFO - Unlimiformer - "Pre Forward Hook", ,", 1
+10/12/2023 09:30:45 - INFO - Unlimiformer - "Pre Forward Hook", but, 1
+10/12/2023 09:31:02 - INFO - Unlimiformer - "Pre Forward Hook", the, 1
+10/12/2023 09:31:29 - INFO - Unlimiformer - "Pre Forward Hook", context, 1
+10/12/2023 09:31:49 - INFO - Unlimiformer - "Pre Forward Hook", of, 1
+10/12/2023 09:32:17 - INFO - Unlimiformer - "Pre Forward Hook", the, 1
+10/12/2023 09:32:34 - INFO - Unlimiformer - "Pre Forward Hook", sentence, 1
+10/12/2023 09:33:02 - INFO - Unlimiformer - "Pre Forward Hook", suggests, 1
+10/12/2023 09:33:19 - INFO - Unlimiformer - "Pre Forward Hook", that, 1
+10/12/2023 09:33:48 - INFO - Unlimiformer - "Pre Forward Hook", ", 1
+10/12/2023 09:34:05 - INFO - Unlimiformer - "Pre Forward Hook", cy, 1
+10/12/2023 09:34:32 - INFO - Unlimiformer - "Pre Forward Hook", cling, 1
+10/12/2023 09:34:49 - INFO - Unlimiformer - "Pre Forward Hook", ", 1
+10/12/2023 09:35:17 - INFO - Unlimiformer - "Pre Forward Hook", is, 1
+10/12/2023 09:35:34 - INFO - Unlimiformer - "Pre Forward Hook", a, 1
+10/12/2023 09:36:02 - INFO - Unlimiformer - "Pre Forward Hook", met, 1
+10/12/2023 09:36:19 - INFO - Unlimiformer - "Pre Forward Hook", ap, 1
+10/12/2023 09:36:41 - INFO - Unlimiformer - "Pre Forward Hook", hor, 1
+10/12/2023 09:37:03 - INFO - Unlimiformer - "Pre Forward Hook", ical, 1
+10/12/2023 09:37:21 - INFO - Unlimiformer - "Pre Forward Hook", or, 1
+10/12/2023 09:37:50 - INFO - Unlimiformer - "Pre Forward Hook", figur, 1
+10/12/2023 09:38:08 - INFO - Unlimiformer - "Pre Forward Hook", ative, 1
+10/12/2023 09:38:35 - INFO - Unlimiformer - "Pre Forward Hook", expression, 1
+10/12/2023 09:38:53 - INFO - Unlimiformer - "Pre Forward Hook", ,, 1
+10/12/2023 09:39:21 - INFO - Unlimiformer - "Pre Forward Hook", rather, 1
+10/12/2023 09:39:38 - INFO - Unlimiformer - "Pre Forward Hook", than, 1
+10/12/2023 09:40:05 - INFO - Unlimiformer - "Pre Forward Hook", a, 1
+10/12/2023 09:40:22 - INFO - Unlimiformer - "Pre Forward Hook", literal, 1
+10/12/2023 09:40:50 - INFO - Unlimiformer - "Pre Forward Hook", physical, 1
+10/12/2023 09:41:07 - INFO - Unlimiformer - "Pre Forward Hook", activity, 1
+10/12/2023 09:41:36 - INFO - Unlimiformer - "Pre Forward Hook", ., 1
+10/12/2023 09:41:53 - INFO - Unlimiformer - "Pre Forward Hook", In, 1
+10/12/2023 09:42:21 - INFO - Unlimiformer - "Pre Forward Hook", this, 1
+10/12/2023 09:42:38 - INFO - Unlimiformer - "Pre Forward Hook", case, 1
+10/12/2023 09:43:06 - INFO - Unlimiformer - "Pre Forward Hook", ,, 1
+10/12/2023 09:43:24 - INFO - Unlimiformer - "Pre Forward Hook", ", 1
+10/12/2023 09:43:53 - INFO - Unlimiformer - "Pre Forward Hook", cy, 1
+10/12/2023 09:44:11 - INFO - Unlimiformer - "Pre Forward Hook", cling, 1
+10/12/2023 09:44:39 - INFO - Unlimiformer - "Pre Forward Hook", ", 1
+10/12/2023 09:44:56 - INFO - Unlimiformer - "Pre Forward Hook", is, 1
+10/12/2023 09:45:24 - INFO - Unlimiformer - "Pre Forward Hook", likely, 1
+10/12/2023 09:45:41 - INFO - Unlimiformer - "Pre Forward Hook", being, 1
+10/12/2023 09:46:01 - INFO - Unlimiformer - "Pre Forward Hook", used, 1
+10/12/2023 09:46:26 - INFO - Unlimiformer - "Pre Forward Hook", to, 1
+10/12/2023 09:46:43 - INFO - Unlimiformer - "Pre Forward Hook", mean, 1
+10/12/2023 09:47:11 - INFO - Unlimiformer - "Pre Forward Hook", ", 1
+10/12/2023 09:47:28 - INFO - Unlimiformer - "Pre Forward Hook", b, 1
+10/12/2023 09:47:55 - INFO - Unlimiformer - "Pre Forward Hook", aking, 1
+10/12/2023 09:48:12 - INFO - Unlimiformer - "Pre Forward Hook", ,", 1
+10/12/2023 09:48:41 - INFO - Unlimiformer - "Pre Forward Hook", as, 1
+10/12/2023 09:49:00 - INFO - Unlimiformer - "Pre Forward Hook", in, 1
+10/12/2023 09:49:29 - INFO - Unlimiformer - "Pre Forward Hook", ", 1
+10/12/2023 09:49:47 - INFO - Unlimiformer - "Pre Forward Hook", wh, 1
+10/12/2023 09:50:15 - INFO - Unlimiformer - "Pre Forward Hook", isk, 1
+10/12/2023 09:50:32 - INFO - Unlimiformer - "Pre Forward Hook", ing, 1
+10/12/2023 09:50:59 - INFO - Unlimiformer - "Pre Forward Hook", ", 1
+10/12/2023 09:51:17 - INFO - Unlimiformer - "Pre Forward Hook", or, 1
+10/12/2023 09:51:45 - INFO - Unlimiformer - "Pre Forward Hook", ", 1
+10/12/2023 09:52:02 - INFO - Unlimiformer - "Pre Forward Hook", st, 1
+10/12/2023 09:52:30 - INFO - Unlimiformer - "Pre Forward Hook", ir, 1
+10/12/2023 09:52:48 - INFO - Unlimiformer - "Pre Forward Hook", ring, 1
+10/12/2023 09:53:14 - INFO - Unlimiformer - "Pre Forward Hook", ", 1
+10/12/2023 09:53:34 - INFO - Unlimiformer - "Pre Forward Hook", the, 1
+10/12/2023 09:53:52 - INFO - Unlimiformer - "Pre Forward Hook", ing, 1
+10/12/2023 09:54:20 - INFO - Unlimiformer - "Pre Forward Hook", red, 1
+10/12/2023 09:54:38 - INFO - Unlimiformer - "Pre Forward Hook", ients, 1
+10/12/2023 09:55:06 - INFO - Unlimiformer - "Pre Forward Hook", together, 1
+10/12/2023 09:55:23 - INFO - Unlimiformer - "Pre Forward Hook", ., 1
+10/12/2023 09:55:52 - INFO - Unlimiformer - "Pre Forward Hook", 
+, 1
+10/12/2023 09:56:08 - INFO - Unlimiformer - "Pre Forward Hook", 
+, 1
+10/12/2023 09:56:36 - INFO - Unlimiformer - "Pre Forward Hook", There, 1
+10/12/2023 09:56:52 - INFO - Unlimiformer - "Pre Forward Hook", fore, 1
+10/12/2023 09:57:20 - INFO - Unlimiformer - "Pre Forward Hook", ,, 1
+10/12/2023 09:57:37 - INFO - Unlimiformer - "Pre Forward Hook", based, 1
+10/12/2023 09:58:05 - INFO - Unlimiformer - "Pre Forward Hook", on, 1
+10/12/2023 09:58:22 - INFO - Unlimiformer - "Pre Forward Hook", the, 1
+10/12/2023 09:58:47 - INFO - Unlimiformer - "Pre Forward Hook", information, 1
+10/12/2023 09:59:06 - INFO - Unlimiformer - "Pre Forward Hook", provided, 1
+10/12/2023 09:59:23 - INFO - Unlimiformer - "Pre Forward Hook", ,, 1
+10/12/2023 09:59:52 - INFO - Unlimiformer - "Pre Forward Hook", William, 1
+10/12/2023 10:00:08 - INFO - Unlimiformer - "Pre Forward Hook", son, 1
+10/12/2023 10:00:36 - INFO - Unlimiformer - "Pre Forward Hook", is, 1
+10/12/2023 10:00:54 - INFO - Unlimiformer - "Pre Forward Hook", b, 1
+10/12/2023 10:01:23 - INFO - Unlimiformer - "Pre Forward Hook", aking, 1
+10/12/2023 10:01:40 - INFO - Unlimiformer - "Pre Forward Hook", a, 1
+10/12/2023 10:02:08 - INFO - Unlimiformer - "Pre Forward Hook", c, 1
+10/12/2023 10:02:25 - INFO - Unlimiformer - "Pre Forward Hook", ake, 1
+10/12/2023 10:02:53 - INFO - Unlimiformer - "Pre Forward Hook", ., 1

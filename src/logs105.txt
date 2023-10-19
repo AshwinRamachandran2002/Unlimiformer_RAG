@@ -1,0 +1,451 @@
+10/16/2023 15:40:11 - WARNING - __main__ - device: cuda:3, n_gpu: 8, 16-bits training: True
+Using pad_token, but it is not set yet.
+Loading checkpoint shards:   0%|          | 0/3 [00:00<?, ?it/s]Loading checkpoint shards:  33%|███▎      | 1/3 [00:03<00:06,  3.34s/it]Loading checkpoint shards:  67%|██████▋   | 2/3 [00:06<00:03,  3.51s/it]Loading checkpoint shards: 100%|██████████| 3/3 [00:08<00:00,  2.57s/it]Loading checkpoint shards: 100%|██████████| 3/3 [00:08<00:00,  2.81s/it]
+10/16/2023 15:41:52 - INFO - __main__ - Namespace(model_type='llama', model_name_or_path='meta-llama/Llama-2-13b-chat-hf', prompt='data13/original_data.txt', length=300, num_hidden_layers=None, stop_token=None, temperature=1.0, repetition_penalty=1.0, k=0, p=0, prefix='', suffix='', padding_text='', xlm_language='', seed=42, data_folder=42, no_cuda=False, stream_output=False, num_return_sequences=1, fp16=True, jit=False, device=device(type='cuda', index=3), n_gpu=8)
+10/16/2023 15:41:52 - INFO - Unlimiformer - Encoding 0 to 8 out of 46
+10/16/2023 15:41:52 - INFO - Unlimiformer - Williamson is baking in America,
+10/16/2023 15:41:53 - INFO - Unlimiformer - Williamson is baking in America,
+10/16/2023 15:41:53 - INFO - Unlimiformer - Encoding 8 to 19 out of 46
+10/16/2023 15:41:53 - INFO - Unlimiformer - Williamson is baking in America, Oppenheimer is cycling in Lithuania,
+10/16/2023 15:41:53 - INFO - Unlimiformer - Oppenheimer is cycling in Lithuania,
+10/16/2023 15:41:53 - INFO - Unlimiformer - Encoding 19 to 29 out of 46
+10/16/2023 15:41:53 - INFO - Unlimiformer - Lory, Williamson is baking in America, Leechenbaum is painting in Siberia,
+10/16/2023 15:41:53 - INFO - Unlimiformer - Leechenbaum is painting in Siberia,
+10/16/2023 15:41:53 - INFO - Unlimiformer - Encoding 29 to 38 out of 46
+10/16/2023 15:41:53 - INFO - Unlimiformer - Lory, Lory, Williamson is baking in America, Zelensky is relaxing in India,
+10/16/2023 15:41:53 - INFO - Unlimiformer - Zelensky is relaxing in India,
+10/16/2023 15:41:53 - INFO - Unlimiformer - Encoding 38 to 47 out of 46
+10/16/2023 15:41:53 - INFO - Unlimiformer - Lory, Lory, Lory, Williamson is baking in America, Murugan is eating in Mexico
+10/16/2023 15:41:53 - INFO - Unlimiformer - , Murugan is eating in Mexico
+10/16/2023 15:41:53 - INFO - Unlimiformer - "Pre Forward Hook", <s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s>[INST] <<SYS>>
+You are a helpful assistant. Answer with short responses according to the question. 
+<</SYS>>
+
+, 80
+10/16/2023 15:41:53 - INFO - Unlimiformer - "Pre Forward Hook", Based, 1
+10/16/2023 15:41:54 - INFO - Unlimiformer - "Pre Forward Hook", on, 1
+10/16/2023 15:41:54 - INFO - Unlimiformer - "Pre Forward Hook", the, 1
+10/16/2023 15:41:54 - INFO - Unlimiformer - "Pre Forward Hook", above, 1
+10/16/2023 15:41:54 - INFO - Unlimiformer - "Pre Forward Hook", information, 1
+10/16/2023 15:41:54 - INFO - Unlimiformer - "Pre Forward Hook", ,, 1
+10/16/2023 15:41:54 - INFO - Unlimiformer - "Pre Forward Hook", can, 1
+10/16/2023 15:41:55 - INFO - Unlimiformer - "Pre Forward Hook", you, 1
+10/16/2023 15:41:55 - INFO - Unlimiformer - "Pre Forward Hook", tell, 1
+10/16/2023 15:41:55 - INFO - Unlimiformer - "Pre Forward Hook", me, 1
+10/16/2023 15:41:55 - INFO - Unlimiformer - "Pre Forward Hook", what, 1
+10/16/2023 15:41:55 - INFO - Unlimiformer - "Pre Forward Hook", O, 1
+10/16/2023 15:41:55 - INFO - Unlimiformer - "Pre Forward Hook", ppen, 1
+10/16/2023 15:41:56 - INFO - Unlimiformer - "Pre Forward Hook", heimer, 1
+10/16/2023 15:41:56 - INFO - Unlimiformer - "Pre Forward Hook", is, 1
+10/16/2023 15:41:56 - INFO - Unlimiformer - "Pre Forward Hook", doing, 1
+10/16/2023 15:41:56 - INFO - Unlimiformer - "Pre Forward Hook", ?, 1
+10/16/2023 15:41:56 - INFO - Unlimiformer - "Pre Forward Hook", [, 1
+10/16/2023 15:41:56 - INFO - Unlimiformer - "Pre Forward Hook", /, 1
+10/16/2023 15:41:57 - INFO - Unlimiformer - "Pre Forward Hook", INST, 1
+10/16/2023 15:41:57 - INFO - Unlimiformer - "Pre Forward Hook", ], 1
+10/16/2023 15:41:57 - INFO - Unlimiformer - "Pre Forward Hook", , 1
+10/16/2023 15:41:57 - INFO - Unlimiformer - "Pre Forward Hook", Sure, 1
+10/16/2023 15:41:57 - INFO - Unlimiformer - "Pre Forward Hook", !, 1
+10/16/2023 15:41:57 - INFO - Unlimiformer - "Pre Forward Hook", Based, 1
+10/16/2023 15:41:58 - INFO - Unlimiformer - "Pre Forward Hook", on, 1
+10/16/2023 15:41:58 - INFO - Unlimiformer - "Pre Forward Hook", the, 1
+10/16/2023 15:41:58 - INFO - Unlimiformer - "Pre Forward Hook", information, 1
+10/16/2023 15:41:58 - INFO - Unlimiformer - "Pre Forward Hook", provided, 1
+10/16/2023 15:41:58 - INFO - Unlimiformer - "Pre Forward Hook", ,, 1
+10/16/2023 15:41:58 - INFO - Unlimiformer - "Pre Forward Hook", O, 1
+10/16/2023 15:41:59 - INFO - Unlimiformer - "Pre Forward Hook", ppen, 1
+10/16/2023 15:41:59 - INFO - Unlimiformer - "Pre Forward Hook", heimer, 1
+10/16/2023 15:41:59 - INFO - Unlimiformer - "Pre Forward Hook", is, 1
+10/16/2023 15:41:59 - INFO - Unlimiformer - "Pre Forward Hook", cy, 1
+10/16/2023 15:41:59 - INFO - Unlimiformer - "Pre Forward Hook", cling, 1
+10/16/2023 15:41:59 - INFO - Unlimiformer - "Pre Forward Hook", in, 1
+10/16/2023 15:42:00 - INFO - Unlimiformer - "Pre Forward Hook", Lith, 1
+10/16/2023 15:42:00 - INFO - Unlimiformer - "Pre Forward Hook", u, 1
+10/16/2023 15:42:00 - INFO - Unlimiformer - "Pre Forward Hook", ania, 1
+10/16/2023 15:42:00 - INFO - Unlimiformer - "Pre Forward Hook", ., 1
+10/16/2023 15:42:00 - INFO - Unlimiformer - "Pre Forward Hook", <s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s>[INST] <<SYS>>
+You are a helpful assistant. Answer with short responses according to the question. 
+<</SYS>>
+
+, 80
+10/16/2023 15:42:00 - INFO - Unlimiformer - "Pre Forward Hook", Based, 1
+10/16/2023 15:42:00 - INFO - Unlimiformer - "Pre Forward Hook", on, 1
+10/16/2023 15:42:01 - INFO - Unlimiformer - "Pre Forward Hook", the, 1
+10/16/2023 15:42:01 - INFO - Unlimiformer - "Pre Forward Hook", above, 1
+10/16/2023 15:42:01 - INFO - Unlimiformer - "Pre Forward Hook", information, 1
+10/16/2023 15:42:01 - INFO - Unlimiformer - "Pre Forward Hook", ,, 1
+10/16/2023 15:42:01 - INFO - Unlimiformer - "Pre Forward Hook", can, 1
+10/16/2023 15:42:01 - INFO - Unlimiformer - "Pre Forward Hook", you, 1
+10/16/2023 15:42:02 - INFO - Unlimiformer - "Pre Forward Hook", tell, 1
+10/16/2023 15:42:02 - INFO - Unlimiformer - "Pre Forward Hook", me, 1
+10/16/2023 15:42:02 - INFO - Unlimiformer - "Pre Forward Hook", what, 1
+10/16/2023 15:42:02 - INFO - Unlimiformer - "Pre Forward Hook", William, 1
+10/16/2023 15:42:02 - INFO - Unlimiformer - "Pre Forward Hook", son, 1
+10/16/2023 15:42:02 - INFO - Unlimiformer - "Pre Forward Hook", is, 1
+10/16/2023 15:42:03 - INFO - Unlimiformer - "Pre Forward Hook", doing, 1
+10/16/2023 15:42:03 - INFO - Unlimiformer - "Pre Forward Hook", ?, 1
+10/16/2023 15:42:03 - INFO - Unlimiformer - "Pre Forward Hook", [, 1
+10/16/2023 15:42:03 - INFO - Unlimiformer - "Pre Forward Hook", /, 1
+10/16/2023 15:42:03 - INFO - Unlimiformer - "Pre Forward Hook", INST, 1
+10/16/2023 15:42:03 - INFO - Unlimiformer - "Pre Forward Hook", ], 1
+10/16/2023 15:42:04 - INFO - Unlimiformer - "Pre Forward Hook", , 1
+10/16/2023 15:42:04 - INFO - Unlimiformer - "Pre Forward Hook", Sure, 1
+10/16/2023 15:42:04 - INFO - Unlimiformer - "Pre Forward Hook", !, 1
+10/16/2023 15:42:04 - INFO - Unlimiformer - "Pre Forward Hook", Based, 1
+10/16/2023 15:42:04 - INFO - Unlimiformer - "Pre Forward Hook", on, 1
+10/16/2023 15:42:04 - INFO - Unlimiformer - "Pre Forward Hook", the, 1
+10/16/2023 15:42:05 - INFO - Unlimiformer - "Pre Forward Hook", information, 1
+10/16/2023 15:42:05 - INFO - Unlimiformer - "Pre Forward Hook", provided, 1
+10/16/2023 15:42:05 - INFO - Unlimiformer - "Pre Forward Hook", ,, 1
+10/16/2023 15:42:05 - INFO - Unlimiformer - "Pre Forward Hook", William, 1
+10/16/2023 15:42:05 - INFO - Unlimiformer - "Pre Forward Hook", son, 1
+10/16/2023 15:42:05 - INFO - Unlimiformer - "Pre Forward Hook", is, 1
+10/16/2023 15:42:06 - INFO - Unlimiformer - "Pre Forward Hook", b, 1
+10/16/2023 15:42:06 - INFO - Unlimiformer - "Pre Forward Hook", aking, 1
+10/16/2023 15:42:06 - INFO - Unlimiformer - "Pre Forward Hook", in, 1
+10/16/2023 15:42:06 - INFO - Unlimiformer - "Pre Forward Hook", America, 1
+10/16/2023 15:42:06 - INFO - Unlimiformer - "Pre Forward Hook", ., 1
+10/16/2023 15:42:06 - INFO - Unlimiformer - "Pre Forward Hook", <s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s>[INST] <<SYS>>
+You are a helpful assistant. Answer with short responses according to the question. 
+<</SYS>>
+
+, 80
+10/16/2023 15:42:06 - INFO - Unlimiformer - "Pre Forward Hook", Based, 1
+10/16/2023 15:42:07 - INFO - Unlimiformer - "Pre Forward Hook", on, 1
+10/16/2023 15:42:07 - INFO - Unlimiformer - "Pre Forward Hook", the, 1
+10/16/2023 15:42:07 - INFO - Unlimiformer - "Pre Forward Hook", above, 1
+10/16/2023 15:42:07 - INFO - Unlimiformer - "Pre Forward Hook", information, 1
+10/16/2023 15:42:07 - INFO - Unlimiformer - "Pre Forward Hook", ,, 1
+10/16/2023 15:42:07 - INFO - Unlimiformer - "Pre Forward Hook", can, 1
+10/16/2023 15:42:08 - INFO - Unlimiformer - "Pre Forward Hook", you, 1
+10/16/2023 15:42:08 - INFO - Unlimiformer - "Pre Forward Hook", tell, 1
+10/16/2023 15:42:08 - INFO - Unlimiformer - "Pre Forward Hook", me, 1
+10/16/2023 15:42:08 - INFO - Unlimiformer - "Pre Forward Hook", who, 1
+10/16/2023 15:42:08 - INFO - Unlimiformer - "Pre Forward Hook", is, 1
+10/16/2023 15:42:08 - INFO - Unlimiformer - "Pre Forward Hook", b, 1
+10/16/2023 15:42:09 - INFO - Unlimiformer - "Pre Forward Hook", aking, 1
+10/16/2023 15:42:09 - INFO - Unlimiformer - "Pre Forward Hook", ?, 1
+10/16/2023 15:42:09 - INFO - Unlimiformer - "Pre Forward Hook", [, 1
+10/16/2023 15:42:09 - INFO - Unlimiformer - "Pre Forward Hook", /, 1
+10/16/2023 15:42:09 - INFO - Unlimiformer - "Pre Forward Hook", INST, 1
+10/16/2023 15:42:09 - INFO - Unlimiformer - "Pre Forward Hook", ], 1
+10/16/2023 15:42:10 - INFO - Unlimiformer - "Pre Forward Hook", , 1
+10/16/2023 15:42:10 - INFO - Unlimiformer - "Pre Forward Hook", Sure, 1
+10/16/2023 15:42:10 - INFO - Unlimiformer - "Pre Forward Hook", !, 1
+10/16/2023 15:42:10 - INFO - Unlimiformer - "Pre Forward Hook", Based, 1
+10/16/2023 15:42:10 - INFO - Unlimiformer - "Pre Forward Hook", on, 1
+10/16/2023 15:42:10 - INFO - Unlimiformer - "Pre Forward Hook", the, 1
+10/16/2023 15:42:11 - INFO - Unlimiformer - "Pre Forward Hook", information, 1
+10/16/2023 15:42:11 - INFO - Unlimiformer - "Pre Forward Hook", provided, 1
+10/16/2023 15:42:11 - INFO - Unlimiformer - "Pre Forward Hook", ,, 1
+10/16/2023 15:42:11 - INFO - Unlimiformer - "Pre Forward Hook", William, 1
+10/16/2023 15:42:11 - INFO - Unlimiformer - "Pre Forward Hook", son, 1
+10/16/2023 15:42:11 - INFO - Unlimiformer - "Pre Forward Hook", is, 1
+10/16/2023 15:42:12 - INFO - Unlimiformer - "Pre Forward Hook", b, 1
+10/16/2023 15:42:12 - INFO - Unlimiformer - "Pre Forward Hook", aking, 1
+10/16/2023 15:42:12 - INFO - Unlimiformer - "Pre Forward Hook", in, 1
+10/16/2023 15:42:12 - INFO - Unlimiformer - "Pre Forward Hook", America, 1
+10/16/2023 15:42:12 - INFO - Unlimiformer - "Pre Forward Hook", ., 1
+10/16/2023 15:42:12 - INFO - Unlimiformer - "Pre Forward Hook", <s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s>[INST] <<SYS>>
+You are a helpful assistant. Answer with short responses according to the question. 
+<</SYS>>
+
+, 80
+10/16/2023 15:42:12 - INFO - Unlimiformer - "Pre Forward Hook", Based, 1
+10/16/2023 15:42:13 - INFO - Unlimiformer - "Pre Forward Hook", on, 1
+10/16/2023 15:42:13 - INFO - Unlimiformer - "Pre Forward Hook", the, 1
+10/16/2023 15:42:13 - INFO - Unlimiformer - "Pre Forward Hook", above, 1
+10/16/2023 15:42:13 - INFO - Unlimiformer - "Pre Forward Hook", information, 1
+10/16/2023 15:42:13 - INFO - Unlimiformer - "Pre Forward Hook", ,, 1
+10/16/2023 15:42:13 - INFO - Unlimiformer - "Pre Forward Hook", can, 1
+10/16/2023 15:42:14 - INFO - Unlimiformer - "Pre Forward Hook", you, 1
+10/16/2023 15:42:14 - INFO - Unlimiformer - "Pre Forward Hook", tell, 1
+10/16/2023 15:42:14 - INFO - Unlimiformer - "Pre Forward Hook", me, 1
+10/16/2023 15:42:14 - INFO - Unlimiformer - "Pre Forward Hook", who, 1
+10/16/2023 15:42:14 - INFO - Unlimiformer - "Pre Forward Hook", is, 1
+10/16/2023 15:42:14 - INFO - Unlimiformer - "Pre Forward Hook", cy, 1
+10/16/2023 15:42:15 - INFO - Unlimiformer - "Pre Forward Hook", cling, 1
+10/16/2023 15:42:15 - INFO - Unlimiformer - "Pre Forward Hook", ?, 1
+10/16/2023 15:42:15 - INFO - Unlimiformer - "Pre Forward Hook", [, 1
+10/16/2023 15:42:15 - INFO - Unlimiformer - "Pre Forward Hook", /, 1
+10/16/2023 15:42:15 - INFO - Unlimiformer - "Pre Forward Hook", INST, 1
+10/16/2023 15:42:15 - INFO - Unlimiformer - "Pre Forward Hook", ], 1
+10/16/2023 15:42:16 - INFO - Unlimiformer - "Pre Forward Hook", , 1
+10/16/2023 15:42:16 - INFO - Unlimiformer - "Pre Forward Hook", Sure, 1
+10/16/2023 15:42:16 - INFO - Unlimiformer - "Pre Forward Hook", !, 1
+10/16/2023 15:42:16 - INFO - Unlimiformer - "Pre Forward Hook", Based, 1
+10/16/2023 15:42:16 - INFO - Unlimiformer - "Pre Forward Hook", on, 1
+10/16/2023 15:42:16 - INFO - Unlimiformer - "Pre Forward Hook", the, 1
+10/16/2023 15:42:17 - INFO - Unlimiformer - "Pre Forward Hook", information, 1
+10/16/2023 15:42:17 - INFO - Unlimiformer - "Pre Forward Hook", provided, 1
+10/16/2023 15:42:17 - INFO - Unlimiformer - "Pre Forward Hook", ,, 1
+10/16/2023 15:42:17 - INFO - Unlimiformer - "Pre Forward Hook", Lee, 1
+10/16/2023 15:42:17 - INFO - Unlimiformer - "Pre Forward Hook", chen, 1
+10/16/2023 15:42:17 - INFO - Unlimiformer - "Pre Forward Hook", baum, 1
+10/16/2023 15:42:18 - INFO - Unlimiformer - "Pre Forward Hook", is, 1
+10/16/2023 15:42:18 - INFO - Unlimiformer - "Pre Forward Hook", cy, 1
+10/16/2023 15:42:18 - INFO - Unlimiformer - "Pre Forward Hook", cling, 1
+10/16/2023 15:42:18 - INFO - Unlimiformer - "Pre Forward Hook", in, 1
+10/16/2023 15:42:18 - INFO - Unlimiformer - "Pre Forward Hook", Si, 1
+10/16/2023 15:42:18 - INFO - Unlimiformer - "Pre Forward Hook", ber, 1
+10/16/2023 15:42:18 - INFO - Unlimiformer - "Pre Forward Hook", ia, 1
+10/16/2023 15:42:19 - INFO - Unlimiformer - "Pre Forward Hook", ., 1
+10/16/2023 15:42:19 - INFO - Unlimiformer - "Pre Forward Hook", <s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s>[INST] <<SYS>>
+You are a helpful assistant. Answer with short responses according to the question. 
+<</SYS>>
+
+, 80
+10/16/2023 15:42:19 - INFO - Unlimiformer - "Pre Forward Hook", Based, 1
+10/16/2023 15:42:19 - INFO - Unlimiformer - "Pre Forward Hook", on, 1
+10/16/2023 15:42:19 - INFO - Unlimiformer - "Pre Forward Hook", the, 1
+10/16/2023 15:42:19 - INFO - Unlimiformer - "Pre Forward Hook", above, 1
+10/16/2023 15:42:20 - INFO - Unlimiformer - "Pre Forward Hook", information, 1
+10/16/2023 15:42:20 - INFO - Unlimiformer - "Pre Forward Hook", ,, 1
+10/16/2023 15:42:20 - INFO - Unlimiformer - "Pre Forward Hook", can, 1
+10/16/2023 15:42:20 - INFO - Unlimiformer - "Pre Forward Hook", you, 1
+10/16/2023 15:42:20 - INFO - Unlimiformer - "Pre Forward Hook", tell, 1
+10/16/2023 15:42:20 - INFO - Unlimiformer - "Pre Forward Hook", me, 1
+10/16/2023 15:42:21 - INFO - Unlimiformer - "Pre Forward Hook", who, 1
+10/16/2023 15:42:21 - INFO - Unlimiformer - "Pre Forward Hook", is, 1
+10/16/2023 15:42:21 - INFO - Unlimiformer - "Pre Forward Hook", painting, 1
+10/16/2023 15:42:21 - INFO - Unlimiformer - "Pre Forward Hook", ?, 1
+10/16/2023 15:42:21 - INFO - Unlimiformer - "Pre Forward Hook", [, 1
+10/16/2023 15:42:21 - INFO - Unlimiformer - "Pre Forward Hook", /, 1
+10/16/2023 15:42:22 - INFO - Unlimiformer - "Pre Forward Hook", INST, 1
+10/16/2023 15:42:22 - INFO - Unlimiformer - "Pre Forward Hook", ], 1
+10/16/2023 15:42:22 - INFO - Unlimiformer - "Pre Forward Hook", , 1
+10/16/2023 15:42:22 - INFO - Unlimiformer - "Pre Forward Hook", Sure, 1
+10/16/2023 15:42:22 - INFO - Unlimiformer - "Pre Forward Hook", !, 1
+10/16/2023 15:42:22 - INFO - Unlimiformer - "Pre Forward Hook", Based, 1
+10/16/2023 15:42:23 - INFO - Unlimiformer - "Pre Forward Hook", on, 1
+10/16/2023 15:42:23 - INFO - Unlimiformer - "Pre Forward Hook", the, 1
+10/16/2023 15:42:23 - INFO - Unlimiformer - "Pre Forward Hook", information, 1
+10/16/2023 15:42:23 - INFO - Unlimiformer - "Pre Forward Hook", provided, 1
+10/16/2023 15:42:23 - INFO - Unlimiformer - "Pre Forward Hook", ,, 1
+10/16/2023 15:42:23 - INFO - Unlimiformer - "Pre Forward Hook", Lee, 1
+10/16/2023 15:42:24 - INFO - Unlimiformer - "Pre Forward Hook", chen, 1
+10/16/2023 15:42:24 - INFO - Unlimiformer - "Pre Forward Hook", baum, 1
+10/16/2023 15:42:24 - INFO - Unlimiformer - "Pre Forward Hook", is, 1
+10/16/2023 15:42:24 - INFO - Unlimiformer - "Pre Forward Hook", painting, 1
+10/16/2023 15:42:24 - INFO - Unlimiformer - "Pre Forward Hook", in, 1
+10/16/2023 15:42:24 - INFO - Unlimiformer - "Pre Forward Hook", Si, 1
+10/16/2023 15:42:25 - INFO - Unlimiformer - "Pre Forward Hook", ber, 1
+10/16/2023 15:42:25 - INFO - Unlimiformer - "Pre Forward Hook", ia, 1
+10/16/2023 15:42:25 - INFO - Unlimiformer - "Pre Forward Hook", ., 1
+10/16/2023 15:42:25 - INFO - Unlimiformer - "Pre Forward Hook", <s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s>[INST] <<SYS>>
+You are a helpful assistant. Answer with short responses according to the question. 
+<</SYS>>
+
+, 80
+10/16/2023 15:42:25 - INFO - Unlimiformer - "Pre Forward Hook", Based, 1
+10/16/2023 15:42:25 - INFO - Unlimiformer - "Pre Forward Hook", on, 1
+10/16/2023 15:42:25 - INFO - Unlimiformer - "Pre Forward Hook", the, 1
+10/16/2023 15:42:26 - INFO - Unlimiformer - "Pre Forward Hook", above, 1
+10/16/2023 15:42:26 - INFO - Unlimiformer - "Pre Forward Hook", information, 1
+10/16/2023 15:42:26 - INFO - Unlimiformer - "Pre Forward Hook", ,, 1
+10/16/2023 15:42:26 - INFO - Unlimiformer - "Pre Forward Hook", can, 1
+10/16/2023 15:42:26 - INFO - Unlimiformer - "Pre Forward Hook", you, 1
+10/16/2023 15:42:26 - INFO - Unlimiformer - "Pre Forward Hook", tell, 1
+10/16/2023 15:42:27 - INFO - Unlimiformer - "Pre Forward Hook", me, 1
+10/16/2023 15:42:27 - INFO - Unlimiformer - "Pre Forward Hook", what, 1
+10/16/2023 15:42:27 - INFO - Unlimiformer - "Pre Forward Hook", Lee, 1
+10/16/2023 15:42:27 - INFO - Unlimiformer - "Pre Forward Hook", chen, 1
+10/16/2023 15:42:27 - INFO - Unlimiformer - "Pre Forward Hook", baum, 1
+10/16/2023 15:42:27 - INFO - Unlimiformer - "Pre Forward Hook", is, 1
+10/16/2023 15:42:28 - INFO - Unlimiformer - "Pre Forward Hook", doing, 1
+10/16/2023 15:42:28 - INFO - Unlimiformer - "Pre Forward Hook", ?, 1
+10/16/2023 15:42:28 - INFO - Unlimiformer - "Pre Forward Hook", [, 1
+10/16/2023 15:42:28 - INFO - Unlimiformer - "Pre Forward Hook", /, 1
+10/16/2023 15:42:28 - INFO - Unlimiformer - "Pre Forward Hook", INST, 1
+10/16/2023 15:42:28 - INFO - Unlimiformer - "Pre Forward Hook", ], 1
+10/16/2023 15:42:29 - INFO - Unlimiformer - "Pre Forward Hook", , 1
+10/16/2023 15:42:29 - INFO - Unlimiformer - "Pre Forward Hook", Sure, 1
+10/16/2023 15:42:29 - INFO - Unlimiformer - "Pre Forward Hook", !, 1
+10/16/2023 15:42:29 - INFO - Unlimiformer - "Pre Forward Hook", Based, 1
+10/16/2023 15:42:29 - INFO - Unlimiformer - "Pre Forward Hook", on, 1
+10/16/2023 15:42:29 - INFO - Unlimiformer - "Pre Forward Hook", the, 1
+10/16/2023 15:42:30 - INFO - Unlimiformer - "Pre Forward Hook", information, 1
+10/16/2023 15:42:30 - INFO - Unlimiformer - "Pre Forward Hook", provided, 1
+10/16/2023 15:42:30 - INFO - Unlimiformer - "Pre Forward Hook", ,, 1
+10/16/2023 15:42:30 - INFO - Unlimiformer - "Pre Forward Hook", Lee, 1
+10/16/2023 15:42:30 - INFO - Unlimiformer - "Pre Forward Hook", chen, 1
+10/16/2023 15:42:30 - INFO - Unlimiformer - "Pre Forward Hook", baum, 1
+10/16/2023 15:42:31 - INFO - Unlimiformer - "Pre Forward Hook", is, 1
+10/16/2023 15:42:31 - INFO - Unlimiformer - "Pre Forward Hook", painting, 1
+10/16/2023 15:42:31 - INFO - Unlimiformer - "Pre Forward Hook", in, 1
+10/16/2023 15:42:31 - INFO - Unlimiformer - "Pre Forward Hook", Si, 1
+10/16/2023 15:42:31 - INFO - Unlimiformer - "Pre Forward Hook", ber, 1
+10/16/2023 15:42:31 - INFO - Unlimiformer - "Pre Forward Hook", ia, 1
+10/16/2023 15:42:32 - INFO - Unlimiformer - "Pre Forward Hook", ., 1
+10/16/2023 15:42:32 - INFO - Unlimiformer - "Pre Forward Hook", <s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s>[INST] <<SYS>>
+You are a helpful assistant. Answer with short responses according to the question. 
+<</SYS>>
+
+, 80
+10/16/2023 15:42:32 - INFO - Unlimiformer - "Pre Forward Hook", Based, 1
+10/16/2023 15:42:32 - INFO - Unlimiformer - "Pre Forward Hook", on, 1
+10/16/2023 15:42:32 - INFO - Unlimiformer - "Pre Forward Hook", the, 1
+10/16/2023 15:42:32 - INFO - Unlimiformer - "Pre Forward Hook", above, 1
+10/16/2023 15:42:33 - INFO - Unlimiformer - "Pre Forward Hook", information, 1
+10/16/2023 15:42:33 - INFO - Unlimiformer - "Pre Forward Hook", ,, 1
+10/16/2023 15:42:33 - INFO - Unlimiformer - "Pre Forward Hook", can, 1
+10/16/2023 15:42:33 - INFO - Unlimiformer - "Pre Forward Hook", you, 1
+10/16/2023 15:42:33 - INFO - Unlimiformer - "Pre Forward Hook", tell, 1
+10/16/2023 15:42:33 - INFO - Unlimiformer - "Pre Forward Hook", me, 1
+10/16/2023 15:42:34 - INFO - Unlimiformer - "Pre Forward Hook", what, 1
+10/16/2023 15:42:34 - INFO - Unlimiformer - "Pre Forward Hook", Zel, 1
+10/16/2023 15:42:34 - INFO - Unlimiformer - "Pre Forward Hook", ens, 1
+10/16/2023 15:42:34 - INFO - Unlimiformer - "Pre Forward Hook", ky, 1
+10/16/2023 15:42:34 - INFO - Unlimiformer - "Pre Forward Hook", is, 1
+10/16/2023 15:42:34 - INFO - Unlimiformer - "Pre Forward Hook", doing, 1
+10/16/2023 15:42:35 - INFO - Unlimiformer - "Pre Forward Hook", ?, 1
+10/16/2023 15:42:35 - INFO - Unlimiformer - "Pre Forward Hook", [, 1
+10/16/2023 15:42:35 - INFO - Unlimiformer - "Pre Forward Hook", /, 1
+10/16/2023 15:42:35 - INFO - Unlimiformer - "Pre Forward Hook", INST, 1
+10/16/2023 15:42:35 - INFO - Unlimiformer - "Pre Forward Hook", ], 1
+10/16/2023 15:42:36 - INFO - Unlimiformer - "Pre Forward Hook", , 1
+10/16/2023 15:42:36 - INFO - Unlimiformer - "Pre Forward Hook", Sure, 1
+10/16/2023 15:42:36 - INFO - Unlimiformer - "Pre Forward Hook", !, 1
+10/16/2023 15:42:36 - INFO - Unlimiformer - "Pre Forward Hook", Based, 1
+10/16/2023 15:42:36 - INFO - Unlimiformer - "Pre Forward Hook", on, 1
+10/16/2023 15:42:36 - INFO - Unlimiformer - "Pre Forward Hook", the, 1
+10/16/2023 15:42:37 - INFO - Unlimiformer - "Pre Forward Hook", information, 1
+10/16/2023 15:42:37 - INFO - Unlimiformer - "Pre Forward Hook", provided, 1
+10/16/2023 15:42:37 - INFO - Unlimiformer - "Pre Forward Hook", ,, 1
+10/16/2023 15:42:37 - INFO - Unlimiformer - "Pre Forward Hook", Zel, 1
+10/16/2023 15:42:37 - INFO - Unlimiformer - "Pre Forward Hook", ens, 1
+10/16/2023 15:42:37 - INFO - Unlimiformer - "Pre Forward Hook", ky, 1
+10/16/2023 15:42:38 - INFO - Unlimiformer - "Pre Forward Hook", is, 1
+10/16/2023 15:42:38 - INFO - Unlimiformer - "Pre Forward Hook", relax, 1
+10/16/2023 15:42:38 - INFO - Unlimiformer - "Pre Forward Hook", ing, 1
+10/16/2023 15:42:38 - INFO - Unlimiformer - "Pre Forward Hook", in, 1
+10/16/2023 15:42:38 - INFO - Unlimiformer - "Pre Forward Hook", India, 1
+10/16/2023 15:42:38 - INFO - Unlimiformer - "Pre Forward Hook", ., 1
+10/16/2023 15:42:39 - INFO - Unlimiformer - "Pre Forward Hook", <s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s>[INST] <<SYS>>
+You are a helpful assistant. Answer with short responses according to the question. 
+<</SYS>>
+
+, 80
+10/16/2023 15:42:39 - INFO - Unlimiformer - "Pre Forward Hook", Based, 1
+10/16/2023 15:42:39 - INFO - Unlimiformer - "Pre Forward Hook", on, 1
+10/16/2023 15:42:39 - INFO - Unlimiformer - "Pre Forward Hook", the, 1
+10/16/2023 15:42:39 - INFO - Unlimiformer - "Pre Forward Hook", above, 1
+10/16/2023 15:42:39 - INFO - Unlimiformer - "Pre Forward Hook", information, 1
+10/16/2023 15:42:40 - INFO - Unlimiformer - "Pre Forward Hook", ,, 1
+10/16/2023 15:42:40 - INFO - Unlimiformer - "Pre Forward Hook", can, 1
+10/16/2023 15:42:40 - INFO - Unlimiformer - "Pre Forward Hook", you, 1
+10/16/2023 15:42:40 - INFO - Unlimiformer - "Pre Forward Hook", tell, 1
+10/16/2023 15:42:40 - INFO - Unlimiformer - "Pre Forward Hook", me, 1
+10/16/2023 15:42:40 - INFO - Unlimiformer - "Pre Forward Hook", who, 1
+10/16/2023 15:42:41 - INFO - Unlimiformer - "Pre Forward Hook", is, 1
+10/16/2023 15:42:41 - INFO - Unlimiformer - "Pre Forward Hook", relax, 1
+10/16/2023 15:42:41 - INFO - Unlimiformer - "Pre Forward Hook", ing, 1
+10/16/2023 15:42:41 - INFO - Unlimiformer - "Pre Forward Hook", ?, 1
+10/16/2023 15:42:41 - INFO - Unlimiformer - "Pre Forward Hook", [, 1
+10/16/2023 15:42:41 - INFO - Unlimiformer - "Pre Forward Hook", /, 1
+10/16/2023 15:42:42 - INFO - Unlimiformer - "Pre Forward Hook", INST, 1
+10/16/2023 15:42:42 - INFO - Unlimiformer - "Pre Forward Hook", ], 1
+10/16/2023 15:42:42 - INFO - Unlimiformer - "Pre Forward Hook", , 1
+10/16/2023 15:42:42 - INFO - Unlimiformer - "Pre Forward Hook", Sure, 1
+10/16/2023 15:42:42 - INFO - Unlimiformer - "Pre Forward Hook", !, 1
+10/16/2023 15:42:42 - INFO - Unlimiformer - "Pre Forward Hook", Based, 1
+10/16/2023 15:42:42 - INFO - Unlimiformer - "Pre Forward Hook", on, 1
+10/16/2023 15:42:43 - INFO - Unlimiformer - "Pre Forward Hook", the, 1
+10/16/2023 15:42:43 - INFO - Unlimiformer - "Pre Forward Hook", information, 1
+10/16/2023 15:42:43 - INFO - Unlimiformer - "Pre Forward Hook", provided, 1
+10/16/2023 15:42:43 - INFO - Unlimiformer - "Pre Forward Hook", ,, 1
+10/16/2023 15:42:43 - INFO - Unlimiformer - "Pre Forward Hook", Zel, 1
+10/16/2023 15:42:43 - INFO - Unlimiformer - "Pre Forward Hook", ens, 1
+10/16/2023 15:42:44 - INFO - Unlimiformer - "Pre Forward Hook", ky, 1
+10/16/2023 15:42:44 - INFO - Unlimiformer - "Pre Forward Hook", is, 1
+10/16/2023 15:42:44 - INFO - Unlimiformer - "Pre Forward Hook", relax, 1
+10/16/2023 15:42:44 - INFO - Unlimiformer - "Pre Forward Hook", ing, 1
+10/16/2023 15:42:44 - INFO - Unlimiformer - "Pre Forward Hook", in, 1
+10/16/2023 15:42:44 - INFO - Unlimiformer - "Pre Forward Hook", India, 1
+10/16/2023 15:42:45 - INFO - Unlimiformer - "Pre Forward Hook", ., 1
+10/16/2023 15:42:45 - INFO - Unlimiformer - "Pre Forward Hook", <s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s>[INST] <<SYS>>
+You are a helpful assistant. Answer with short responses according to the question. 
+<</SYS>>
+
+, 80
+10/16/2023 15:42:45 - INFO - Unlimiformer - "Pre Forward Hook", Based, 1
+10/16/2023 15:42:45 - INFO - Unlimiformer - "Pre Forward Hook", on, 1
+10/16/2023 15:42:45 - INFO - Unlimiformer - "Pre Forward Hook", the, 1
+10/16/2023 15:42:45 - INFO - Unlimiformer - "Pre Forward Hook", above, 1
+10/16/2023 15:42:45 - INFO - Unlimiformer - "Pre Forward Hook", information, 1
+10/16/2023 15:42:46 - INFO - Unlimiformer - "Pre Forward Hook", ,, 1
+10/16/2023 15:42:46 - INFO - Unlimiformer - "Pre Forward Hook", can, 1
+10/16/2023 15:42:46 - INFO - Unlimiformer - "Pre Forward Hook", you, 1
+10/16/2023 15:42:46 - INFO - Unlimiformer - "Pre Forward Hook", tell, 1
+10/16/2023 15:42:46 - INFO - Unlimiformer - "Pre Forward Hook", me, 1
+10/16/2023 15:42:46 - INFO - Unlimiformer - "Pre Forward Hook", what, 1
+10/16/2023 15:42:47 - INFO - Unlimiformer - "Pre Forward Hook", Mur, 1
+10/16/2023 15:42:47 - INFO - Unlimiformer - "Pre Forward Hook", ug, 1
+10/16/2023 15:42:47 - INFO - Unlimiformer - "Pre Forward Hook", an, 1
+10/16/2023 15:42:47 - INFO - Unlimiformer - "Pre Forward Hook", is, 1
+10/16/2023 15:42:47 - INFO - Unlimiformer - "Pre Forward Hook", doing, 1
+10/16/2023 15:42:47 - INFO - Unlimiformer - "Pre Forward Hook", ?, 1
+10/16/2023 15:42:48 - INFO - Unlimiformer - "Pre Forward Hook", [, 1
+10/16/2023 15:42:48 - INFO - Unlimiformer - "Pre Forward Hook", /, 1
+10/16/2023 15:42:48 - INFO - Unlimiformer - "Pre Forward Hook", INST, 1
+10/16/2023 15:42:48 - INFO - Unlimiformer - "Pre Forward Hook", ], 1
+10/16/2023 15:42:48 - INFO - Unlimiformer - "Pre Forward Hook", , 1
+10/16/2023 15:42:48 - INFO - Unlimiformer - "Pre Forward Hook", Sure, 1
+10/16/2023 15:42:49 - INFO - Unlimiformer - "Pre Forward Hook", !, 1
+10/16/2023 15:42:49 - INFO - Unlimiformer - "Pre Forward Hook", Based, 1
+10/16/2023 15:42:49 - INFO - Unlimiformer - "Pre Forward Hook", on, 1
+10/16/2023 15:42:49 - INFO - Unlimiformer - "Pre Forward Hook", the, 1
+10/16/2023 15:42:49 - INFO - Unlimiformer - "Pre Forward Hook", information, 1
+10/16/2023 15:42:49 - INFO - Unlimiformer - "Pre Forward Hook", provided, 1
+10/16/2023 15:42:50 - INFO - Unlimiformer - "Pre Forward Hook", ,, 1
+10/16/2023 15:42:50 - INFO - Unlimiformer - "Pre Forward Hook", Mur, 1
+10/16/2023 15:42:50 - INFO - Unlimiformer - "Pre Forward Hook", ug, 1
+10/16/2023 15:42:50 - INFO - Unlimiformer - "Pre Forward Hook", an, 1
+10/16/2023 15:42:50 - INFO - Unlimiformer - "Pre Forward Hook", is, 1
+10/16/2023 15:42:50 - INFO - Unlimiformer - "Pre Forward Hook", e, 1
+10/16/2023 15:42:51 - INFO - Unlimiformer - "Pre Forward Hook", ating, 1
+10/16/2023 15:42:51 - INFO - Unlimiformer - "Pre Forward Hook", in, 1
+10/16/2023 15:42:51 - INFO - Unlimiformer - "Pre Forward Hook", Mexico, 1
+10/16/2023 15:42:51 - INFO - Unlimiformer - "Pre Forward Hook", ., 1
+10/16/2023 15:42:51 - INFO - Unlimiformer - "Pre Forward Hook", <s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s>[INST] <<SYS>>
+You are a helpful assistant. Answer with short responses according to the question. 
+<</SYS>>
+
+, 80
+10/16/2023 15:42:51 - INFO - Unlimiformer - "Pre Forward Hook", Based, 1
+10/16/2023 15:42:51 - INFO - Unlimiformer - "Pre Forward Hook", on, 1
+10/16/2023 15:42:52 - INFO - Unlimiformer - "Pre Forward Hook", the, 1
+10/16/2023 15:42:52 - INFO - Unlimiformer - "Pre Forward Hook", above, 1
+10/16/2023 15:42:52 - INFO - Unlimiformer - "Pre Forward Hook", information, 1
+10/16/2023 15:42:52 - INFO - Unlimiformer - "Pre Forward Hook", ,, 1
+10/16/2023 15:42:52 - INFO - Unlimiformer - "Pre Forward Hook", can, 1
+10/16/2023 15:42:52 - INFO - Unlimiformer - "Pre Forward Hook", you, 1
+10/16/2023 15:42:53 - INFO - Unlimiformer - "Pre Forward Hook", tell, 1
+10/16/2023 15:42:53 - INFO - Unlimiformer - "Pre Forward Hook", me, 1
+10/16/2023 15:42:53 - INFO - Unlimiformer - "Pre Forward Hook", who, 1
+10/16/2023 15:42:53 - INFO - Unlimiformer - "Pre Forward Hook", is, 1
+10/16/2023 15:42:53 - INFO - Unlimiformer - "Pre Forward Hook", e, 1
+10/16/2023 15:42:53 - INFO - Unlimiformer - "Pre Forward Hook", ating, 1
+10/16/2023 15:42:54 - INFO - Unlimiformer - "Pre Forward Hook", ?, 1
+10/16/2023 15:42:54 - INFO - Unlimiformer - "Pre Forward Hook", [, 1
+10/16/2023 15:42:54 - INFO - Unlimiformer - "Pre Forward Hook", /, 1
+10/16/2023 15:42:54 - INFO - Unlimiformer - "Pre Forward Hook", INST, 1
+10/16/2023 15:42:54 - INFO - Unlimiformer - "Pre Forward Hook", ], 1
+10/16/2023 15:42:54 - INFO - Unlimiformer - "Pre Forward Hook", , 1
+10/16/2023 15:42:55 - INFO - Unlimiformer - "Pre Forward Hook", Sure, 1
+10/16/2023 15:42:55 - INFO - Unlimiformer - "Pre Forward Hook", !, 1
+10/16/2023 15:42:55 - INFO - Unlimiformer - "Pre Forward Hook", Based, 1
+10/16/2023 15:42:55 - INFO - Unlimiformer - "Pre Forward Hook", on, 1
+10/16/2023 15:42:55 - INFO - Unlimiformer - "Pre Forward Hook", the, 1
+10/16/2023 15:42:55 - INFO - Unlimiformer - "Pre Forward Hook", information, 1
+10/16/2023 15:42:56 - INFO - Unlimiformer - "Pre Forward Hook", provided, 1
+10/16/2023 15:42:56 - INFO - Unlimiformer - "Pre Forward Hook", ,, 1
+10/16/2023 15:42:56 - INFO - Unlimiformer - "Pre Forward Hook", Zel, 1
+10/16/2023 15:42:56 - INFO - Unlimiformer - "Pre Forward Hook", ens, 1
+10/16/2023 15:42:56 - INFO - Unlimiformer - "Pre Forward Hook", ky, 1
+10/16/2023 15:42:57 - INFO - Unlimiformer - "Pre Forward Hook", is, 1
+10/16/2023 15:42:57 - INFO - Unlimiformer - "Pre Forward Hook", e, 1
+10/16/2023 15:42:57 - INFO - Unlimiformer - "Pre Forward Hook", ating, 1
+10/16/2023 15:42:57 - INFO - Unlimiformer - "Pre Forward Hook", in, 1
+10/16/2023 15:42:57 - INFO - Unlimiformer - "Pre Forward Hook", India, 1
+10/16/2023 15:42:57 - INFO - Unlimiformer - "Pre Forward Hook", ., 1
