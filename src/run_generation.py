@@ -58,7 +58,7 @@ from transformers import (
 )
 from transformers.modeling_outputs import CausalLMOutputWithPast
 
-from unlimiformer_retrieval_test import Unlimiformer
+from unlimiformer import Unlimiformer
 from random_training_unlimiformer import RandomTrainingUnlimiformer
 
 @dataclass
@@ -425,7 +425,7 @@ def main():
     if len(set(unknown_args) & set(unknown_unlimiformer_args)) > 0:
         raise ValueError(f"Unknown arguments detected: {set(unknown_args) & set(unknown_unlimiformer_args)}")
 
-    args.device = torch.device("cuda:4" if torch.cuda.is_available() and not args.no_cuda else "cpu")
+    args.device = torch.device("cuda:1" if torch.cuda.is_available() and not args.no_cuda else "cpu")
     args.n_gpu = 0 if args.no_cuda else torch.cuda.device_count()
 
     logger.warning(f"device: {args.device}, n_gpu: {args.n_gpu}, 16-bits training: {args.fp16}")

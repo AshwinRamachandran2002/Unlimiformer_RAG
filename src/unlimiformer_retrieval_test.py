@@ -572,7 +572,7 @@ class Unlimiformer(Generic[ModelType]):
         if 'attention_mask' not in kwargs:
             kwargs['attention_mask'] = torch.ones_like(input_ids)
         self.reset_memory(input_ids, kwargs['attention_mask'])
-        self.num_retrieved = 10
+        self.num_retrieved = 5
         new_kwargs = kwargs
         if 'attention_mask' in kwargs:
             new_kwargs = {k: v for k, v in kwargs.items() if k != 'attention_mask'}

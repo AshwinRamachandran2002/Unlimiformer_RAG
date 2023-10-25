@@ -72,7 +72,7 @@ class Unlimiformer(Generic[ModelType]):
         self.datastore_device = torch.device(f'cuda:{datastore_device}' if torch.cuda.is_available() and gpu_datastore else 'cpu')
         self.test_datastore = test_datastore # flag for debugging
 
-        self.device = torch.device('cuda:4' if torch.cuda.is_available() else 'cpu')
+        self.device = torch.device('cuda:1' if torch.cuda.is_available() else 'cpu')
         self.activation_capturer = None
         self.is_encoder_decoder = model.config.is_encoder_decoder
         self.hook_handles = []
@@ -497,7 +497,7 @@ class Unlimiformer(Generic[ModelType]):
                         if self.csv_unlimiformer and not self.not_first_encoding_pass:
                             self.hidden_layer_our_anchor[i] = layer_states[:, 0:1].reshape((1, 1, -1)).to(self.datastore_device)
                         if self.csv_unlimiformer and self.not_first_encoding_pass:
-                            self.hidden_layer_our_anchor[i]  = torch.cat((self.hidden_layer_our_anchor[i] , layer_states[:, 3:7].reshape((1, 4, -1)).to(self.datastore_device)), dim = -2)
+                            self.hidden_layer_our_anchor[i]  = torch.cat((self.hidden_layer_our_anchor[i] , layer_states[:, 0:1].reshape((1, 1, -1)).to(self.datastore_device)), dim = -2)
                 logger.info(f'using only the first hidden states, stablising first also, so discard baking, trying to make Lee the stabliser, third in book, also adding diff position ids, making Zelensky stabiliser')
                 if self.csv_unlimiformer:
                     self.not_first_encoding_pass = True
@@ -734,7 +734,7 @@ class Unlimiformer(Generic[ModelType]):
     # format copied from https://huggingface.co/spaces/huggingface-projects/llama-2-13b-chat/blob/main/model.py
     def prefix(self, leni):
         if self.ind_up >= 4:
-            return ' '.join(['Fact'] * (1 + (self.ind_up - 3) * 4 + 20))
+            return ' '.join(['Fact'] * (1 + (self.ind_up - 3) * 1 + 20))
         else:
             return ' '.join(['Fact'] * (1 + 20))
         if leni == 1:
@@ -994,8 +994,8 @@ class Unlimiformer(Generic[ModelType]):
                         topk = self.hidden_layer_our[cur_layer_num].shape[-2]
                             
                         if self.ind_up >=4:
-                            topk += self.hidden_layer_our_anchor[cur_layer_num][:, :-4].shape[-2]
-                            hidden_states = torch.cat([self.hidden_layer_our_anchor[cur_layer_num][:, :-4], self.hidden_layer_our[cur_layer_num], hidden_states[:,topk:]], dim=-2)
+                            topk += self.hidden_layer_our_anchor[cur_layer_num][:, :-1].shape[-2]
+                            hidden_states = torch.cat([self.hidden_layer_our_anchor[cur_layer_num][:, :-1], self.hidden_layer_our[cur_layer_num], hidden_states[:,topk:]], dim=-2)
                         elif self.ind_up >=2:
                             topk += self.hidden_layer_our_anchor[cur_layer_num][:, :1].shape[-2]
                             hidden_states = torch.cat([self.hidden_layer_our_anchor[cur_layer_num][:, :1], self.hidden_layer_our[cur_layer_num], hidden_states[:,topk:]], dim=-2)
