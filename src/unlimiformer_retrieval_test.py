@@ -35,17 +35,11 @@ class Unlimiformer(Generic[ModelType]):
             index_devices=(0,), datastore_device=0,
             ):
         super().__init__()
+        self.data_file = 'data_final_data1'
         self.csv_unlimiformer = True
-        self.not_first_encoding_pass = False
         self.input_ids_full = []
-        self.data_file = 'data14'
         self.input_ids_full_extra = []
         self.attention_weights = []
-        self.my_method = False
-        self.apply_boundary = False
-        self.one_by_one = True
-        self.num_retrieved = 0
-        self.gap = 5
         self.model = model
         model.unlimiformer = self
         self.layer_begin = layer_begin
@@ -72,7 +66,7 @@ class Unlimiformer(Generic[ModelType]):
         self.datastore_device = torch.device(f'cuda:{datastore_device}' if torch.cuda.is_available() and gpu_datastore else 'cpu')
         self.test_datastore = test_datastore # flag for debugging
 
-        self.device = torch.device('cuda:6' if torch.cuda.is_available() else 'cpu')
+        self.device = torch.device('cuda:4' if torch.cuda.is_available() else 'cpu')
         self.activation_capturer = None
         self.is_encoder_decoder = model.config.is_encoder_decoder
         self.hook_handles = []
@@ -361,8 +355,6 @@ class Unlimiformer(Generic[ModelType]):
                     gpu_index=self.gpu_index, index_device=self.index_devices[i % len(self.index_devices)]) 
                     for i in range(self.model.config.num_hidden_layers)[self.layer_begin:self.layer_end]]
                 self.hidden_states = [[] for _ in range(self.model.config.num_hidden_layers)[self.layer_begin:self.layer_end]]
-                self.hidden_layer_our = [[] for _ in range(self.model.config.num_hidden_layers)[self.layer_begin:self.layer_end]]
-                self.comma_hidden_state = [[] for _ in range(self.model.config.num_hidden_layers)[self.layer_begin:self.layer_end]]
             torch.cuda.empty_cache()
         self.prompt_input_ids = input_ids
         self.input_ids_size = input_ids.shape[-1]
@@ -370,7 +362,6 @@ class Unlimiformer(Generic[ModelType]):
         self.prev_tokens = [None for _ in range(len(self.original_decoder_layer_cross_attn_forward_funcs))]
         self.last_beam_idx = None
         self.cur_layer_key_value_placeholder = None
-        self.cur_layer_attention_mask_placeholder = None
         self.is_input_encoding_pass = True
         if self.is_encoder_decoder:
             dummy_labels = torch.zeros((input_ids.shape[0], 1), dtype=torch.long, device=input_ids.device)
@@ -386,28 +377,14 @@ class Unlimiformer(Generic[ModelType]):
         self.prompt_keys = [[] for _ in range(self.model.config.num_hidden_layers)[self.layer_begin:self.layer_end]]
         self.prompt_values = [[] for _ in range(self.model.config.num_hidden_layers)[self.layer_begin:self.layer_end]]
         self.prompt_attention_mask = []
-        
-        if self.csv_unlimiformer:
-            prefix_input_id = self.tokenizer.encode(self.prefix(2), add_special_tokens=False, return_tensors="pt")
-            prefix_len = len(prefix_input_id[0])
-            window_indices = self.window_indices(input_ids.shape[-1], prefix_len)
-        else:
-            window_indices = self.window_indices(input_ids.shape[-1])
+        window_indices = self.window_indices(input_ids.shape[-1])
 
         for context_start_ind, context_end_ind, update_start_ind, update_end_ind in window_indices:
             logger.info(f'Encoding {context_start_ind} to {context_end_ind} out of {input_ids.shape[-1]}')
-            if self.csv_unlimiformer:
-                chunk = torch.cat((torch.ones(1, 1).to(torch.int64), input_ids[:, context_start_ind:context_end_ind]), dim = 1).to(self.device)
-                chunk_attention_mask = torch.cat((torch.zeros(1, 1), attention_mask[:, context_start_ind:context_end_ind]), dim = 1).to(self.device)
-                chunk_position_ids = None
-                self.input_ids_full.append(chunk[0])
-                logger.info(f'{(self.tokenizer.decode(chunk[0]))}')
-            else:
-                chunk = input_ids[:, context_start_ind:context_end_ind].to(self.device)
-                chunk_attention_mask = attention_mask[:, context_start_ind:context_end_ind].to(self.device)
-                chunk_position_ids = None
+            chunk = input_ids[:, context_start_ind:context_end_ind].to(self.device)
+            chunk_attention_mask = attention_mask[:, context_start_ind:context_end_ind].to(self.device)
             with torch.inference_mode():
-                _ = self.model(chunk, attention_mask=chunk_attention_mask, labels=dummy_labels, position_ids=chunk_position_ids) # , return_dict=True, output_hidden_states=True)
+                _ = self.model(chunk, attention_mask=chunk_attention_mask, labels=dummy_labels) # , return_dict=True, output_hidden_states=True)
             if self.use_datastore:
                 # TODO: verify with BART as well
                 # hidden_states_to_index = [hidden_states.encoder_last_hidden_state] # list of length 1 of (batch, chunked_source_len, dim)
@@ -418,7 +395,6 @@ class Unlimiformer(Generic[ModelType]):
                 to_add = [state[:, update_start_ind:update_end_ind].detach() for state in hidden_states_to_index]
                 logger.info(f'{self.tokenizer.decode(chunk[0][update_start_ind:update_end_ind])}')
                 to_apply_mask = chunk_attention_mask[:, update_start_ind:update_end_ind]
-                self.num_retrieved += len(to_apply_mask[0])
                 # to_apply_mask = to_apply_mask.log().to(to_add[0].dtype)
                 to_apply_mask = to_apply_mask.to(to_add[0].dtype)
                 if not self.reconstruct_embeddings:
@@ -427,11 +403,8 @@ class Unlimiformer(Generic[ModelType]):
                         to_add_embeddings = [states.cpu() for states in to_add_embeddings]
                         to_apply_mask = to_apply_mask.cpu()
                     for i, layer_states in enumerate(to_add_embeddings):
-                        layer_states = layer_states * to_apply_mask.unsqueeze(-1) # [1, seq_len, dim]
+                        layer_states = layer_states * to_apply_mask.unsqueeze(-1)
                         self.hidden_states[i].append(layer_states.to(self.datastore_device))
-                        if self.csv_unlimiformer:
-                            self.hidden_layer_our[i] = layer_states.to(self.datastore_device)
-                            self.not_first_encoding_pass = True
                 # list of len layers, inside it there is a list of len batch, each item is (masked_time, dim)
                 # for i, to_add_layer in enumerate(to_add):
                 #     keys = [key[mask.bool()] for key, mask in zip(to_add_layer, to_apply_mask)]
@@ -465,7 +438,7 @@ class Unlimiformer(Generic[ModelType]):
                     self.hidden_states[i] = None
                 self.hidden_states = concat_hidden_states
             for datastore, layer_hidden_states in zip(self.datastore, self.hidden_states):
-                datastore.train_index(layer_hidden_states[:, 1:])
+                datastore.train_index(layer_hidden_states)
         if (not self.use_datastore) or self.test_datastore:
             for i, (layer_keys, layer_values) in enumerate(zip(self.prompt_keys, self.prompt_values)):
                 self.prompt_keys[i] = torch.cat(layer_keys, dim=-2)
@@ -511,49 +484,15 @@ class Unlimiformer(Generic[ModelType]):
             print()
         return long_inputs_encoded, long_inputs_mask
 
-    def window_indices(self, total_seq_len, prefix_len=None):
+    def window_indices(self, total_seq_len):
         # Copied from SLED (Ivgy et al., 2022)
         # https://github.com/Mivg/SLED/blob/main/sled/modeling_sled.py#L467
-        if not self.csv_unlimiformer and total_seq_len <= self.model_encoder_max_len:
+        if total_seq_len <= self.model_encoder_max_len:
             return [(0, total_seq_len, 0, total_seq_len)]
         else:
             results = []
             # if self.chunk_overlap == 0:
             #     stride = self.model_encoder_max_len
-            if self.csv_unlimiformer:
-                with open(self.data_file + "/config_data.json", "r") as f:
-                    text = f.read()
-                    import json
-                    parsed_data = json.loads(text)
-                    segment_lengths = parsed_data["segment_length"]
-
-                results = []
-                context_start = 0
-                # context_end = segment_lengths[0] - 2
-                context_end = segment_lengths[0]
-                results.append((0, None, 0, None))
-                return results
-                # results.append((context_start, context_end + 1, -segment_lengths[0] + 1, None))  
-                # results.append((context_start, context_end - 1, -segment_lengths[0], None))
-                # results.append((context_start, context_end - 1, prefix_len, prefix_len + segment_lengths[0] - 1))  
-
-                for i in range(1, len(segment_lengths)):
-                    # context_start = context_start + (segment_lengths[i - 2] if i>1 else 0)
-                    context_start = context_start + segment_lengths[i - 1] - 1
-                    context_end = context_end + segment_lengths[i] - 1
-                    # context_end = context_end + segment_lengths[i] - 1
-                    
-                    update_start_ind = -segment_lengths[i] + 1
-                    update_end_ind = None
-                    # update_end_ind = segment_lengths[i] - 1
-                    
-                    cs, ce, us, ue = context_start, context_end - 1, update_start_ind, update_end_ind
-                    # cs, ce, us, ue = context_start - (1 if i > 1 else 0), context_end + 1, update_start_ind - 1, update_end_ind
-                    # cs, ce, us, ue = context_start - 1, context_end - 1, update_start_ind + prefix_len, update_end_ind + prefix_len - 1
-                    # cs, ce, us, ue = context_start, context_end - 1, update_start_ind + prefix_len, update_end_ind + prefix_len
-                    results.append((cs, ce, us, ue))
-                return results
-
             stride = self.model_encoder_max_len - 2 * self.window_margin
             context_start = update_start_ind = 0
             context_end = self.model_encoder_max_len
@@ -581,17 +520,15 @@ class Unlimiformer(Generic[ModelType]):
                 results.append((cs, ce, us, ue))
             return results
 
-    # format copied from https://huggingface.co/spaces/huggingface-projects/llama-2-13b-chat/blob/main/model.py
-    def suffix(self, val=""):
+    def suffix(self):
         return '<s>[INST] <<SYS>>\nYou are a helpful assistant. Answer with short responses according to the question. \n<</SYS>>\n\n'
-        
-    # format copied from https://huggingface.co/spaces/huggingface-projects/llama-2-13b-chat/blob/main/model.py
+    
     def suffix2(self, i=0):
         if i == 0:
-            return 'Based on the above numbered list of facts, can you tell me what Sameer is doing?[/INST]'
+            return 'Based on the above numbered list of facts, can you tell me what Oppenheimer is doing?[/INST]'
         elif i==1:
             # return 'Based on the above information, can you tell me the value associated with key "62eff267-d0e6-4c65-81cb-6b6b7db9c63b"?[/INST]'
-            return 'Based on the above numbered list of facts, can you tell me what Williamson is doing?[/INST]'
+            return 'Based on the above numbered list of facts, can you tell me what Rithik is doing?[/INST]'
             # return 'Based on the above information, can you tell me what Williamson is doing?[/INST]'
         elif i==2:
             # return 'Based on the above information, can you tell me the key associated with value "f3142b5e-ccc7-49c2-ab5f-fbf402b2becd"?[/INST]'
@@ -602,12 +539,12 @@ class Unlimiformer(Generic[ModelType]):
             return 'Based on the above numbered list of facts, can you tell me who is cycling?[/INST]'
             # return 'Based on the above information, can you tell me who is cycling?[/INST]'
         elif i==4:
-            return 'Based on the above numbered list of facts, can you tell me who is painting?[/INST]'
+            return 'Based on the above numbered list of facts, can you tell me who is sleeping?[/INST]'
             # return 'Based on the above information, can you tell me who is painting?[/INST]'
         elif i==5:
             return 'Based on the above numbered list of facts, can you tell me what Leechenbaum is doing?[/INST]'
         elif i==6:
-            return 'Based on the above numbered list of facts, can you tell me what Lal is doing?[/INST]'
+            return 'Based on the above numbered list of facts, can you tell me what Zelensky is doing?[/INST]'
         elif i==7:
             return 'Based on the above numbered list of facts, can you tell me who is relaxing?[/INST]'
         elif i==8:
@@ -618,35 +555,24 @@ class Unlimiformer(Generic[ModelType]):
             return 'Based on the above numbered list of facts, can you tell me who is drinking?[/INST]'
             # return 'Based on the above numbered list of facts, can you tell me who is in Siberia?[/INST]'
         elif i==11:
-            return 'Based on the above numbered list of facts, can you tell me what Ashwin is doing?[/INST]'
+            return 'Based on the above numbered list of facts, can you tell me what Vaibhav is doing?[/INST]'
             # return 'Based on the above numbered list of facts, can you tell me who is in India?[/INST]'
         elif i==12:
-            return 'Based on the above numbered list of facts, can you tell me who is in Mexico?[/INST]'
+            return 'Based on the above numbered list of facts, can you tell me what Rohit is doing?[/INST]'
+            # return 'Based on the above numbered list of facts, can you tell me who is in Mexico?[/INST]'
         elif i==13:
-            return 'Based on the above numbered list of facts, can you tell me who is in Lithuania?[/INST]'
+            return 'Based on the above numbered list of facts, can you tell me who is cooking?[/INST]'
         elif i==14:
-            return 'Based on the above numbered list of facts, can you tell me who is in America?[/INST]'
-    
-    # format copied from https://huggingface.co/spaces/huggingface-projects/llama-2-13b-chat/blob/main/model.py
-    def prefix(self, leni):
-        if leni == 1:
-            return 'Fact number 1:'
-        if leni == 2:
-            return 'Fact number 2:'
-        elif leni == 3:
-            return 'Fact number 3:'
-        elif leni == 4:
-            return 'Fact number 4:'
-        elif leni == 5:
-            return 'Fact number 5:'
+            return 'Based on the above numbered list of facts, can you tell me what Rakesh is doing?[/INST]'
+            # return 'Based on the above numbered list of facts, can you tell me who is in America?[/INST]'
+        elif i==15:
+            return 'Based on the above numbered list of facts, can you tell me who is bowling?[/INST]'
 
     def pre_generate_hook(self, input_ids, **kwargs):
         if 'attention_mask' not in kwargs:
             kwargs['attention_mask'] = torch.ones_like(input_ids)
-        self.reset_memory(input_ids, kwargs['attention_mask']) 
-        self.num_phrases = 3
-        self.num_retrieved = 13 * self.num_phrases
-        logger.info(f'number of phrases allowed {self.num_phrases}')
+        self.reset_memory(input_ids, kwargs['attention_mask'])
+        self.num_retrieved = 10
         new_kwargs = kwargs
         if 'attention_mask' in kwargs:
             new_kwargs = {k: v for k, v in kwargs.items() if k != 'attention_mask'}
@@ -657,18 +583,18 @@ class Unlimiformer(Generic[ModelType]):
         else:
             if self.csv_unlimiformer:
                 vals_pred = []
-                for i in range(12):
+                for i in range(16):
                     self.curr_key = i
-                    input_ids_prefix = self.tokenizer.encode(self.suffix(" "), add_special_tokens=False, return_tensors="pt")
+                    input_ids_prefix = self.tokenizer.encode(self.suffix(), add_special_tokens=False, return_tensors="pt")
                     self.input_ids_full += input_ids_prefix[0]
                     new_kwargs["attention_mask"] = torch.cat((torch.zeros(1, self.num_retrieved), torch.ones(1, len(input_ids_prefix[0]))), dim = 1).to(self.device)
-                    input_ids_prefix = torch.cat((torch.ones(1, self.num_retrieved).to(torch.int64), input_ids_prefix), dim = 1)
-                    input_ids_prefix = input_ids_prefix.to(self.device)
+                    input_ids_prefix = torch.cat((torch.ones(1, self.num_retrieved).to(torch.int64), input_ids_prefix), dim = 1).to(self.device)
                     vals_pred.append(self.original_generate_func(input_ids_prefix, **new_kwargs))
                     self.attention_weights = []
                     self.input_ids_full_extra = []
                 return vals_pred
-            input_ids_prefix = input_ids[:, -self.actual_model_window_size:]	
+            else:
+                input_ids_prefix = input_ids[:, -self.actual_model_window_size:]	
         input_ids_prefix = input_ids_prefix.to(self.device)
         return self.original_generate_func(input_ids_prefix, **new_kwargs)
 
@@ -686,60 +612,36 @@ class Unlimiformer(Generic[ModelType]):
                 if kwargs.get('past_key_values') is None:
                     self.is_first_test_decoding_step = True
                     if self.csv_unlimiformer:
-                        # in the initial forward pass, also set the position ids to indicate padding and then input
                         question_len = (attention_mask[0] == 1).sum(dim=0)
                         self.is_second_test_decoding_step = False
                         self.num_generated = 0
-                        # The initial position ids will determine
                         kwargs["position_ids"] = torch.cat((torch.zeros(self.num_retrieved), torch.arange(1, question_len + 1))).unsqueeze(0).to(self.device)
-                        self.rotation_retrieved = question_len + self.gap
-                        self.what_num = question_len + 1
         
                 # Here we send all the suffix that we need to push and expect attention to retrieved keys
                 if self.csv_unlimiformer and self.is_second_test_decoding_step:
                     input_ids_suffix = self.tokenizer.encode(self.suffix2(self.curr_key), add_special_tokens=False, return_tensors="pt")
                     self.curr_suffix_len = len(input_ids_suffix[0])
-                    if self.one_by_one:
-                        if self.num_generated == (len(input_ids_suffix[0]) + 1):
-                            self.is_second_test_decoding_step = False
-                        else:
-                            input_ids = input_ids_suffix[:, self.num_generated - 1].unsqueeze(0).to(self.device)
-                            kwargs["position_ids"] = torch.arange(self.num_retrieved + int(kwargs["position_ids"][0]), self.num_retrieved + int(kwargs["position_ids"][0]) + 1).unsqueeze(0).to(self.device)
-                            # kwargs["position_ids"] = torch.arange(self.gap * 2 + int(kwargs["position_ids"][0]), self.gap * 2 + int(kwargs["position_ids"][0]) + 1).unsqueeze(0).to(self.device)
+                    if self.num_generated == (len(input_ids_suffix[0]) + 1):
+                        self.is_second_test_decoding_step = False
                     else:
-                        input_ids = input_ids_suffix.to(self.device)
-                        kwargs["position_ids"] = torch.arange(int(kwargs["position_ids"][0]), int(kwargs["position_ids"][0]) + len(input_ids[0])).unsqueeze(0).to(self.device)
-                        attention_mask = torch.cat((attention_mask, torch.ones(1, len(input_ids[0]) - 1).to(self.device)), dim = 1)
-
-                if self.csv_unlimiformer and not self.is_second_test_decoding_step and not self.is_first_test_decoding_step:
-                    if self.one_by_one:
+                        input_ids = input_ids_suffix[:, self.num_generated - 1].unsqueeze(0).to(self.device)
                         kwargs["position_ids"] = torch.arange(self.num_retrieved + int(kwargs["position_ids"][0]), self.num_retrieved + int(kwargs["position_ids"][0]) + 1).unsqueeze(0).to(self.device)
-                        # kwargs["position_ids"] = torch.arange(self.gap * 2 + int(kwargs["position_ids"][0]), self.gap * 2 + int(kwargs["position_ids"][0]) + 1).unsqueeze(0).to(self.device)
-                    else:
-                        attention_mask = torch.cat((attention_mask, torch.ones(1, self.curr_suffix_len - 1).to(self.device)), dim = 1)
-                        kwargs["position_ids"] = torch.arange(int(kwargs["position_ids"][0]) + self.curr_suffix_len, int(kwargs["position_ids"][0]) + self.curr_suffix_len + 1).unsqueeze(0).to(self.device)
-
-                # print(attention_mask, kwargs["position_ids"])
+                    
+                if self.csv_unlimiformer and not self.is_second_test_decoding_step and not self.is_first_test_decoding_step:
+                    kwargs["position_ids"] = torch.arange(self.num_retrieved + int(kwargs["position_ids"][0]), self.num_retrieved + int(kwargs["position_ids"][0]) + 1).unsqueeze(0).to(self.device)
+                    
                 if not kwargs.get('past_key_values') is None and self.csv_unlimiformer:
                     self.input_ids_full_extra += input_ids[0]
-                # el
+                
                 if input_ids is not None:
                     self.input_ids_size += 1
-                    # to keep track of the number of generations as done in earlier code
                     if self.csv_unlimiformer:
                         self.num_generated += 1
-                    # logger.info(f'{self.tokenizer.decode(self.input_ids_full + self.input_ids_full_extra)}, {len(self.input_ids_full + self.input_ids_full_extra)}')
                 if kwargs.get('decoder_input_ids') is not None:
                     self.generated_input_ids = torch.cat([self.generated_input_ids, kwargs['decoder_input_ids']], axis=-1)
             logger.info(f'"Pre Forward Hook", {self.tokenizer.decode(input_ids[0])}, {len(input_ids[0])}')
-        # the position id is used to calculate by how much to rotate the key and query newly added
-        # So according to our thing, we can start the position ids to start from any number
         result = self.original_forward_func(input_ids=input_ids, labels=labels, attention_mask=attention_mask, **kwargs)
         if self.csv_unlimiformer:
-            # self.is_second_test_decoding_step = False
-            if not self.one_by_one:
-                if self.is_second_test_decoding_step:
-                    self.is_second_test_decoding_step = False
             if self.is_first_test_decoding_step:
                 self.is_second_test_decoding_step = True
         self.is_first_test_decoding_step = False
@@ -753,7 +655,6 @@ class Unlimiformer(Generic[ModelType]):
                 # and modify its items from our attention_forward_hook
                 self.cur_layer_key_value_placeholder = \
                     kwargs['past_key_value'] = list(kwargs['past_key_value']) # (batch, head, time, attn_dim)
-                self.cur_layer_attention_mask_placeholder = attention_mask
             batch_size, tgt_len, dim = hidden_states.shape
             if self.model.training:
                 # from: (batch, tgt_len, dim) to: (batch * tgt_len, 1, dim)
@@ -765,17 +666,13 @@ class Unlimiformer(Generic[ModelType]):
                 attn_output = attn_output.reshape(batch_size, tgt_len, dim)
                 result = (attn_output, attn_weights_reshaped, past_key_value)
             else:
-                # The below logs cur_layer_num only range is [0, 17] where layer_begin is 22
-                # print(self.is_first_test_decoding_step, cur_layer_num, self.is_input_encoding_pass, self.layer_begin)
                 if not self.csv_unlimiformer or self.is_first_test_decoding_step or self.is_input_encoding_pass:
                     kwargs['output_attentions'] = True
                     result = original_cross_attn_forward_func(hidden_states=hidden_states, attention_mask=attention_mask, *args, **kwargs)
                     attn_wts = result[1].squeeze(0).squeeze(1)
                     self.attention_weights.append(attn_wts)    
-                    result = original_cross_attn_forward_func(hidden_states=hidden_states, attention_mask=attention_mask, *args, **kwargs)
                 else:
                     attention_mask = torch.ones_like(attention_mask)
-                    # print(attention_mask.shape)
                     result = original_cross_attn_forward_func(hidden_states=hidden_states, attention_mask=attention_mask, *args, **kwargs)
             return result
         return attention_pre_forward_hook
@@ -795,9 +692,8 @@ class Unlimiformer(Generic[ModelType]):
                 topk = min(topk, window_size - generated_size + 1)
             if self.gpu_index:
                 if self.csv_unlimiformer:
-                    # topk = self.num_retrieved
+                    topk = self.num_retrieved
                     # topk = self.num_phrases
-                    topk = 10
                     # topk = min(2048, self.num_retrieved)
                 else:
                     topk = min(topk, 2048)
@@ -827,32 +723,31 @@ class Unlimiformer(Generic[ModelType]):
                     _, top_search_key_indices = self.datastore[datastore_index].search(datastore_query, k=topk)
                     # top_search_key_indices = torch.sort(top_search_key_indices).values
                     # top_search_key_indices = torch.arange(0, self.num_retrieved).repeat(40, 1).unsqueeze(0)
-                    indices = top_search_key_indices.squeeze(0) + 1
-                    with open("data14/config_data.json", "r") as f: 
-                        text = f.read()
-                        import json
-                        parsed_data = json.loads(text)
-                        segment_lengths = parsed_data["segment_length"]
-                    min_values = [1]
-                    max_values = [segment_lengths[0]]
-                    for i in range(1, len(segment_lengths)):
-                        min_values.append(segment_lengths[i-1] + min_values[-1])
-                        max_values.append(segment_lengths[i] + max_values[-1])
-                    min_values = torch.tensor(min_values).unsqueeze(1).to(self.device)
-                    max_values = torch.tensor(max_values).unsqueeze(1).to(self.device)
-                    indices_temp = indices.reshape((1,-1))
-                    phrase_index = ((indices_temp >= min_values) & (indices_temp <= max_values)).nonzero()[:, 0]
-                    phrase_index = phrase_index.reshape((40, -1))
-                    final_indices = torch.zeros(40, self.num_retrieved).to(self.device)
-                    for head in range(len(phrase_index)):
-                        head_index = []
-                        phrase_indexes_for_head = torch.unique(phrase_index[head])[:self.num_phrases].reshape((-1))
-                        print(phrase_indexes_for_head[])
-                        for ph in range(len(phrase_indexes_for_head)):
-                            head_index.append(torch.arange(int(min_values[phrase_indexes_for_head[ph]]), int(max_values[phrase_indexes_for_head[ph]]) + 1))
-                        head_index = torch.cat(head_index).to(self.device)
-                        final_indices[head, :len(head_index)] = head_index
-                    top_search_key_indices = final_indices.unsqueeze(0).to(top_search_key_indices.dtype)
+                    # indices = top_search_key_indices.squeeze(0) + 1
+                    # with open("data_final_data1/config_data.json", "r") as f: 
+                    #     text = f.read()
+                    #     import json
+                    #     parsed_data = json.loads(text)
+                    #     segment_lengths = parsed_data["segment_length"]
+                    # min_values = [1]
+                    # max_values = [segment_lengths[0]]
+                    # for i in range(1, len(segment_lengths)):
+                    #     min_values.append(segment_lengths[i-1] + min_values[-1])
+                    #     max_values.append(segment_lengths[i] + max_values[-1])
+                    # min_values = torch.tensor(min_values).unsqueeze(1).to(self.device)
+                    # max_values = torch.tensor(max_values).unsqueeze(1).to(self.device)
+                    # indices_temp = indices.reshape((1,-1))
+                    # phrase_index = ((indices_temp >= min_values) & (indices_temp <= max_values)).nonzero()[:, 0]
+                    # phrase_index = phrase_index.reshape((40, -1))
+                    # final_indices = torch.zeros(40, self.num_retrieved).to(self.device)
+                    # for head in range(len(phrase_index)):
+                    #     head_index = []
+                    #     phrase_indexes_for_head = torch.unique(phrase_index[head])[:self.num_phrases].reshape((-1))
+                    #     for ph in range(len(phrase_indexes_for_head)):
+                    #         head_index.append(torch.arange(int(min_values[phrase_indexes_for_head[ph]]), int(max_values[phrase_indexes_for_head[ph]]) + 1))
+                    #     head_index = torch.cat(head_index).to(self.device)
+                    #     final_indices[head, :len(head_index)] = head_index
+                    # top_search_key_indices = final_indices.unsqueeze(0).to(top_search_key_indices.dtype)
                     # self.embeddings: (batch,              src_len, dim)
                     # indices:         (batch, beam * head, actual_model_window_size)
                     # embeddings: (batch, beam * head, actual_model_window_size, dim)
@@ -968,7 +863,7 @@ class Unlimiformer(Generic[ModelType]):
             top_key_scores, top_key_indices = torch.topk(attn_weights, k=min(topk, attn_weights.shape[-1]), dim=-1, sorted=True) # (batch, beam, head, tgt, trunc_source)
 
                    
-        # `this_layer_prompt_keys`:   (batch,          head,    source_len, dim)
+        # this_layer_prompt_keys:   (batch,          head,    source_len, dim)
         # top_key_indices:          (batch, tgt_len, head, 1, trunc_source)
         new_keys = torch.take_along_dim(this_layer_prompt_keys.unsqueeze(2).unsqueeze(1), indices=top_key_indices.unsqueeze(-1), 
             dim=-2) # (batch, tgt_len, head, 1, trunc_source, attn_dim)
@@ -1306,17 +1201,12 @@ class UnlimiformerLLaMa(Unlimiformer[LlamaModel]):
 
     def preprocess_query(self, query, k_proj_weight):
         # query: (batch * time, head, dim)
-        ####### The rotation given to q should not matter
         attention = self.model.base_model.layers[-1].self_attn
         num_generated = min(self.input_ids_size - self.prompt_input_ids.shape[1], self.actual_model_window_size)
-        # cos, sin = attention.rotary_emb(query, seq_len=self.num_generated)
+
         cos, sin = attention.rotary_emb(query, seq_len=num_generated)
-        # # Experiment 1
-        # cos, sin = attention.rotary_emb(query, seq_len = 1)
         cos = cos[:,:,-1]  # [1, 1, dim]
         sin = sin[:,:,-1]  # [1, 1, dim]
-        # # cos = cos[-1].unsqueeze(0).unsqueeze(0)  # [bs, 1, seq_len, dim]
-        # # sin = sin[-1].unsqueeze(0)  # [bs, 1, seq_len, dim]
         query = (query * cos) + (self.rotate_half(query) * sin)
 
         k_proj = k_proj_weight.view(1, self.num_heads, query.shape[-1], k_proj_weight.shape[0]) # (1, num_heads, attn_dim, embed_dim)
@@ -1326,8 +1216,7 @@ class UnlimiformerLLaMa(Unlimiformer[LlamaModel]):
 
         datastore_query = query.unsqueeze(-2) # (batch * beam, num_heads, 1, attn_dim)
         datastore_query = torch.matmul(datastore_query, k_proj + k_proj_rotated) # (batch * beam, num_heads, 1, embed_dim)
-        # Experiment 1
-        # datastore_query = torch.matmul(datastore_query, k_proj) # (batch * beam, num_heads, 1, embed_dim)
+
         datastore_query = datastore_query.squeeze(-2)  # (batch * beam, num_heads, embed_dim)
         return datastore_query
 
@@ -1344,57 +1233,20 @@ class UnlimiformerLLaMa(Unlimiformer[LlamaModel]):
         # new_keys, new_values: (batch, beam, head, encoder_len, attn_dim)
         retrieved_keys = torch.matmul(embeddings, k_weight) + k_bias # (beam, head, encoder_len, embed_dim)
         retrieved_values = torch.matmul(embeddings, v_weight) + v_bias # (beam, head, encoder_len, embed_dim)
-        if self.is_input_encoding_pass:
-            # attention = self.model.base_model.layers[-1].self_attn
-            # cos, sin = attention.rotary_emb(retrieved_values, seq_len=top_search_key_indices.shape[-1])
-            # cos = cos.squeeze(1).squeeze(0)  # [seq_len, dim]
-            # sin = sin.squeeze(1).squeeze(0)  # [seq_len, dim]
-            # retrieved_keys = (retrieved_keys * cos) + (self.rotate_half(retrieved_keys) * sin)
-            return retrieved_keys, retrieved_values
-        # attention = self.model.base_model.layers[-1].self_attn
-        # cos, sin = attention.rotary_emb(retrieved_values, seq_len=self.hidden_states[0].shape[1])
-        # cos = cos.squeeze(1).squeeze(0)  # [seq_len, dim]
-        # sin = sin.squeeze(1).squeeze(0)  # [seq_len, dim]
-        # if self.prompt_input_ids.shape[1] > self.actual_model_window_size:
-        #     # scale the top key indices to the actual model window size, such that the model will not see
-        #     # positional embeddings that did not appear at training time
-        #     scaled_key_indices = ((top_search_key_indices / self.prompt_input_ids.shape[1]) * self.actual_model_window_size).int()
-        # else:
-        #     scaled_key_indices = top_search_key_indices
-        # # top_search_key_indices = top_search_key_indices.to(cos.device)
-        # scaled_key_indices = scaled_key_indices.to(cos.device)
-        # cos = cos[scaled_key_indices]  # [bs, 1, seq_len, dim]
-        # sin = sin[scaled_key_indices]  # [bs, 1, seq_len, dim]
-        # retrieved_keys = (retrieved_keys * cos) + (self.rotate_half(retrieved_keys) * sin)
-        # retrieved_keys = retrieved_keys
-        
-        # Experiment: We provide all the retrieved keys a constant rotation between prefix and suffix
         attention = self.model.base_model.layers[-1].self_attn
-        # with open(self.data_file + "/config_data_2.json", "r") as f:
-        #     text = f.read()
-        #     import json
-        #     parsed_data = json.loads(text)
-        #     update_lengths = parsed_data["update_length"]
-        with open(self.data_file + "/config_data.json", "r") as f:
-            text = f.read()
-            import json
-            parsed_data = json.loads(text)
-            segment_lengths = parsed_data["segment_length"]
-        # cossin = [attention.rotary_emb(retrieved_values, seq_len=(update_lengths[i])) for i in range(len(segment_lengths))]
-        # cossin = [attention.rotary_emb(retrieved_values, seq_len=(segment_lengths[i] - update_lengths[i])) for i in range(len(segment_lengths))]
-        # cos = torch.cat([cossin[i][0].squeeze(1).squeeze(0) for i in range(len(cossin))], dim = 0)
-        # sin = torch.cat([cossin[i][1].squeeze(1).squeeze(0) for i in range(len(cossin))], dim = 0)
-        # sum_num = 0
-        # for seg in segment_lengths:
-        #     sum_num += seg
-        # cos, sin = attention.rotary_emb(retrieved_values, seq_len=self.what_num + 1)
-        cos, sin = attention.rotary_emb(retrieved_values, seq_len=self.what_num + self.num_retrieved + 1)
+        cos, sin = attention.rotary_emb(retrieved_values, seq_len=self.hidden_states[0].shape[1])
         cos = cos.squeeze(1).squeeze(0)  # [seq_len, dim]
         sin = sin.squeeze(1).squeeze(0)  # [seq_len, dim]
-        cos = cos[self.what_num + 1:]
-        sin = sin[self.what_num + 1:]
-        # cos = cos[-1]  # [1, 1, dim]
-        # sin = sin[-1]  # [1, 1, dim]
+        if self.prompt_input_ids.shape[1] > self.actual_model_window_size:
+            # scale the top key indices to the actual model window size, such that the model will not see
+            # positional embeddings that did not appear at training time
+            scaled_key_indices = ((top_search_key_indices / self.prompt_input_ids.shape[1]) * self.actual_model_window_size).int()
+        else:
+            scaled_key_indices = top_search_key_indices
+        # top_search_key_indices = top_search_key_indices.to(cos.device)
+        scaled_key_indices = scaled_key_indices.to(cos.device)
+        cos = cos[scaled_key_indices]  # [bs, 1, seq_len, dim]
+        sin = sin[scaled_key_indices]  # [bs, 1, seq_len, dim]
         retrieved_keys = (retrieved_keys * cos) + (self.rotate_half(retrieved_keys) * sin)
         return retrieved_keys, retrieved_values
 

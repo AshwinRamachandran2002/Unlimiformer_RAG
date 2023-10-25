@@ -2,7 +2,7 @@ import json
 import torch
 from transformers import AutoTokenizer
 
-with open("data9/config_data.json", "r") as f:
+with open("data11/config_data.json", "r") as f:
 # with open("dataset_key_value/config_data_75_kv.txt.json", "r") as f:
     text = f.read()
     parsed_data = json.loads(text)
@@ -36,7 +36,7 @@ for i in range(1, len(segment_lengths)):
     results.append((cs, ce, us, ue))
 
 
-with open("data9/original_data.txt", "r") as f:
+with open("data11/original_data.txt", "r") as f:
 # with open("dataset_key_value/75_kv.txt", "r") as f:
     text = f.read()
     input_ids = tokenizer.encode(text, add_special_tokens=False, return_tensors="pt")

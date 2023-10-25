@@ -58,7 +58,7 @@ from transformers import (
 )
 from transformers.modeling_outputs import CausalLMOutputWithPast
 
-from unlimiformer import Unlimiformer
+from unlimiformer_retrieval_test import Unlimiformer
 from random_training_unlimiformer import RandomTrainingUnlimiformer
 
 @dataclass
@@ -396,7 +396,8 @@ def main():
         "--repetition_penalty", type=float, default=1.0, help="primarily useful for CTRL model; in that case, use 1.2"
     )
     parser.add_argument("--k", type=int, default=0)
-    parser.add_argument("--p", type=float, default=0.9)
+    parser.add_argument("--p", type=float, default=0)
+    # parser.add_argument("--p", type=float, default=0.9)
 
     parser.add_argument("--prefix", type=str, default="", help="Text added prior to input.")
     parser.add_argument("--suffix", type=str, default="", help="Text added after the input.")
@@ -424,7 +425,7 @@ def main():
     if len(set(unknown_args) & set(unknown_unlimiformer_args)) > 0:
         raise ValueError(f"Unknown arguments detected: {set(unknown_args) & set(unknown_unlimiformer_args)}")
 
-    args.device = torch.device("cuda:6" if torch.cuda.is_available() and not args.no_cuda else "cpu")
+    args.device = torch.device("cuda:4" if torch.cuda.is_available() and not args.no_cuda else "cpu")
     args.n_gpu = 0 if args.no_cuda else torch.cuda.device_count()
 
     logger.warning(f"device: {args.device}, n_gpu: {args.n_gpu}, 16-bits training: {args.fp16}")
