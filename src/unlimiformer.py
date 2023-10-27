@@ -46,6 +46,7 @@ class Unlimiformer(Generic[ModelType]):
         self.one_by_one = True
         self.num_retrieved = 0
         self.gap = 5
+        self.kt = 3
         self.model = model
         model.unlimiformer = self
         self.layer_begin = layer_begin
@@ -443,9 +444,9 @@ class Unlimiformer(Generic[ModelType]):
                         chunk_attention_mask = torch.cat((torch.ones_like(prefix_input_id), attention_mask[:, context_start_ind:context_end_ind]), dim = 1).to(self.device)
                         if ind_up >=4:
                             if ind_up == 20:
-                                chunk_position_ids = torch.cat((torch.arange(0, 3), torch.arange(1 + (ind_up-3) * 15, (ind_up-1)*15))).unsqueeze(0).to(self.device)
+                                chunk_position_ids = None#torch.cat((torch.arange(0, 3), torch.arange(1 + (ind_up-3) * 7, (ind_up-2)*7 + 15))).unsqueeze(0).to(self.device)
                             else:
-                                chunk_position_ids = torch.cat((torch.arange(0, 3), torch.arange(1 + (ind_up-3) * 15, 1+(ind_up-1)*15))).unsqueeze(0).to(self.device)
+                                chunk_position_ids = None#torch.cat((torch.arange(0, 3), torch.arange(1 + (ind_up-3) * 7, 1+(ind_up-2)*7 + 15))).unsqueeze(0).to(self.device)
                         else:
                             chunk_position_ids = None
                     else:
@@ -480,9 +481,10 @@ class Unlimiformer(Generic[ModelType]):
                 to_add = [state[:, update_start_ind:update_end_ind].detach() for state in hidden_states_to_index]
                 logger.info(f'{self.tokenizer.decode(chunk[0][update_start_ind:update_end_ind])}')
                 to_apply_mask = chunk_attention_mask[:, update_start_ind:update_end_ind]
-                self.num_retrieved += len(to_apply_mask[0])
                 # to_apply_mask = to_apply_mask.log().to(to_add[0].dtype)
                 to_apply_mask = to_apply_mask.to(to_add[0].dtype)
+                if True:#self.ind_up != 18 and self.ind_up != 15:
+                    self.num_retrieved += len(to_apply_mask[0])
                 if not self.reconstruct_embeddings:
                     to_add_embeddings = to_add
                     if not self.gpu_datastore:
@@ -490,10 +492,16 @@ class Unlimiformer(Generic[ModelType]):
                         to_apply_mask = to_apply_mask.cpu()
                     for i, layer_states in enumerate(to_add_embeddings):
                         layer_states = layer_states * to_apply_mask.unsqueeze(-1) # [1, seq_len, dim]
-                        self.hidden_states[i].append(layer_states.to(self.datastore_device))
+                        if True:#self.ind_up != 18 and self.ind_up != 15:
+                            self.hidden_states[i].append(layer_states.to(self.datastore_device))
                         if self.csv_unlimiformer and self.ind_up <= 50:# not self.not_first_encoding_pass:
                             # self.hidden_layer_our[i] = layer_states.to(self.datastore_device)
-                            self.hidden_layer_our[i] = layer_states.to(self.datastore_device)
+                            if self.ind_up == 1:
+                                self.hidden_layer_our[i] = torch.cat((layer_states[:, 0:4], layer_states[:, 7:]), dim=-2).reshape((1, 12, -1)).to(self.datastore_device)
+                            elif self.ind_up == 2:
+                                self.hidden_layer_our[i] = torch.cat((self.hidden_layer_our[i], torch.cat((layer_states[:, 0:4], layer_states[:, 7:]), dim=-2)), dim = -2).reshape((1, 24, -1)).to(self.datastore_device)
+                            else:
+                                self.hidden_layer_our[i] = torch.cat((self.hidden_layer_our[i][:, 12:], torch.cat((layer_states[:, 0:4], layer_states[:, 7:]), dim=-2)), dim = -2).to(self.datastore_device)
                         if self.csv_unlimiformer and not self.not_first_encoding_pass:
                             self.hidden_layer_our_anchor[i] = layer_states[:, 0:3].reshape((1, 3, -1)).to(self.datastore_device)
                         # if self.csv_unlimiformer and self.not_first_encoding_pass:
@@ -747,7 +755,10 @@ class Unlimiformer(Generic[ModelType]):
         
     # format copied from https://huggingface.co/spaces/huggingface-projects/llama-2-13b-chat/blob/main/model.py
     def prefix(self, leni):
-        return ' '.join(['Fact'] * (3 + 15))
+        if self.ind_up == 2:
+            return ' '.join(['Fact'] * (3 + 12))
+        else:
+            return ' '.join(['Fact'] * (3 + 12*2))
         if leni == 1:
             # return '{"A" : "B"},'
             return 'Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact'

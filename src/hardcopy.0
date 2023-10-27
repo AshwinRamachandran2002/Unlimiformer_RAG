@@ -1,0 +1,17 @@
+<</SYS>>
+
+What on the moon factsing facts of facts, which you guess me the is doinging?</s>
+=== GENERATED SEQUENCE 1 (input length: 299) ===
+|||<s>[INST] <<SYS>>
+You are a helpful assistant. Answer with short responses according to the question.
+<</SYS>>
+
+What on the moon factsing facts of facts, which you guess me the isvind is doing?
+/info0  Sure! Based on the list of facts you provided, Fact number 1829: Arvind is jumping.</s>
+(btp) ashwinr@iitb-dgx2:~/RoPE/unlimiformer/src$ python run_generation.py --model_type llama --model_name_or_path meta-llama/Llama-2-13b-chat-hf --prefix "" --prompt data_final_data
+1/original_data.txt --suffix "" --test_unlimiformer --fp16 --length 300 --layer_begin 0 --index_devices 4 --datastore_device 4 2> logs165_final_20_kt_3_remove_4ids_consec_also_diff_
+removing_nums_from_context_inclduing_everything_except_number.txt
+(btp) ashwinr@iitb-dgx2:~/RoPE/unlimiformer/src$ python run_generation.py --model_type llama --model_name_or_path meta-llama/Llama-2-13b-chat-hf --prefix "" --prompt data_final_data
+1/original_data.txt --suffix "" --test_unlimiformer --fp16 --length 300 --layer_begin 0 --index_devices 4 --datastore_device 4 2> logs165_final_20_kt_3_remove_4ids_consec_also_diff_
+removing_nums_from_context_inclduing_everything_except_number.txt
+
