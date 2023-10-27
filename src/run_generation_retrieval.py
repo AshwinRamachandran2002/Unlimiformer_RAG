@@ -58,7 +58,7 @@ from transformers import (
 )
 from transformers.modeling_outputs import CausalLMOutputWithPast
 
-from unlimiformer import Unlimiformer
+from unlimiformer_retrieval_test import Unlimiformer
 from random_training_unlimiformer import RandomTrainingUnlimiformer
 
 @dataclass

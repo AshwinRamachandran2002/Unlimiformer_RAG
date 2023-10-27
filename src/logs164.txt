@@ -1,0 +1,56 @@
+10/26/2023 09:09:12 - WARNING - __main__ - device: cuda:1, n_gpu: 8, 16-bits training: True
+Using pad_token, but it is not set yet.
+Loading checkpoint shards:   0%|          | 0/3 [00:00<?, ?it/s]Loading checkpoint shards:  33%|███▎      | 1/3 [00:02<00:05,  2.84s/it]Loading checkpoint shards:  67%|██████▋   | 2/3 [00:05<00:02,  2.74s/it]Loading checkpoint shards: 100%|██████████| 3/3 [00:07<00:00,  2.51s/it]Loading checkpoint shards: 100%|██████████| 3/3 [00:07<00:00,  2.58s/it]
+10/26/2023 09:11:01 - INFO - __main__ - Namespace(model_type='llama', model_name_or_path='meta-llama/Llama-2-13b-chat-hf', prompt='data_final_data1/original_data.txt', length=300, num_hidden_layers=None, stop_token=None, temperature=1.0, repetition_penalty=1.0, k=0, p=0, prefix='', suffix='', padding_text='', xlm_language='', seed=42, data_folder=42, no_cuda=False, stream_output=False, num_return_sequences=1, fp16=True, jit=False, device=device(type='cuda', index=1), n_gpu=8)
+10/26/2023 09:11:01 - INFO - Unlimiformer - Encoding 0 to 15 out of 119
+10/26/2023 09:11:02 - INFO - Unlimiformer - Fact number 6893: Rithik is baking,
+10/26/2023 09:11:02 - INFO - Unlimiformer - Encoding 15 to 30 out of 119
+10/26/2023 09:11:02 - INFO - Unlimiformer - "Pre Forward Hook", Fact, 1
+Traceback (most recent call last):
+  File "/raid/infolab/ashwinr/RoPE/unlimiformer/src/run_generation.py", line 583, in <module>
+    main()
+  File "/raid/infolab/ashwinr/RoPE/unlimiformer/src/run_generation.py", line 534, in main
+    output_sequences = model.generate(
+                       ^^^^^^^^^^^^^^^
+  File "/raid/infolab/ashwinr/RoPE/unlimiformer/src/unlimiformer_datastore.py", line 621, in pre_generate_hook
+    self.reset_memory(input_ids, kwargs['attention_mask'])
+  File "/raid/infolab/ashwinr/RoPE/unlimiformer/src/unlimiformer_datastore.py", line 398, in reset_memory
+    _ = self.model(chunk, attention_mask=chunk_attention_mask, labels=dummy_labels, use_cache=True) # , return_dict=True, output_hidden_states=True)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/raid/infolab/ashwinr/anaconda3/envs/btp/lib/python3.11/site-packages/torch/nn/modules/module.py", line 1501, in _call_impl
+    return forward_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/raid/infolab/ashwinr/RoPE/unlimiformer/src/unlimiformer_datastore.py", line 706, in pre_forward_hook
+    result = self.original_forward_func(input_ids=input_ids, labels=labels, attention_mask=attention_mask, **kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/raid/infolab/ashwinr/anaconda3/envs/btp/lib/python3.11/site-packages/transformers/models/llama/modeling_llama.py", line 820, in forward
+    outputs = self.model(
+              ^^^^^^^^^^^
+  File "/raid/infolab/ashwinr/anaconda3/envs/btp/lib/python3.11/site-packages/torch/nn/modules/module.py", line 1501, in _call_impl
+    return forward_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/raid/infolab/ashwinr/anaconda3/envs/btp/lib/python3.11/site-packages/transformers/models/llama/modeling_llama.py", line 708, in forward
+    layer_outputs = decoder_layer(
+                    ^^^^^^^^^^^^^^
+  File "/raid/infolab/ashwinr/anaconda3/envs/btp/lib/python3.11/site-packages/torch/nn/modules/module.py", line 1501, in _call_impl
+    return forward_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/raid/infolab/ashwinr/anaconda3/envs/btp/lib/python3.11/site-packages/transformers/models/llama/modeling_llama.py", line 424, in forward
+    hidden_states, self_attn_weights, present_key_value = self.self_attn(
+                                                          ^^^^^^^^^^^^^^^
+  File "/raid/infolab/ashwinr/anaconda3/envs/btp/lib/python3.11/site-packages/torch/nn/modules/module.py", line 1501, in _call_impl
+    return forward_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/raid/infolab/ashwinr/RoPE/unlimiformer/src/unlimiformer_datastore.py", line 749, in attention_pre_forward_hook
+    result = original_cross_attn_forward_func(hidden_states=hidden_states, attention_mask=attention_mask, *args, **kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/raid/infolab/ashwinr/anaconda3/envs/btp/lib/python3.11/site-packages/transformers/models/llama/modeling_llama.py", line 321, in forward
+    query_states = self.q_proj(hidden_states)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/raid/infolab/ashwinr/anaconda3/envs/btp/lib/python3.11/site-packages/torch/nn/modules/module.py", line 1547, in _call_impl
+    hook_result = hook(self, args, result)
+                  ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/raid/infolab/ashwinr/RoPE/unlimiformer/src/unlimiformer_datastore.py", line 761, in attention_forward_hook
+    window_size = self.cur_layer_key_value_placeholder[0].shape[-2]
+                  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^
+TypeError: 'NoneType' object is not subscriptable

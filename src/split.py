@@ -4,7 +4,7 @@ from transformers import AutoTokenizer
 model_name = "meta-llama/Llama-2-13b-chat-hf"
 tokenizer = AutoTokenizer.from_pretrained(model_name)
 
-data_file = "data11"
+data_file = "data_final_data1"
 with open(data_file + "/original_data.txt", 'r') as file:
     file_contents = file.read()
 

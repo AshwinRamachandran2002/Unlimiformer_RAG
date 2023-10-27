@@ -72,7 +72,7 @@ class Unlimiformer(Generic[ModelType]):
         self.datastore_device = torch.device(f'cuda:{datastore_device}' if torch.cuda.is_available() and gpu_datastore else 'cpu')
         self.test_datastore = test_datastore # flag for debugging
 
-        self.device = torch.device('cuda:1' if torch.cuda.is_available() else 'cpu')
+        self.device = torch.device(f'cuda:{datastore_device}' if torch.cuda.is_available() else 'cpu')
         self.activation_capturer = None
         self.is_encoder_decoder = model.config.is_encoder_decoder
         self.hook_handles = []
@@ -402,12 +402,12 @@ class Unlimiformer(Generic[ModelType]):
         # we have established that the model can attend to the padded spaces, so that isnt a problem, problem is the retrieval step
         # if we get all the json data out?
         if self.csv_unlimiformer:
-            # with open("data11/config_data_2.json", "r") as f:
+            # with open("data_final_data1/config_data_2.json", "r") as f:
             #     text = f.read()
             #     import json
             #     parsed_data = json.loads(text)
             #     update_lengths = parsed_data["update_length"]
-            with open("data11/config_data.json", "r") as f:
+            with open("data_final_data1/config_data.json", "r") as f:
                 text = f.read()
                 import json
                 parsed_data = json.loads(text)
@@ -442,10 +442,10 @@ class Unlimiformer(Generic[ModelType]):
                         # chunk_attention_mask = torch.cat((torch.ones(1, 2 * (ind_up - 1)), attention_mask[:, context_start_ind:context_end_ind]), dim = 1).to(self.device)
                         chunk_attention_mask = torch.cat((torch.ones_like(prefix_input_id), attention_mask[:, context_start_ind:context_end_ind]), dim = 1).to(self.device)
                         if ind_up >=4:
-                            if ind_up == 8:
-                                chunk_position_ids = None#torch.cat((torch.arange(0, 3), torch.arange(1 + (ind_up-3) * 15, (ind_up-1)*15))).unsqueeze(0).to(self.device)
+                            if ind_up == 20:
+                                chunk_position_ids = torch.cat((torch.arange(0, 3), torch.arange(1 + (ind_up-3) * 15, (ind_up-1)*15))).unsqueeze(0).to(self.device)
                             else:
-                                chunk_position_ids = None#torch.cat((torch.arange(0, 3), torch.arange(1 + (ind_up-3) * 15, 1+(ind_up-1)*15))).unsqueeze(0).to(self.device)
+                                chunk_position_ids = torch.cat((torch.arange(0, 3), torch.arange(1 + (ind_up-3) * 15, 1+(ind_up-1)*15))).unsqueeze(0).to(self.device)
                         else:
                             chunk_position_ids = None
                     else:
@@ -491,13 +491,13 @@ class Unlimiformer(Generic[ModelType]):
                     for i, layer_states in enumerate(to_add_embeddings):
                         layer_states = layer_states * to_apply_mask.unsqueeze(-1) # [1, seq_len, dim]
                         self.hidden_states[i].append(layer_states.to(self.datastore_device))
-                        if self.csv_unlimiformer and self.ind_up <= 10:# not self.not_first_encoding_pass:
+                        if self.csv_unlimiformer and self.ind_up <= 50:# not self.not_first_encoding_pass:
                             # self.hidden_layer_our[i] = layer_states.to(self.datastore_device)
                             self.hidden_layer_our[i] = layer_states.to(self.datastore_device)
                         if self.csv_unlimiformer and not self.not_first_encoding_pass:
-                            self.hidden_layer_our_anchor[i] = layer_states[:, 0:1].reshape((1, 1, -1)).to(self.datastore_device)
-                        if self.csv_unlimiformer and self.not_first_encoding_pass:
-                            self.hidden_layer_our_anchor[i]  = torch.cat((self.hidden_layer_our_anchor[i] , layer_states[:, 0:1].reshape((1, 1, -1)).to(self.datastore_device)), dim = -2)
+                            self.hidden_layer_our_anchor[i] = layer_states[:, 0:3].reshape((1, 3, -1)).to(self.datastore_device)
+                        # if self.csv_unlimiformer and self.not_first_encoding_pass:
+                        #     self.hidden_layer_our_anchor[i]  = torch.cat((self.hidden_layer_our_anchor[i] , layer_states[:, 0:1].reshape((1, 1, -1)).to(self.datastore_device)), dim = -2)
                 logger.info(f'using only the first hidden states, stablising first also, so discard baking, trying to make Lee the stabliser, third in book, also adding diff position ids, making Zelensky stabiliser')
                 if self.csv_unlimiformer:
                     self.not_first_encoding_pass = True
@@ -590,7 +590,7 @@ class Unlimiformer(Generic[ModelType]):
             # if self.chunk_overlap == 0:
             #     stride = self.model_encoder_max_len
             if self.csv_unlimiformer:
-                with open("data11/config_data.json", "r") as f:
+                with open("data_final_data1/config_data.json", "r") as f:
                     text = f.read()
                     import json
                     parsed_data = json.loads(text)
@@ -670,73 +670,84 @@ class Unlimiformer(Generic[ModelType]):
         # return 'From the JSON data above, key "' + val + '", value: \n[/INST] Sure! Here is the value associated with the key "' + val + '"'
         # return 'Read the above JSON object and tell the value corresponding to the specified key in the given JSON object above\nKey: "' + val + '"\nCorresponding value: [\INST]'
         # return '-- how many stadiums in total?\n\nSELECT'
+        with open("data_final_data1/original_data.txt", 'r') as f:
+            cont = f.read()
+        cont = cont.split(',')
+        if i==0 or i==1:
+            if i%2:
+                return 'Based on the above numbered list of facts, can you tell me what ' + cont[i//2].split(' ')[3] + ' is doing?[/INST]'
+            else:
+                return 'Based on the above numbered list of facts, can you tell me who is ' + cont[i//2].split(' ')[5] + '?[/INST]'
+        else:
+            if i%2:
+                return 'Based on the above numbered list of facts, can you tell me what ' + cont[i//2].split(' ')[4] + ' is doing?[/INST]'
+            else:
+                return 'Based on the above numbered list of facts, can you tell me who is ' + cont[i//2].split(' ')[6] + '?[/INST]'
+        
         if i == 0:
             # return 'Based on the above numbered list of facts, can you tell me the value associated with key "ed1ef023-f1bb-4bf9-8b54-910bbd1c2750"?[/INST]'
-            return 'Based on the above numbered list of facts, can you tell me what is key corresponding to "aj12"?[/INST]'
-            # return 'Based on the above numbered list of facts, can you tell me what Oppenheimer is doing?[/INST]'
+            # return 'Based on the above numbered list of facts, can you tell me what is key corresponding to "aj12"?[/INST]'
+            return 'Based on the above numbered list of facts, can you tell me what Oppenheimer is doing?[/INST]'
         elif i==1:
             # return 'Based on the above numbered list of facts, can you tell me the value associated with key "62eff267-d0e6-4c65-81cb-6b6b7db9c63b"?[/INST]'
-            return 'Based on the above numbered list of facts, can you tell me what is value corresponding to "we34"?[/INST]'
-            # return 'Based on the above numbered list of facts, can you tell me what Rithik is doing?[/INST]'
+            # return 'Based on the above numbered list of facts, can you tell me what is value corresponding to "we34"?[/INST]'
+            return 'Based on the above numbered list of facts, can you tell me what Rithik is doing?[/INST]'
         elif i==2:
             # return 'Based on the above numbered list of facts, can you tell me the key associated with value "f3142b5e-ccc7-49c2-ab5f-fbf402b2becd"?[/INST]'
-            return 'Based on the above numbered list of facts, can you tell me what is key corresponding to "dh83"?[/INST]'
-            # return 'Based on the above numbered list of facts, can you tell me who is baking?[/INST]'
+            # return 'Based on the above numbered list of facts, can you tell me what is key corresponding to "dh83"?[/INST]'
+            return 'Based on the above numbered list of facts, can you tell me who is baking?[/INST]'
         elif i==3:
             # return 'Based on the above numbered list of facts, can you tell me the key associated with value "a4eacd0b-5962-46d3-9877-0f0e9c5b892f"?[/INST]'
-            return 'Based on the above numbered list of facts, can you tell me what is value corresponding to "es52"?[/INST]'
-            # return 'Based on the above numbered list of facts, can you tell me who is cycling?[/INST]'
+            # return 'Based on the above numbered list of facts, can you tell me what is value corresponding to "es52"?[/INST]'
+            return 'Based on the above numbered list of facts, can you tell me who is cycling?[/INST]'
         elif i==4:
-            return 'Based on the above numbered list of facts, can you tell me what is key corresponding to "sw45"?[/INST]'
-            # return 'Based on the above numbered list of facts, can you tell me who is sleeping?[/INST]'
+            # return 'Based on the above numbered list of facts, can you tell me what is key corresponding to "sw45"?[/INST]'
+            return 'Based on the above numbered list of facts, can you tell me who is sleeping?[/INST]'
         elif i==5:
-            return 'Based on the above numbered list of facts, can you tell me what is value corresponding to "hs57"?[/INST]'
-            # return 'Based on the above numbered list of facts, can you tell me what Leechenbaum is doing?[/INST]'
+            # return 'Based on the above numbered list of facts, can you tell me what is value corresponding to "hs57"?[/INST]'
+            return 'Based on the above numbered list of facts, can you tell me what Leechenbaum is doing?[/INST]'
         elif i==6:
-            return 'Based on the above numbered list of facts, can you tell me what is key corresponding to "hs57"?[/INST]'
-            # return 'Based on the above numbered list of facts, can you tell me what Zelensky is doing?[/INST]'
+            # return 'Based on the above numbered list of facts, can you tell me what is key corresponding to "hs57"?[/INST]'
+            return 'Based on the above numbered list of facts, can you tell me what Zelensky is doing?[/INST]'
         elif i==7:
-            return 'Based on the above numbered list of facts, can you tell me what is value corresponding to "ex88"?[/INST]'
-            # return 'Based on the above numbered list of facts, can you tell me who is relaxing?[/INST]'
+            # return 'Based on the above numbered list of facts, can you tell me what is value corresponding to "ex88"?[/INST]'
+            return 'Based on the above numbered list of facts, can you tell me who is relaxing?[/INST]'
         elif i==8:
-            return 'Based on the above numbered list of facts, can you tell me what is key corresponding to "fe80"?[/INST]'
-            # return 'Based on the above numbered list of facts, can you tell me what Murugan is doing?[/INST]'
+            # return 'Based on the above numbered list of facts, can you tell me what is key corresponding to "fe80"?[/INST]'
+            return 'Based on the above numbered list of facts, can you tell me what Murugan is doing?[/INST]'
         elif i==9:
-            return 'Based on the above numbered list of facts, can you tell me what is value corresponding to "rs52"?[/INST]'
-            # return 'Based on the above numbered list of facts, can you tell me who is eating?[/INST]'
+            # return 'Based on the above numbered list of facts, can you tell me what is value corresponding to "rs52"?[/INST]'
+            return 'Based on the above numbered list of facts, can you tell me who is eating?[/INST]'
         elif i==10:
-            return 'Based on the above numbered list of facts, can you tell me what is key corresponding to "hr79"?[/INST]'
-            # return 'Based on the above numbered list of facts, can you tell me what Vaibhav is doing?[/INST]'
+            # return 'Based on the above numbered list of facts, can you tell me what is key corresponding to "hr79"?[/INST]'
+            return 'Based on the above numbered list of facts, can you tell me what Vaibhav is doing?[/INST]'
             # return 'Based on the above numbered list of facts, can you tell me who is in Siberia?[/INST]'
         elif i==11:
             # return 'Based on the above numbered list of facts, can you tell me who is in India?[/INST]'
-            return 'Based on the above numbered list of facts, can you tell me what is value corresponding to "er34"?[/INST]'
-            # return 'Based on the above numbered list of facts, can you tell me who is drinking?[/INST]'
+            # return 'Based on the above numbered list of facts, can you tell me what is value corresponding to "er34"?[/INST]'
+            return 'Based on the above numbered list of facts, can you tell me who is drinking?[/INST]'
         elif i==12:
-            return 'Based on the above numbered list of facts, can you tell me what is key corresponding to "op18"?[/INST]'
-            # return 'Based on the above numbered list of facts, can you tell me what Rohit is doing?[/INST]'
+            # return 'Based on the above numbered list of facts, can you tell me what is key corresponding to "op18"?[/INST]'
+            return 'Based on the above numbered list of facts, can you tell me what Rohit is doing?[/INST]'
             # return 'Based on the above numbered list of facts, can you tell me who is in Mexico?[/INST]'
         elif i==13:
             # return 'Based on the above numbered list of facts, can you tell me who is in Lithuania?[/INST]'
-            return 'Based on the above numbered list of facts, can you tell me what is value corresponding to "dw43"?[/INST]'
-            # return 'Based on the above numbered list of facts, can you tell me who is cooking?[/INST]'
+            # return 'Based on the above numbered list of facts, can you tell me what is value corresponding to "dw43"?[/INST]'
+            return 'Based on the above numbered list of facts, can you tell me who is cooking?[/INST]'
         elif i==14:
-            return 'Based on the above numbered list of facts, can you tell me what is key corresponding to "dr45"?[/INST]'
-            # return 'Based on the above numbered list of facts, can you tell me what Rakesh is doing?[/INST]'
+            # return 'Based on the above numbered list of facts, can you tell me what is key corresponding to "dr45"?[/INST]'
+            return 'Based on the above numbered list of facts, can you tell me what Rakesh is doing?[/INST]'
         elif i==15:
             # return 'Based on the above numbered list of facts, can you tell me who is in Lithuania?[/INST]'
-            return 'Based on the above numbered list of facts, can you tell me what is value corresponding to "ir83"?[/INST]'
-            # return 'Based on the above numbered list of facts, can you tell me who is bowling?[/INST]'
+            # return 'Based on the above numbered list of facts, can you tell me what is value corresponding to "ir83"?[/INST]'
+            return 'Based on the above numbered list of facts, can you tell me who is bowling?[/INST]'
             # return 'Based on the above numbered list of facts, can you tell me who is in America?[/INST]'
         # return 'Based on the above numbered list of facts, can you tell me what the value is for "' + val + '"?[/INST]'
         # return 'Can you tell me, from the JSON key-value pairs given above, the value for the key "'+ val + '"?[\INST]'
         
     # format copied from https://huggingface.co/spaces/huggingface-projects/llama-2-13b-chat/blob/main/model.py
     def prefix(self, leni):
-        if self.ind_up >= 4:
-            return ' '.join(['Fact'] * (1 + (self.ind_up - 3) * 1 + 20))
-        else:
-            return ' '.join(['Fact'] * (1 + 20))
+        return ' '.join(['Fact'] * (3 + 15))
         if leni == 1:
             # return '{"A" : "B"},'
             return 'Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact'
@@ -830,7 +841,7 @@ class Unlimiformer(Generic[ModelType]):
                 with open("data9/sampled_keys.txt", "r") as f:
                     key_vals = f.read().split("\n")
                 vals_pred = []
-                for i in range(16):
+                for i in range(40):
                     # encode the suffix prompt
                     self.curr_key = i
                     input_ids_prefix = self.tokenizer.encode(self.suffix(" "), add_special_tokens=False, return_tensors="pt")
@@ -992,15 +1003,8 @@ class Unlimiformer(Generic[ModelType]):
                     #     hidden_states[:, 0:2*(self.ind_up - 1)] = self.comma_hidden_state[cur_layer_num].repeat(1, 2 * (self.ind_up - 1), 1)
                     if self.not_first_encoding_pass and self.is_input_encoding_pass:
                         topk = self.hidden_layer_our[cur_layer_num].shape[-2]
-                            
-                        if self.ind_up >=4:
-                            topk += self.hidden_layer_our_anchor[cur_layer_num][:, :-1].shape[-2]
-                            hidden_states = torch.cat([self.hidden_layer_our_anchor[cur_layer_num][:, :-1], self.hidden_layer_our[cur_layer_num], hidden_states[:,topk:]], dim=-2)
-                        elif self.ind_up >=2:
-                            topk += self.hidden_layer_our_anchor[cur_layer_num][:, :1].shape[-2]
-                            hidden_states = torch.cat([self.hidden_layer_our_anchor[cur_layer_num][:, :1], self.hidden_layer_our[cur_layer_num], hidden_states[:,topk:]], dim=-2)
-                        else:
-                            hidden_states = torch.cat([self.hidden_layer_our[cur_layer_num], hidden_states[:,topk:]], dim=-2)
+                        topk += self.hidden_layer_our_anchor[cur_layer_num].shape[-2]
+                        hidden_states = torch.cat([self.hidden_layer_our_anchor[cur_layer_num], self.hidden_layer_our[cur_layer_num], hidden_states[:,topk:]], dim=-2)
                     kwargs['output_attentions'] = True
                     result = original_cross_attn_forward_func(hidden_states=hidden_states, attention_mask=attention_mask, *args, **kwargs)
                     if self.is_input_encoding_pass:
@@ -1613,12 +1617,12 @@ class UnlimiformerLLaMa(Unlimiformer[LlamaModel]):
         
         # Experiment: We provide all the retrieved keys a constant rotation between prefix and suffix
         attention = self.model.base_model.layers[-1].self_attn
-        # with open("data11/config_data_2.json", "r") as f:
+        # with open("data_final_data1/config_data_2.json", "r") as f:
         #     text = f.read()
         #     import json
         #     parsed_data = json.loads(text)
         #     update_lengths = parsed_data["update_length"]
-        with open("data11/config_data.json", "r") as f:
+        with open("data_final_data1/config_data.json", "r") as f:
             text = f.read()
             import json
             parsed_data = json.loads(text)

@@ -37,10 +37,13 @@ class Unlimiformer(Generic[ModelType]):
         super().__init__()
         self.data_file = 'data_final_data1'
         self.csv_unlimiformer = True
+        self.first_empty = False
         self.input_ids_full = []
         self.input_ids_full_extra = []
         self.attention_weights = []
         self.model = model
+        self.num_generated = 1
+        self.is_encoding_done = True
         model.unlimiformer = self
         self.layer_begin = layer_begin
         self.layer_end = layer_end
@@ -378,13 +381,21 @@ class Unlimiformer(Generic[ModelType]):
         self.prompt_values = [[] for _ in range(self.model.config.num_hidden_layers)[self.layer_begin:self.layer_end]]
         self.prompt_attention_mask = []
         window_indices = self.window_indices(input_ids.shape[-1])
-
+        self.encoding_retrieval = 10
+        self.num_retrieved = 0
+        self.ind_up = 0
         for context_start_ind, context_end_ind, update_start_ind, update_end_ind in window_indices:
             logger.info(f'Encoding {context_start_ind} to {context_end_ind} out of {input_ids.shape[-1]}')
-            chunk = input_ids[:, context_start_ind:context_end_ind].to(self.device)
-            chunk_attention_mask = attention_mask[:, context_start_ind:context_end_ind].to(self.device)
+            self.ind_up += 1
+            if self.ind_up > 1:
+                self.curr_chunk = input_ids[:, context_start_ind:context_end_ind]
+                chunk = torch.ones(1, self.encoding_retrieval).to(torch.int64).to(self.device)
+                chunk_attention_mask = torch.ones(1, self.encoding_retrieval).to(self.device)
+            else:
+                chunk = input_ids[:, context_start_ind:context_end_ind].to(self.device)
+                chunk_attention_mask = attention_mask[:, context_start_ind:context_end_ind].to(self.device)
             with torch.inference_mode():
-                _ = self.model(chunk, attention_mask=chunk_attention_mask, labels=dummy_labels) # , return_dict=True, output_hidden_states=True)
+                _ = self.model(chunk, attention_mask=chunk_attention_mask, labels=dummy_labels, use_cache=True) # , return_dict=True, output_hidden_states=True)
             if self.use_datastore:
                 # TODO: verify with BART as well
                 # hidden_states_to_index = [hidden_states.encoder_last_hidden_state] # list of length 1 of (batch, chunked_source_len, dim)
@@ -395,6 +406,7 @@ class Unlimiformer(Generic[ModelType]):
                 to_add = [state[:, update_start_ind:update_end_ind].detach() for state in hidden_states_to_index]
                 logger.info(f'{self.tokenizer.decode(chunk[0][update_start_ind:update_end_ind])}')
                 to_apply_mask = chunk_attention_mask[:, update_start_ind:update_end_ind]
+                self.num_retrieved += len(to_apply_mask[0])
                 # to_apply_mask = to_apply_mask.log().to(to_add[0].dtype)
                 to_apply_mask = to_apply_mask.to(to_add[0].dtype)
                 if not self.reconstruct_embeddings:
@@ -487,12 +499,47 @@ class Unlimiformer(Generic[ModelType]):
     def window_indices(self, total_seq_len):
         # Copied from SLED (Ivgy et al., 2022)
         # https://github.com/Mivg/SLED/blob/main/sled/modeling_sled.py#L467
-        if total_seq_len <= self.model_encoder_max_len:
+        if not self.csv_unlimiformer and total_seq_len <= self.model_encoder_max_len:
             return [(0, total_seq_len, 0, total_seq_len)]
         else:
             results = []
             # if self.chunk_overlap == 0:
             #     stride = self.model_encoder_max_len
+            if self.csv_unlimiformer:
+                with open(self.data_file + "/config_data.json", "r") as f:
+                    text = f.read()
+                    import json
+                    parsed_data = json.loads(text)
+                    segment_lengths = parsed_data["segment_length"]
+
+                results = []
+                context_start = 0
+                # context_end = segment_lengths[0] - 2
+                context_end = segment_lengths[0]
+                # results.append((0, None, 0, None))
+                # results.append((context_start, context_end + 1, -segment_lengths[0] + 1, None))  
+                # results.append((0, None, 0, None))
+                # return results
+                results.append((context_start, context_end - 1, -segment_lengths[0], None))  
+                # results.append((context_start, context_end - 1, prefix_len, prefix_len + segment_lengths[0] - 1))  
+
+                for i in range(1, len(segment_lengths)):
+                    # context_start = context_start + (segment_lengths[i - 2] if i>1 else 0)
+                    context_start = context_start + segment_lengths[i - 1] - 1
+                    context_end = context_end + segment_lengths[i] - 1
+                    # context_end = context_end + segment_lengths[i] - 1
+                    
+                    update_start_ind = -segment_lengths[i] + 1
+                    update_end_ind = None
+                    # update_end_ind = segment_lengths[i] - 1
+                    
+                    cs, ce, us, ue = context_start, context_end - 1, update_start_ind, update_end_ind
+                    # cs, ce, us, ue = context_start - (1 if i > 1 else 0), context_end + 1, update_start_ind - 1, update_end_ind
+                    # cs, ce, us, ue = context_start - 1, context_end - 1, update_start_ind + prefix_len, update_end_ind + prefix_len - 1
+                    # cs, ce, us, ue = context_start, context_end - 1, update_start_ind + prefix_len, update_end_ind + prefix_len
+                    results.append((cs, ce, us, ue))
+                return results
+
             stride = self.model_encoder_max_len - 2 * self.window_margin
             context_start = update_start_ind = 0
             context_end = self.model_encoder_max_len
@@ -572,7 +619,7 @@ class Unlimiformer(Generic[ModelType]):
         if 'attention_mask' not in kwargs:
             kwargs['attention_mask'] = torch.ones_like(input_ids)
         self.reset_memory(input_ids, kwargs['attention_mask'])
-        self.num_retrieved = len(input_ids[0])
+        self.num_retrieved = 5
         new_kwargs = kwargs
         if 'attention_mask' in kwargs:
             new_kwargs = {k: v for k, v in kwargs.items() if k != 'attention_mask'}
@@ -648,7 +695,6 @@ class Unlimiformer(Generic[ModelType]):
             top_k_tokens = [self.tokenizer.convert_ids_to_tokens(token_id) for token_id in top_k_token_ids]
             logger.info(f'{top_k_tokens}')
             logger.info(f'{top_k_values}')
-
         if self.csv_unlimiformer:
             if self.is_first_test_decoding_step:
                 self.is_second_test_decoding_step = True
@@ -657,6 +703,7 @@ class Unlimiformer(Generic[ModelType]):
 
     def create_cross_attn_pre_forward_hook(self, original_cross_attn_forward_func, cur_layer_num):
         def attention_pre_forward_hook(hidden_states, attention_mask=None, *args, **kwargs):
+            kwargs["use_cache"] = True
             self.cur_decoder_layer_index = cur_layer_num
             if kwargs.get('past_key_value') is not None:
                 # it's a tuple, and we convert it to a list to be able to perform assignment 
@@ -674,11 +721,11 @@ class Unlimiformer(Generic[ModelType]):
                 attn_output = attn_output.reshape(batch_size, tgt_len, dim)
                 result = (attn_output, attn_weights_reshaped, past_key_value)
             else:
-                if not self.csv_unlimiformer or self.is_first_test_decoding_step or self.is_input_encoding_pass:
+                if not self.csv_unlimiformer or self.is_first_test_decoding_step or (self.is_input_encoding_pass and self.ind_up == 1):
                     kwargs['output_attentions'] = True
                     result = original_cross_attn_forward_func(hidden_states=hidden_states, attention_mask=attention_mask, *args, **kwargs)
                     attn_wts = result[1].squeeze(0).squeeze(1)
-                    self.attention_weights.append(attn_wts)    
+                    self.attention_weights.append(attn_wts)
                 else:
                     attention_mask = torch.ones_like(attention_mask)
                     result = original_cross_attn_forward_func(hidden_states=hidden_states, attention_mask=attention_mask, *args, **kwargs)
@@ -688,7 +735,7 @@ class Unlimiformer(Generic[ModelType]):
 
     def attention_forward_hook(self, module, input, output):
         # output: (batch, time, 3 * heads * attention_dim)
-        if self.is_input_encoding_pass or self.is_first_test_decoding_step:
+        if self.is_first_test_decoding_step or self.is_input_encoding_pass:
             return
         with torch.no_grad():
             prompt_size = self.prompt_input_ids.shape[1]
@@ -728,9 +775,10 @@ class Unlimiformer(Generic[ModelType]):
                     # embeddings: (batch, beam * head, actual_model_window_size, dim)
                     _, top_search_key_indices, embeddings = self.datastore[datastore_index].search_and_reconstruct(datastore_query, k=topk) 
                 else:
-                    _, top_search_key_indices = self.datastore[datastore_index].search(datastore_query, k=topk)
+                    # _, top_search_key_indices = self.datastore[datastore_index].search(datastore_query, k=topk)
                     # top_search_key_indices = torch.sort(top_search_key_indices).values
-                    # top_search_key_indices = torch.arange(0, self.num_retrieved).repeat(40, 1).unsqueeze(0)
+                    _, top_search_key_indices = self.datastore[datastore_index].search(datastore_query, k=topk)
+
                     # indices = top_search_key_indices.squeeze(0) + 1
                     # with open("data_final_data1/config_data.json", "r") as f: 
                     #     text = f.read()
@@ -834,10 +882,10 @@ class Unlimiformer(Generic[ModelType]):
             assert torch.mean(torch.isclose(correct_values, retrieved_values, rtol=1e-3, atol=1e-3).float()) > 0.99
 
         # retrieved_keys, retrieved_values: (batch * beam, head, encoder_len, attn_dim)
-        retrieved_keys = retrieved_keys.flatten(0, 1)[:,:,:self.num_retrieved]
-        retrieved_values = retrieved_values.flatten(0, 1)[:,:,:self.num_retrieved]
-        self.cur_layer_key_value_placeholder[0] = torch.cat([retrieved_keys, self.cur_layer_key_value_placeholder[0][:,:,self.num_retrieved:]], dim=-2)
-        self.cur_layer_key_value_placeholder[1] = torch.cat([retrieved_values, self.cur_layer_key_value_placeholder[1][:,:,self.num_retrieved:]], dim=-2)
+        retrieved_keys = retrieved_keys.flatten(0, 1)[:,:,:topk]
+        retrieved_values = retrieved_values.flatten(0, 1)[:,:,:topk]
+        self.cur_layer_key_value_placeholder[0] = torch.cat([retrieved_keys, self.cur_layer_key_value_placeholder[0][:,:,topk:]], dim=-2)
+        self.cur_layer_key_value_placeholder[1] = torch.cat([retrieved_values, self.cur_layer_key_value_placeholder[1][:,:,topk:]], dim=-2)
         return
 
     def train_attention_forward_hook(self, module, input, output):
