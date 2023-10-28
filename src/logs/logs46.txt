@@ -1,0 +1,123 @@
+10/15/2023 19:00:11 - WARNING - __main__ - device: cuda:7, n_gpu: 8, 16-bits training: True
+Using pad_token, but it is not set yet.
+Loading checkpoint shards:   0%|          | 0/3 [00:00<?, ?it/s]Loading checkpoint shards:  33%|███▎      | 1/3 [00:03<00:07,  3.60s/it]Loading checkpoint shards:  67%|██████▋   | 2/3 [00:07<00:03,  3.60s/it]Loading checkpoint shards: 100%|██████████| 3/3 [00:08<00:00,  2.76s/it]Loading checkpoint shards: 100%|██████████| 3/3 [00:08<00:00,  2.99s/it]
+10/15/2023 19:01:58 - INFO - __main__ - Namespace(model_type='llama', model_name_or_path='meta-llama/Llama-2-13b-chat-hf', prompt='data9/original_data.txt', length=300, num_hidden_layers=None, stop_token=None, temperature=1.0, repetition_penalty=1.0, k=0, p=0, prefix='', suffix='', padding_text='', xlm_language='', seed=42, data_folder=42, no_cuda=False, stream_output=False, num_return_sequences=1, fp16=True, jit=False, device=device(type='cuda', index=7), n_gpu=8)
+10/15/2023 19:01:58 - INFO - Unlimiformer - Encoding 0 to 16 out of 98
+10/15/2023 19:01:58 - INFO - Unlimiformer - {"775aec" : "7b4c30"},
+10/15/2023 19:02:03 - INFO - Unlimiformer - {"775aec" : "7b4c30"},
+10/15/2023 19:02:03 - INFO - Unlimiformer - Encoding 16 to 33 out of 98
+10/15/2023 19:02:03 - INFO - Unlimiformer - {"A" : "B"}, {"a3c02c" : "e33287"},
+10/15/2023 19:02:07 - INFO - Unlimiformer - {"a3c02c" : "e33287"},
+10/15/2023 19:02:07 - INFO - Unlimiformer - Encoding 33 to 50 out of 98
+10/15/2023 19:02:07 - INFO - Unlimiformer - ,{"A" : "B"}, {"013e9f" : "d9f130"},
+10/15/2023 19:02:10 - INFO - Unlimiformer - {"013e9f" : "d9f130"},
+10/15/2023 19:02:10 - INFO - Unlimiformer - Encoding 50 to 67 out of 98
+10/15/2023 19:02:10 - INFO - Unlimiformer - ,,{"A" : "B"}, {"5c3782" : "d92383"},
+10/15/2023 19:02:12 - INFO - Unlimiformer - {"5c3782" : "d92383"},
+10/15/2023 19:02:12 - INFO - Unlimiformer - Encoding 67 to 82 out of 98
+10/15/2023 19:02:12 - INFO - Unlimiformer - ,,,{"A" : "B"}, {"aca320" : "88f247"},
+10/15/2023 19:02:15 - INFO - Unlimiformer - {"aca320" : "88f247"},
+10/15/2023 19:02:15 - INFO - Unlimiformer - Encoding 82 to 98 out of 98
+10/15/2023 19:02:15 - INFO - Unlimiformer - ,,,,{"A" : "B"}, {"ceb47b" : "35b391"}
+10/15/2023 19:02:18 - INFO - Unlimiformer - {"ceb47b" : "35b391"}
+10/15/2023 19:02:18 - INFO - Unlimiformer - "Pre Forward Hook", <s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s>[INST] <<SYS>>
+You are a helpful assistant. Answer with short responses according to the question. 
+<</SYS>>
+
+, 131
+10/15/2023 19:02:21 - INFO - Unlimiformer - "Pre Forward Hook", Based, 1
+/raid/infolab/ashwinr/anaconda3/envs/btp/lib/python3.11/site-packages/faiss/contrib/torch_utils.py:44: UserWarning: TypedStorage is deprecated. It will be removed in the future and UntypedStorage will be the only storage class. This should only matter to you if you are using storages directly.  To access UntypedStorage directly, use tensor.untyped_storage() instead of tensor.storage()
+  x.storage().data_ptr() + x.storage_offset() * 2)
+10/15/2023 19:02:44 - INFO - Unlimiformer - "Pre Forward Hook", on, 1
+10/15/2023 19:02:59 - INFO - Unlimiformer - "Pre Forward Hook", the, 1
+10/15/2023 19:03:13 - INFO - Unlimiformer - "Pre Forward Hook", above, 1
+10/15/2023 19:03:27 - INFO - Unlimiformer - "Pre Forward Hook", information, 1
+10/15/2023 19:03:41 - INFO - Unlimiformer - "Pre Forward Hook", ,, 1
+10/15/2023 19:03:55 - INFO - Unlimiformer - "Pre Forward Hook", can, 1
+10/15/2023 19:04:09 - INFO - Unlimiformer - "Pre Forward Hook", you, 1
+10/15/2023 19:04:24 - INFO - Unlimiformer - "Pre Forward Hook", tell, 1
+10/15/2023 19:04:38 - INFO - Unlimiformer - "Pre Forward Hook", me, 1
+10/15/2023 19:04:51 - INFO - Unlimiformer - "Pre Forward Hook", what, 1
+10/15/2023 19:05:05 - INFO - Unlimiformer - "Pre Forward Hook", the, 1
+10/15/2023 19:05:19 - INFO - Unlimiformer - "Pre Forward Hook", value, 1
+10/15/2023 19:05:34 - INFO - Unlimiformer - "Pre Forward Hook", is, 1
+10/15/2023 19:05:49 - INFO - Unlimiformer - "Pre Forward Hook", for, 1
+10/15/2023 19:06:03 - INFO - Unlimiformer - "Pre Forward Hook", ", 1
+10/15/2023 19:06:16 - INFO - Unlimiformer - "Pre Forward Hook", ce, 1
+10/15/2023 19:06:31 - INFO - Unlimiformer - "Pre Forward Hook", b, 1
+10/15/2023 19:06:45 - INFO - Unlimiformer - "Pre Forward Hook", 4, 1
+10/15/2023 19:06:59 - INFO - Unlimiformer - "Pre Forward Hook", 7, 1
+10/15/2023 19:07:16 - INFO - Unlimiformer - "Pre Forward Hook", b, 1
+10/15/2023 19:07:31 - INFO - Unlimiformer - "Pre Forward Hook", "?, 1
+10/15/2023 19:07:47 - INFO - Unlimiformer - "Pre Forward Hook", [, 1
+10/15/2023 19:08:02 - INFO - Unlimiformer - "Pre Forward Hook", /, 1
+10/15/2023 19:08:16 - INFO - Unlimiformer - "Pre Forward Hook", INST, 1
+10/15/2023 19:08:32 - INFO - Unlimiformer - "Pre Forward Hook", ], 1
+10/15/2023 19:08:48 - INFO - Unlimiformer - "Pre Forward Hook", , 1
+10/15/2023 19:09:03 - INFO - Unlimiformer - "Pre Forward Hook", Sure, 1
+10/15/2023 19:09:18 - INFO - Unlimiformer - "Pre Forward Hook", !, 1
+10/15/2023 19:09:34 - INFO - Unlimiformer - "Pre Forward Hook", Based, 1
+10/15/2023 19:09:49 - INFO - Unlimiformer - "Pre Forward Hook", on, 1
+10/15/2023 19:10:04 - INFO - Unlimiformer - "Pre Forward Hook", the, 1
+10/15/2023 19:10:20 - INFO - Unlimiformer - "Pre Forward Hook", information, 1
+10/15/2023 19:10:36 - INFO - Unlimiformer - "Pre Forward Hook", provided, 1
+10/15/2023 19:10:51 - INFO - Unlimiformer - "Pre Forward Hook", ,, 1
+10/15/2023 19:11:07 - INFO - Unlimiformer - "Pre Forward Hook", the, 1
+10/15/2023 19:11:21 - INFO - Unlimiformer - "Pre Forward Hook", value, 1
+10/15/2023 19:11:38 - INFO - Unlimiformer - "Pre Forward Hook", for, 1
+10/15/2023 19:11:54 - INFO - Unlimiformer - "Pre Forward Hook", ", 1
+10/15/2023 19:12:09 - INFO - Unlimiformer - "Pre Forward Hook", ce, 1
+10/15/2023 19:12:26 - INFO - Unlimiformer - "Pre Forward Hook", b, 1
+10/15/2023 19:12:40 - INFO - Unlimiformer - "Pre Forward Hook", 4, 1
+10/15/2023 19:12:56 - INFO - Unlimiformer - "Pre Forward Hook", 7, 1
+10/15/2023 19:13:12 - INFO - Unlimiformer - "Pre Forward Hook", b, 1
+10/15/2023 19:13:28 - INFO - Unlimiformer - "Pre Forward Hook", ", 1
+10/15/2023 19:13:44 - INFO - Unlimiformer - "Pre Forward Hook", is, 1
+10/15/2023 19:13:59 - INFO - Unlimiformer - "Pre Forward Hook", ", 1
+10/15/2023 19:14:15 - INFO - Unlimiformer - "Pre Forward Hook", 3, 1
+10/15/2023 19:14:31 - INFO - Unlimiformer - "Pre Forward Hook", 5, 1
+10/15/2023 19:14:46 - INFO - Unlimiformer - "Pre Forward Hook", b, 1
+10/15/2023 19:15:03 - INFO - Unlimiformer - "Pre Forward Hook", 3, 1
+Traceback (most recent call last):
+  File "/raid/infolab/ashwinr/RoPE/unlimiformer/src/run_generation.py", line 583, in <module>
+    main()
+  File "/raid/infolab/ashwinr/RoPE/unlimiformer/src/run_generation.py", line 534, in main
+    output_sequences = model.generate(
+                       ^^^^^^^^^^^^^^^
+  File "/raid/infolab/ashwinr/RoPE/unlimiformer/src/unlimiformer.py", line 693, in pre_generate_hook
+    vals_pred.append(self.original_generate_func(input_ids_prefix, **new_kwargs))
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/raid/infolab/ashwinr/anaconda3/envs/btp/lib/python3.11/site-packages/torch/utils/_contextlib.py", line 115, in decorate_context
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "/raid/infolab/ashwinr/anaconda3/envs/btp/lib/python3.11/site-packages/transformers/generation/utils.py", line 1648, in generate
+    return self.sample(
+           ^^^^^^^^^^^^
+  File "/raid/infolab/ashwinr/anaconda3/envs/btp/lib/python3.11/site-packages/transformers/generation/utils.py", line 2730, in sample
+    outputs = self(
+              ^^^^^
+  File "/raid/infolab/ashwinr/anaconda3/envs/btp/lib/python3.11/site-packages/torch/nn/modules/module.py", line 1501, in _call_impl
+    return forward_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/raid/infolab/ashwinr/RoPE/unlimiformer/src/unlimiformer.py", line 778, in pre_forward_hook
+    result = self.original_forward_func(input_ids=input_ids, labels=labels, attention_mask=attention_mask, **kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/raid/infolab/ashwinr/anaconda3/envs/btp/lib/python3.11/site-packages/transformers/models/llama/modeling_llama.py", line 820, in forward
+    outputs = self.model(
+              ^^^^^^^^^^^
+  File "/raid/infolab/ashwinr/anaconda3/envs/btp/lib/python3.11/site-packages/torch/nn/modules/module.py", line 1501, in _call_impl
+    return forward_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/raid/infolab/ashwinr/anaconda3/envs/btp/lib/python3.11/site-packages/transformers/models/llama/modeling_llama.py", line 708, in forward
+    layer_outputs = decoder_layer(
+                    ^^^^^^^^^^^^^^
+  File "/raid/infolab/ashwinr/anaconda3/envs/btp/lib/python3.11/site-packages/torch/nn/modules/module.py", line 1501, in _call_impl
+    return forward_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/raid/infolab/ashwinr/anaconda3/envs/btp/lib/python3.11/site-packages/transformers/models/llama/modeling_llama.py", line 436, in forward
+    hidden_states = self.post_attention_layernorm(hidden_states)
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/raid/infolab/ashwinr/anaconda3/envs/btp/lib/python3.11/site-packages/torch/nn/modules/module.py", line 1501, in _call_impl
+    return forward_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+KeyboardInterrupt

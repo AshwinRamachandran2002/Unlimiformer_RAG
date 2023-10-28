@@ -497,13 +497,13 @@ class Unlimiformer(Generic[ModelType]):
                         if self.csv_unlimiformer and self.ind_up <= 50:# not self.not_first_encoding_pass:
                             # self.hidden_layer_our[i] = layer_states.to(self.datastore_device)
                             if self.ind_up == 1:
-                                self.hidden_layer_our[i] = torch.cat((layer_states[:, 0:4], layer_states[:, 7:]), dim=-2).reshape((1, 12, -1)).to(self.datastore_device)
+                                self.hidden_layer_our[i] = torch.cat((layer_states[:, 0:4], layer_states[:, 4:]), dim=-2).reshape((1, 11, -1)).to(self.datastore_device)
                             elif self.ind_up == 2:
-                                self.hidden_layer_our[i] = torch.cat((self.hidden_layer_our[i], torch.cat((layer_states[:, 0:4], layer_states[:, 7:]), dim=-2)), dim = -2).reshape((1, 24, -1)).to(self.datastore_device)
+                                self.hidden_layer_our[i] = torch.cat((self.hidden_layer_our[i], torch.cat((layer_states[:, 0:4], layer_states[:, 4:]), dim=-2)), dim = -2).reshape((1, 22, -1)).to(self.datastore_device)
                             else:
-                                self.hidden_layer_our[i] = torch.cat((self.hidden_layer_our[i][:, 12:], torch.cat((layer_states[:, 0:4], layer_states[:, 7:]), dim=-2)), dim = -2).to(self.datastore_device)
+                                self.hidden_layer_our[i] = torch.cat((self.hidden_layer_our[i][:, 11:], torch.cat((layer_states[:, 0:4], layer_states[:, 4:]), dim=-2)), dim = -2).to(self.datastore_device)
                         if self.csv_unlimiformer and not self.not_first_encoding_pass:
-                            self.hidden_layer_our_anchor[i] = layer_states[:, 0:3].reshape((1, 3, -1)).to(self.datastore_device)
+                            self.hidden_layer_our_anchor[i] = layer_states[:, 0:2].reshape((1, 2, -1)).to(self.datastore_device)
                         # if self.csv_unlimiformer and self.not_first_encoding_pass:
                         #     self.hidden_layer_our_anchor[i]  = torch.cat((self.hidden_layer_our_anchor[i] , layer_states[:, 0:1].reshape((1, 1, -1)).to(self.datastore_device)), dim = -2)
                 logger.info(f'using only the first hidden states, stablising first also, so discard baking, trying to make Lee the stabliser, third in book, also adding diff position ids, making Zelensky stabiliser')
@@ -756,9 +756,9 @@ class Unlimiformer(Generic[ModelType]):
     # format copied from https://huggingface.co/spaces/huggingface-projects/llama-2-13b-chat/blob/main/model.py
     def prefix(self, leni):
         if self.ind_up == 2:
-            return ' '.join(['Fact'] * (3 + 12))
+            return ' '.join(['Fact'] * (2 + 11))
         else:
-            return ' '.join(['Fact'] * (3 + 12*2))
+            return ' '.join(['Fact'] * (2 + 11*2))
         if leni == 1:
             # return '{"A" : "B"},'
             return 'Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact'
