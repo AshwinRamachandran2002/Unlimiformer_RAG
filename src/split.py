@@ -20,6 +20,7 @@ for segment in segments:
     for i in range(len(inputs)):
         print(tokenizer.decode(inputs[i]), end=" ")
     print(len(inputs))
+    print(inputs)
     len_list.append(len(inputs))
 tot_len = 0
 len_list[len(len_list)-1] = len_list[len(len_list) - 1] - 1

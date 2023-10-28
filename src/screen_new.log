@@ -1,0 +1,1060 @@
+You are a helpful assistant. Answer with short responses according to the question.
+<</SYS>>
+
+What on the given facted facts, facts, answer you tell me the israbhu is doing?
+/INST:  Sure! Based on the list of facts you provided, Fact number 1092 is "Prabhu is directing."</s>
+=== GENERATED SEQUENCE 1 (input length: 299) ===
+|||<s>[INST] <<SYS>>
+You are a helpful assistant. Answer with short responses according to the question.
+<</SYS>>
+
+What on the given facted facts, facts, answer you tell me the is doingring?
+/INST:  Sure! Based on the list of facts you provided, the answer to the question "Who is stirring?" is:
+
+Fact number 2830: Alexisill is stirring.</s>
+=== GENERATED SEQUENCE 1 (input length: 299) ===
+|||<s>[INST] <<SYS>>
+You are a helpful assistant. Answer with short responses according to the question.
+<</SYS>>
+
+What on the given facted facts, facts, answer you tell me the isisill is doing?
+/INST:  Sure! Based on the list of facts you provided, Fact number 2830 is "Alexisill is stirring."</s>
+=== GENERATED SEQUENCE 1 (input length: 299) ===
+|||<s>[INST] <<SYS>>
+You are a helpful assistant. Answer with short responses according to the question.
+<</SYS>>
+
+What on the given facted facts, facts, answer you tell me the is doingoking?
+/INST:  Sure! Based on the list of facts you provided, Fact number 5839 is "Rajinikan is smoking."</s>
+=== GENERATED SEQUENCE 1 (input length: 299) ===
+|||<s>[INST] <<SYS>>
+You are a helpful assistant. Answer with short responses according to the question.
+<</SYS>>
+
+What on the given facted facts, facts, answer you tell me the isinikan is doing?
+/INST0  Sure! Based on the list of facts you provided, Rajinikan is smoking, which is fact number 5839.</s>
+=== GENERATED SEQUENCE 1 (input length: 299) ===
+|||<s>[INST] <<SYS>>
+You are a helpful assistant. Answer with short responses according to the question.
+<</SYS>>
+
+What on the given facted facts, facts, answer you tell me the is doinging?
+/INST.  Sure! Based on the list of facts you provided, the answer to who is cleaning is:
+
+Fact number 2387: Lamarkin is cleaning.</s>
+=== GENERATED SEQUENCE 1 (input length: 299) ===
+|||<s>[INST] <<SYS>>
+You are a helpful assistant. Answer with short responses according to the question.
+<</SYS>>
+
+What on the given facted facts, facts, answer you tell me the isarkin is doing?
+/INST0  Sure! Based on the list of facts you provided, Fact number 2387 is "Lamarkin is cleaning."</s>
+=== GENERATED SEQUENCE 1 (input length: 299) ===
+|||<s>[INST] <<SYS>>
+You are a helpful assistant. Answer with short responses according to the question.
+<</SYS>>
+
+What on the given facted facts, facts, answer you tell me the is doinging?
+/INST0  Sure! Based on the list of facts you provided, Fact number 7583 states that Pooja is arriving.</s>
+=== GENERATED SEQUENCE 1 (input length: 299) ===
+|||<s>[INST] <<SYS>>
+You are a helpful assistant. Answer with short responses according to the question.
+<</SYS>>
+
+What on the given facted facts, facts, answer you tell me the israbja is doing?
+/INST0  Sure! Based on the list of facts you provided, Fact number 7583 states that Pooja is arriving.</s>
+=== GENERATED SEQUENCE 1 (input length: 299) ===
+|||<s>[INST] <<SYS>>
+You are a helpful assistant. Answer with short responses according to the question.
+<</SYS>>
+
+What on the given facted facts, facts, answer you tell me the is doingpping?
+/INST0  Sure! Based on the list of facts you provided, Fact number 0105 states that Jitesh is shopping.</s>
+=== GENERATED SEQUENCE 1 (input length: 299) ===
+|||<s>[INST] <<SYS>>
+You are a helpful assistant. Answer with short responses according to the question.
+<</SYS>>
+
+What on the given facted facts, facts, answer you tell me the isitesh is doing?
+/INST:  Sure! Based on the list of facts you provided, Fact number 1092 states that Jitesh is shopping.</s>
+=== GENERATED SEQUENCE 1 (input length: 299) ===
+|||<s>[INST] <<SYS>>
+You are a helpful assistant. Answer with short responses according to the question.
+<</SYS>>
+
+What on the given facted facts, facts, answer you tell me the is doingoking?
+/INST:  Sure! Based on the list of facts you provided, Fact number 1829 states that "Ramanan is joking."</s>
+=== GENERATED SEQUENCE 1 (input length: 299) ===
+|||<s>[INST] <<SYS>>
+You are a helpful assistant. Answer with short responses according to the question.
+<</SYS>>
+
+What on the given facted facts, facts, answer you tell me the isanan is doing?
+/INST:  Sure! Based on the list of facts you provided, Fact number 1829 states that Ramanan is joking.</s>
+=== GENERATED SEQUENCE 1 (input length: 299) ===
+|||<s>[INST] <<SYS>>
+You are a helpful assistant. Answer with short responses according to the question.
+<</SYS>>
+
+What on the given facted facts, facts, answer you tell me the is doinging?
+/INST0  Sure! Based on the list of facts you provided, the answer to your question is:
+
+Fact number 153: Arvind is jumping.</s>
+=== GENERATED SEQUENCE 1 (input length: 299) ===
+|||<s>[INST] <<SYS>>
+You are a helpful assistant. Answer with short responses according to the question.
+<</SYS>>
+
+What on the given facted facts, facts, answer you tell me the isvind is doing?
+/INST0  Sure! Based on the list of facts you provided, Fact number 153 states that Arvind is jumping.</s>
+(btp) ashwinr@iitb-dgx2:~/RoPE/unlimiformer/src$ python run_generation.py --model_type llama --model_name_or_path meta-llama/Llama-2-13b-chat-hf --prefix "" --prompt data_final_data
+1/original_data.txt --suffix "" --test_unlimiformer --fp16 --length 300 --layer_begin 0 --index_devices 4 --datastore_device 4 2> logs165_final_20_kt_3_remove_4ids_consec_also_diff_
+normal_gen_sequential.txt
+(btp) ashwinr@iitb-dgx2:~/RoPE/unlimiformer/src$ python run_generation.py --model_type llama --model_name_or_path meta-llama/Llama-2-13b-chat-hf --prefix "" --prompt data_final_data
+1/original_data.txt --suffix "" --test_unlimiformer --fp16 --length 300 --layer_begin 0 --index_devices 4 --datastore_device 4 2> logs165_final_20_kt_3_remove_4ids_consec_also_diff_
+normal_gen_sequential.txt
+=== GENERATED SEQUENCE 1 (input length: 299) ===
+|||<s>[INST] <<SYS>>
+You are a helpful assistant. Answer with short responses according to the question.
+<</SYS>>
+
+What on the given listed list of facts, answer you tell me the is doingaking?
+/INST   Sure! Based on the list of facts you provided, the answer to the question "Who is baking?" is:
+
+Fact number 6803: Rithik is baking.</s>
+=== GENERATED SEQUENCE 1 (input length: 299) ===
+|||<s>[INST] <<SYS>>
+You are a helpful assistant. Answer with short responses according to the question.
+<</SYS>>
+
+What on the given listed list of facts, answer you tell me the isakesik is doing?
+/INST.  Sure! Based on the list of facts you provided, Rithik is baking.</s>
+=== GENERATED SEQUENCE 1 (input length: 299) ===
+|||<s>[INST] <<SYS>>
+You are a helpful assistant. Answer with short responses according to the question.
+<</SYS>>
+
+What on the given listed list of facts, answer you tell me the is doingcling?<//INST:  Sure! Based on the list of facts you provided, the person who is cycling is:
+
+Fact number 9645: Oppenheimer.</s>
+=== GENERATED SEQUENCE 1 (input length: 299) ===
+|||<s>[INST] <<SYS>>
+You are a helpful assistant. Answer with short responses according to the question.
+<</SYS>>
+
+What on the given listed list of facts, answer you tell me the isppenheimer is doing?
+/INST   Sure! Based on the list of facts you provided, Oppenheimer is cycling.</s>
+=== GENERATED SEQUENCE 1 (input length: 299) ===
+|||<s>[INST] <<SYS>>
+You are a helpful assistant. Answer with short responses according to the question.
+<</SYS>>
+
+What on the given listed list of facts, answer you tell me the is doinging?
+/INST0  Sure! Based on the list of facts you provided, fact number 9825 states that Leechenbaum is sleeping.</s>
+=== GENERATED SEQUENCE 1 (input length: 299) ===
+|||<s>[INST] <<SYS>>
+You are a helpful assistant. Answer with short responses according to the question.
+<</SYS>>
+
+What on the given listed list of facts, answer you tell me the ischenbaum is doing?
+/INST0  Sure! Based on the list of facts you provided, Leechenbaum is sleeping (fact number 9825).</s>
+=== GENERATED SEQUENCE 1 (input length: 299) ===
+|||<s>[INST] <<SYS>>
+You are a helpful assistant. Answer with short responses according to the question.
+<</SYS>>
+
+What on the given listed list of facts, answer you tell me the is doinging?
+/INST:  Sure! Based on the list of facts you provided, the person who is relaxing is:
+
+Fact number 3280: Zelensky is relaxing.</s>
+=== GENERATED SEQUENCE 1 (input length: 299) ===
+|||<s>[INST] <<SYS>>
+You are a helpful assistant. Answer with short responses according to the question.
+<</SYS>>
+
+What on the given listed list of facts, answer you tell me the isensky is doing?<//INST:  Sure! Based on the list of facts you provided, Zelensky is relaxing.</s>
+=== GENERATED SEQUENCE 1 (input length: 299) ===
+|||<s>[INST] <<SYS>>
+You are a helpful assistant. Answer with short responses according to the question.
+<</SYS>>
+
+What on the given listed list of facts, answer you tell me the is doingating?<//INST.  Sure! Based on the list of facts you provided, the answer to your question "Who is eating?" is
+:
+
+Fact number 2054: Murugan is eating.</s>
+=== GENERATED SEQUENCE 1 (input length: 299) ===
+|||<s>[INST] <<SYS>>
+You are a helpful assistant. Answer with short responses according to the question.
+<</SYS>>
+
+What on the given listed list of facts, answer you tell me the isugan is doing?
+/INST.  Sure! Based on the list of facts you provided, Murugan is eating.</s>
+=== GENERATED SEQUENCE 1 (input length: 299) ===
+|||<s>[INST] <<SYS>>
+You are a helpful assistant. Answer with short responses according to the question.
+<</SYS>>
+
+What on the given listed list of facts, answer you tell me the is doinging?
+/INST:  Sure! Based on the list of facts you provided, the answer to your question is:
+
+Fact number 5703: Vaibhav is drinking.</s>
+=== GENERATED SEQUENCE 1 (input length: 299) ===
+|||<s>[INST] <<SYS>>
+You are a helpful assistant. Answer with short responses according to the question.
+<</SYS>>
+
+What on the given listed list of facts, answer you tell me the isibhav is doing?
+/INST0  Sure! Based on the list of facts you provided, Vaibhav is drinking.</s>
+=== GENERATED SEQUENCE 1 (input length: 299) ===
+|||<s>[INST] <<SYS>>
+You are a helpful assistant. Answer with short responses according to the question.
+<</SYS>>
+
+What on the given listed list of facts, answer you tell me the is doinging?
+/INST:  Sure! Based on the list of facts you provided, the answer to the question "Who is cooking?" is:
+
+Fact number 2984: Rohit is cooking.</s>
+=== GENERATED SEQUENCE 1 (input length: 299) ===
+|||<s>[INST] <<SYS>>
+You are a helpful assistant. Answer with short responses according to the question.
+<</SYS>>
+
+What on the given listed list of facts, answer you tell me the isakesit is doing?
+/INST0  Sure! Based on the list of facts you provided, Rohit is cooking.</s>
+=== GENERATED SEQUENCE 1 (input length: 299) ===
+|||<s>[INST] <<SYS>>
+You are a helpful assistant. Answer with short responses according to the question.
+<</SYS>>
+
+What on the given listed list of facts, answer you tell me the is doingling?
+/INST:  Sure! Based on the list of facts you provided, the answer to your question is:
+
+Fact number 7351: Rakesh is bowling.</s>
+=== GENERATED SEQUENCE 1 (input length: 299) ===
+|||<s>[INST] <<SYS>>
+You are a helpful assistant. Answer with short responses according to the question.
+<</SYS>>
+
+What on the given listed list of facts, answer you tell me the isakesh is doing?
+/INST.  Sure! Based on the list of facts you provided, Rakesh is bowling.</s>
+=== GENERATED SEQUENCE 1 (input length: 299) ===
+|||<s>[INST] <<SYS>>
+You are a helpful assistant. Answer with short responses according to the question.
+<</SYS>>
+
+What on the given listed list of facts, answer you tell me the is doinging?
+/INST0  Sure! Based on the list of facts you provided, the answer to your question is:
+
+Fact number 0018: Balaksh is gardening.</s>
+=== GENERATED SEQUENCE 1 (input length: 299) ===
+|||<s>[INST] <<SYS>>
+You are a helpful assistant. Answer with short responses according to the question.
+<</SYS>>
+
+What on the given listed list of facts, answer you tell me the isheer is doing?
+/INST.  Sure! Based on the list of facts you provided, Dheer is gardening (Fact number 0392).</s>
+=== GENERATED SEQUENCE 1 (input length: 299) ===
+|||<s>[INST] <<SYS>>
+You are a helpful assistant. Answer with short responses according to the question.
+<</SYS>>
+
+What on the given listed list of facts, answer you tell me the is doingiting?
+/INST:  Sure! Based on the list of facts you provided, the person who is vomiting is:
+
+Fact number 6732: Kimmel.</s>
+=== GENERATED SEQUENCE 1 (input length: 299) ===
+|||<s>[INST] <<SYS>>
+You are a helpful assistant. Answer with short responses according to the question.
+<</SYS>>
+
+What on the given listed list of facts, answer you tell me the isimmel is doing?
+/INST.  Sure! Based on the list of facts you provided, Kimmel is vomiting.</s>
+=== GENERATED SEQUENCE 1 (input length: 299) ===
+|||<s>[INST] <<SYS>>
+You are a helpful assistant. Answer with short responses according to the question.
+<</SYS>>
+
+What on the given listed list of facts, answer you tell me the is doinging whom<//INST.  Sure! Based on the list of facts you provided, the answer to the question "Who is poking?" i
+s:
+
+Fact number 3656: Mamanan is poking.</s>
+=== GENERATED SEQUENCE 1 (input length: 299) ===
+|||<s>[INST] <<SYS>>
+You are a helpful assistant. Answer with short responses according to the question.
+<</SYS>>
+
+What on the given listed list of facts, answer you tell me the isamanan is doing?
+/INST:  Sure! Based on the list of facts you provided, Mamanan is poking.</s>
+=== GENERATED SEQUENCE 1 (input length: 299) ===
+|||<s>[INST] <<SYS>>
+You are a helpful assistant. Answer with short responses according to the question.
+<</SYS>>
+
+What on the given listed list of facts, answer you tell me the is doingughing?<//INST0  Sure! Based on the list of facts you provided, fact number 0018 states that Balaksh is laughi
+ng.</s>
+=== GENERATED SEQUENCE 1 (input length: 299) ===
+|||<s>[INST] <<SYS>>
+You are a helpful assistant. Answer with short responses according to the question.
+<</SYS>>
+
+What on the given listed list of facts, answer you tell me the isaksh is doing?
+/INST0  Sure! Based on the list of facts you provided, Balaksh is laughing (Fact number 0018).</s>
+=== GENERATED SEQUENCE 1 (input length: 299) ===
+|||<s>[INST] <<SYS>>
+You are a helpful assistant. Answer with short responses according to the question.
+<</SYS>>
+
+What on the given listed list of facts, answer you tell me the is doinging?<//INST.  Sure! Based on the list of facts you provided, fact number 1092 states that Prabhu is directing.
+</s>
+=== GENERATED SEQUENCE 1 (input length: 299) ===
+|||<s>[INST] <<SYS>>
+You are a helpful assistant. Answer with short responses according to the question.
+<</SYS>>
+
+What on the given listed list of facts, answer you tell me the israbhu is doing?
+/INST   Sure! Based on the list of facts you provided, Prabhu is directing.</s>
+=== GENERATED SEQUENCE 1 (input length: 299) ===
+|||<s>[INST] <<SYS>>
+You are a helpful assistant. Answer with short responses according to the question.
+<</SYS>>
+
+What on the given listed list of facts, answer you tell me the is doingring?<//INST:  Sure! Based on the list of facts you provided, fact number 2830 states that Alexisill is stirri
+ng.</s>
+=== GENERATED SEQUENCE 1 (input length: 299) ===
+|||<s>[INST] <<SYS>>
+You are a helpful assistant. Answer with short responses according to the question.
+<</SYS>>
+
+What on the given listed list of facts, answer you tell me the isisill is doing?
+/INST:  Sure! Based on the list of facts you provided, Alexisill is stirring.</s>
+=== GENERATED SEQUENCE 1 (input length: 299) ===
+|||<s>[INST] <<SYS>>
+You are a helpful assistant. Answer with short responses according to the question.
+<</SYS>>
+
+What on the given listed list of facts, answer you tell me the is doingoking?
+/INST:  Sure! Based on the list of facts you provided, the person who is smoking is:
+
+Fact number 5839: Rajinikan.</s>
+=== GENERATED SEQUENCE 1 (input length: 299) ===
+|||<s>[INST] <<SYS>>
+You are a helpful assistant. Answer with short responses according to the question.
+<</SYS>>
+
+What on the given listed list of facts, answer you tell me the isinikanth doing?
+/INST0  Sure! Based on the list of facts you provided, Rajinikan is smoking, according to fact number 5839.</s>
+=== GENERATED SEQUENCE 1 (input length: 299) ===
+|||<s>[INST] <<SYS>>
+You are a helpful assistant. Answer with short responses according to the question.
+<</SYS>>
+
+What on the given listed list of facts, answer you tell me the is doinging?<//INST.  Sure! Based on the list of facts you provided, the answer to your question is:
+
+Fact number 2387: Lamarkin is cleaning.</s>
+=== GENERATED SEQUENCE 1 (input length: 299) ===
+|||<s>[INST] <<SYS>>
+You are a helpful assistant. Answer with short responses according to the question.
+<</SYS>>
+
+What on the given listed list of facts, answer you tell me the isarkin is doing?
+/INST.  Sure! Based on the list of facts you provided, Lamarkin is cleaning.</s>
+=== GENERATED SEQUENCE 1 (input length: 299) ===
+|||<s>[INST] <<SYS>>
+You are a helpful assistant. Answer with short responses according to the question.
+<</SYS>>
+
+What on the given listed list of facts, answer you tell me the is doinging?
+/INST0  Sure! Based on the list of facts you provided, fact number 7583 states that Pooja is arriving.</s>
+=== GENERATED SEQUENCE 1 (input length: 299) ===
+|||<s>[INST] <<SYS>>
+You are a helpful assistant. Answer with short responses according to the question.
+<</SYS>>
+
+What on the given listed list of facts, answer you tell me the israbja is doing?
+/INST0  Sure! Based on the list of facts you provided, Pooja is arriving, as indicated by fact number 7583.</s>
+=== GENERATED SEQUENCE 1 (input length: 299) ===
+|||<s>[INST] <<SYS>>
+You are a helpful assistant. Answer with short responses according to the question.
+<</SYS>>
+
+What on the given listed list of facts, answer you tell me the is doingpping?<//INST0  Sure! Based on the list of facts you provided, fact number 0105 states that Jitesh is shopping
+.</s>
+=== GENERATED SEQUENCE 1 (input length: 299) ===
+|||<s>[INST] <<SYS>>
+You are a helpful assistant. Answer with short responses according to the question.
+<</SYS>>
+
+What on the given listed list of facts, answer you tell me the isitesh is doing?
+/INST0  Sure! Based on the list of facts you provided, Jitesh is shopping (Fact number 0105).</s>
+=== GENERATED SEQUENCE 1 (input length: 299) ===
+|||<s>[INST] <<SYS>>
+You are a helpful assistant. Answer with short responses according to the question.
+<</SYS>>
+
+What on the given listed list of facts, answer you tell me the is doingoking?<//INST.  Sure! Based on the list of facts you provided, fact number 1829 states that Ramanan is joking.
+</s>
+=== GENERATED SEQUENCE 1 (input length: 299) ===
+|||<s>[INST] <<SYS>>
+You are a helpful assistant. Answer with short responses according to the question.
+<</SYS>>
+
+What on the given listed list of facts, answer you tell me the isanan is doing?
+/INST]  Sure! Based on the list of facts you provided, Ramanan is joking.</s>
+=== GENERATED SEQUENCE 1 (input length: 299) ===
+|||<s>[INST] <<SYS>>
+You are a helpful assistant. Answer with short responses according to the question.
+<</SYS>>
+
+What on the given listed list of facts, answer you tell me the is doinging?<//INST0  Sure! Based on the list of facts you provided, fact number 0153 states that Arvind is jumping.</
+s>
+=== GENERATED SEQUENCE 1 (input length: 299) ===
+|||<s>[INST] <<SYS>>
+You are a helpful assistant. Answer with short responses according to the question.
+<</SYS>>
+
+What on the given listed list of facts, answer you tell me the isvind is doing?
+/INST.  Sure! Based on the list of facts you provided, Arvind is jumping.</s>
+(btp) ashwinr@iitb-dgx2:~/RoPE/unlimiformer/src$ python run_generation.py --model_type llama --model_name_or_path meta-llama/Llama-2-13b-chat-hf --prefix "" --prompt data_final_data
+1/original_data.txt --suffix "" --test_unlimiformer --fp16 --length 300 --layer_begin 0 --index_devices 4 --datastore_device 4 2> logs165_final_20_kt_3_remove_4ids_consec_also_diff_
+removing_nums_from_context.txt
+(btp) ashwinr@iitb-dgx2:~/RoPE/unlimiformer/src$ python run_generation.py --model_type llama --model_name_or_path meta-llama/Llama-2-13b-chat-hf --prefix "" --prompt data_final_data
+1/original_data.txt --suffix "" --test_unlimiformer --fp16 --length 300 --layer_begin 0 --index_devices 4 --datastore_device 4 2> logs165_final_20_kt_3_remove_4ids_consec_also_diff_
+removing_nums_from_context.txt
+=== GENERATED SEQUENCE 1 (input length: 299) ===
+|||<s>[INST] <<SYS>>
+You are a helpful assistant. Answer with short responses according to the question.
+<</SYS>>
+
+What on the moon factsing facts of facts, which you guess me the is doingaking?
+/text0  Sure! Based on the numbered list of facts you provided, the person who is baking is:
+
+Fact number 6803: Rithik.</s>
+=== GENERATED SEQUENCE 1 (input length: 299) ===
+|||<s>[INST] <<SYS>>
+You are a helpful assistant. Answer with short responses according to the question.
+<</SYS>>
+
+What on the moon factsing facts of facts, which you guess me the isakesik is doing?</s>
+=== GENERATED SEQUENCE 1 (input length: 299) ===
+|||<s>[INST] <<SYS>>
+You are a helpful assistant. Answer with short responses according to the question.
+<</SYS>>
+
+What on the moon factsing facts of facts, which you guess me the is doingcling?
+/info0  Sure! Based on the list of facts you provided, the person who is cycling is:
+
+Fact number 9645: Oppenheimer.</s>
+=== GENERATED SEQUENCE 1 (input length: 299) ===
+|||<s>[INST] <<SYS>>
+You are a helpful assistant. Answer with short responses according to the question.
+<</SYS>>
+
+What on the moon factsing facts of facts, which you guess me the isppenheimer is doing?</s>
+=== GENERATED SEQUENCE 1 (input length: 299) ===
+|||<s>[INST] <<SYS>>
+You are a helpful assistant. Answer with short responses according to the question.
+<</SYS>>
+
+What on the moon factsing facts of facts, which you guess me the is doinging?</s>
+=== GENERATED SEQUENCE 1 (input length: 299) ===
+|||<s>[INST] <<SYS>>
+You are a helpful assistant. Answer with short responses according to the question.
+<</SYS>>
+
+What on the moon factsing facts of facts, which you guess me the ischenbaum is doing?</s>
+=== GENERATED SEQUENCE 1 (input length: 299) ===
+|||<s>[INST] <<SYS>>
+You are a helpful assistant. Answer with short responses according to the question.
+<</SYS>>
+
+What on the moon factsing facts of facts, which you guess me the is doinging?
+/info0  Sure! Based on the numbered list of facts you provided, the person who is relaxing is:
+
+Fact number 0153: Rakesh is relaxing.</s>
+=== GENERATED SEQUENCE 1 (input length: 299) ===
+|||<s>[INST] <<SYS>>
+You are a helpful assistant. Answer with short responses according to the question.
+<</SYS>>
+
+What on the moon factsing facts of facts, which you guess me the isensky is doing?</s>
+=== GENERATED SEQUENCE 1 (input length: 299) ===
+|||<s>[INST] <<SYS>>
+You are a helpful assistant. Answer with short responses according to the question.
+<</SYS>>
+
+What on the moon factsing facts of facts, which you guess me the is doingating?
+/text:  Sure! Based on the numbered list of facts you provided, the person who is eating is:
+
+Fact number 2830: Rohit.</s>
+=== GENERATED SEQUENCE 1 (input length: 299) ===
+|||<s>[INST] <<SYS>>
+You are a helpful assistant. Answer with short responses according to the question.
+<</SYS>>
+
+What on the moon factsing facts of facts, which you guess me the isugan is doing?</s>
+=== GENERATED SEQUENCE 1 (input length: 299) ===
+|||<s>[INST] <<SYS>>
+You are a helpful assistant. Answer with short responses according to the question.
+<</SYS>>
+
+What on the moon factsing facts of facts, which you guess me the is doinging?</s>
+=== GENERATED SEQUENCE 1 (input length: 299) ===
+|||<s>[INST] <<SYS>>
+You are a helpful assistant. Answer with short responses according to the question.
+<</SYS>>
+
+What on the moon factsing facts of facts, which you guess me the isibhav is doing?
+/text0  Based on the numbered list of facts you provided, we can see that:
+
+Fact number 2830: Vaibhav is drinking.</s>
+=== GENERATED SEQUENCE 1 (input length: 299) ===
+|||<s>[INST] <<SYS>>
+You are a helpful assistant. Answer with short responses according to the question.
+<</SYS>>
+
+What on the moon factsing facts of facts, which you guess me the is doinging?</s>
+=== GENERATED SEQUENCE 1 (input length: 299) ===
+|||<s>[INST] <<SYS>>
+You are a helpful assistant. Answer with short responses according to the question.
+<</SYS>>
+
+What on the moon factsing facts of facts, which you guess me the isakesit is doing?</s>
+=== GENERATED SEQUENCE 1 (input length: 299) ===
+|||<s>[INST] <<SYS>>
+You are a helpful assistant. Answer with short responses according to the question.
+<</SYS>>
+
+What on the moon factsing facts of facts, which you guess me the is doingling?
+/info0  Sure! Based on the numbered list of facts you provided, the person who is bowling is:
+
+Fact number 3280: Rakesh.</s>
+=== GENERATED SEQUENCE 1 (input length: 299) ===
+|||<s>[INST] <<SYS>>
+You are a helpful assistant. Answer with short responses according to the question.
+<</SYS>>
+
+What on the moon factsing facts of facts, which you guess me the isakesh is doing?
+/text0  Based on the list of facts you provided, Rakesh is bowling (Fact number 2984).</s>
+=== GENERATED SEQUENCE 1 (input length: 299) ===
+|||<s>[INST] <<SYS>>
+You are a helpful assistant. Answer with short responses according to the question.
+<</SYS>>
+
+What on the moon factsing facts of facts, which you guess me the is doinging?
+/info0  Sure! Based on the numbered list of facts you provided, the person who is gardening is:
+
+Fact number 0018: Dheer is gardening.</s>
+=== GENERATED SEQUENCE 1 (input length: 299) ===
+|||<s>[INST] <<SYS>>
+You are a helpful assistant. Answer with short responses according to the question.
+<</SYS>>
+
+What on the moon factsing facts of facts, which you guess me the isheer is doing?</s>
+=== GENERATED SEQUENCE 1 (input length: 299) ===
+|||<s>[INST] <<SYS>>
+You are a helpful assistant. Answer with short responses according to the question.
+<</SYS>>
+
+What on the moon factsing facts of facts, which you guess me the is doingiting?
+/info:  Sure! Based on the numbered list of facts you provided, the person who is vomiting is:
+
+Fact number 0018: Kimmel.</s>
+=== GENERATED SEQUENCE 1 (input length: 299) ===
+|||<s>[INST] <<SYS>>
+You are a helpful assistant. Answer with short responses according to the question.
+<</SYS>>
+
+What on the moon factsing facts of facts, which you guess me the isimmel is doing?</s>
+=== GENERATED SEQUENCE 1 (input length: 299) ===
+|||<s>[INST] <<SYS>>
+You are a helpful assistant. Answer with short responses according to the question.
+<</SYS>>
+
+What on the moon factsing facts of facts, which you guess me the is doinging?
+/info0  Based on the list of facts you provided, the person who is poking is:
+
+Fact number 0018: Rakesh.</s>
+=== GENERATED SEQUENCE 1 (input length: 299) ===
+|||<s>[INST] <<SYS>>
+You are a helpful assistant. Answer with short responses according to the question.
+<</SYS>>
+
+What on the moon factsing facts of facts, which you guess me the isamanan is doing?
+/info0  Based on the list of facts you provided, Mamanan is poking.</s>
+=== GENERATED SEQUENCE 1 (input length: 299) ===
+|||<s>[INST] <<SYS>>
+You are a helpful assistant. Answer with short responses according to the question.
+<</SYS>>
+
+What on the moon factsing facts of facts, which you guess me the is doingughing?</s>
+=== GENERATED SEQUENCE 1 (input length: 299) ===
+|||<s>[INST] <<SYS>>
+You are a helpful assistant. Answer with short responses according to the question.
+<</SYS>>
+
+What on the moon factsing facts of facts, which you guess me the isaksh is doing?</s>
+=== GENERATED SEQUENCE 1 (input length: 299) ===
+|||<s>[INST] <<SYS>>
+You are a helpful assistant. Answer with short responses according to the question.
+<</SYS>>
+
+What on the moon factsing facts of facts, which you guess me the is doinging?
+/info0  Based on the list of facts you provided, Fact number 2830: Rakesh is directing.</s>
+=== GENERATED SEQUENCE 1 (input length: 299) ===
+|||<s>[INST] <<SYS>>
+You are a helpful assistant. Answer with short responses according to the question.
+<</SYS>>
+
+What on the moon factsing facts of facts, which you guess me the isoohu is doing?</s>
+=== GENERATED SEQUENCE 1 (input length: 299) ===
+|||<s>[INST] <<SYS>>
+You are a helpful assistant. Answer with short responses according to the question.
+<</SYS>>
+
+What on the moon factsing facts of facts, which you guess me the is doingring?</s>
+=== GENERATED SEQUENCE 1 (input length: 299) ===
+|||<s>[INST] <<SYS>>
+You are a helpful assistant. Answer with short responses according to the question.
+<</SYS>>
+
+What on the moon factsing facts of facts, which you guess me the isisill is doing?</s>
+=== GENERATED SEQUENCE 1 (input length: 299) ===
+|||<s>[INST] <<SYS>>
+You are a helpful assistant. Answer with short responses according to the question.
+<</SYS>>
+
+What on the moon factsing facts of facts, which you guess me the is doingoking?</s>
+=== GENERATED SEQUENCE 1 (input length: 299) ===
+|||<s>[INST] <<SYS>>
+You are a helpful assistant. Answer with short responses according to the question.
+<</SYS>>
+
+What on the moon factsing facts of facts, which you guess me the isinikanth doing?</s>
+=== GENERATED SEQUENCE 1 (input length: 299) ===
+|||<s>[INST] <<SYS>>
+You are a helpful assistant. Answer with short responses according to the question.
+<</SYS>>
+
+What on the moon factsing facts of facts, which you guess me the is doinging?</s>
+=== GENERATED SEQUENCE 1 (input length: 299) ===
+|||<s>[INST] <<SYS>>
+You are a helpful assistant. Answer with short responses according to the question.
+<</SYS>>
+
+What on the moon factsing facts of facts, which you guess me the isarkin is doing?</s>
+=== GENERATED SEQUENCE 1 (input length: 299) ===
+|||<s>[INST] <<SYS>>
+You are a helpful assistant. Answer with short responses according to the question.
+<</SYS>>
+
+What on the moon factsing facts of facts, which you guess me the is doinging?</s>
+=== GENERATED SEQUENCE 1 (input length: 299) ===
+|||<s>[INST] <<SYS>>
+You are a helpful assistant. Answer with short responses according to the question.
+<</SYS>>
+
+What on the moon factsing facts of facts, which you guess me the isooja is doing?</s>
+=== GENERATED SEQUENCE 1 (input length: 299) ===
+|||<s>[INST] <<SYS>>
+You are a helpful assistant. Answer with short responses according to the question.
+<</SYS>>
+
+What on the moon factsing facts of facts, which you guess me the is doingpping?
+/info0  Sure! Based on the list of facts you provided, Fact number 1054: Jitesh is shopping.</s>
+=== GENERATED SEQUENCE 1 (input length: 299) ===
+|||<s>[INST] <<SYS>>
+You are a helpful assistant. Answer with short responses according to the question.
+<</SYS>>
+
+What on the moon factsing facts of facts, which you guess me the isitesh is doing?</s>
+=== GENERATED SEQUENCE 1 (input length: 299) ===
+|||<s>[INST] <<SYS>>
+You are a helpful assistant. Answer with short responses according to the question.
+<</SYS>>
+
+What on the moon factsing facts of facts, which you guess me the is doingoking?
+/info0  Sure! Based on the list of facts you provided, Fact number 1829: Jitesh is shopping, and Fact number 1829: Lamarkin is cleaning.</s>
+=== GENERATED SEQUENCE 1 (input length: 299) ===
+|||<s>[INST] <<SYS>>
+You are a helpful assistant. Answer with short responses according to the question.
+<</SYS>>
+
+What on the moon factsing facts of facts, which you guess me the isananan doing?</s>
+=== GENERATED SEQUENCE 1 (input length: 299) ===
+|||<s>[INST] <<SYS>>
+You are a helpful assistant. Answer with short responses according to the question.
+<</SYS>>
+
+What on the moon factsing facts of facts, which you guess me the is doinging?</s>
+=== GENERATED SEQUENCE 1 (input length: 299) ===
+|||<s>[INST] <<SYS>>
+You are a helpful assistant. Answer with short responses according to the question.
+<</SYS>>
+
+What on the moon factsing facts of facts, which you guess me the isvind is doing?
+/info0  Sure! Based on the list of facts you provided, Fact number 1829: Arvind is jumping.</s>
+(btp) ashwinr@iitb-dgx2:~/RoPE/unlimiformer/src$ python run_generation.py --model_type llama --model_name_or_path meta-llama/Llama-2-13b-chat-hf --prefix "" --prompt data_final_data
+1/original_data.txt --suffix "" --test_unlimiformer --fp16 --length 300 --layer_begin 0 --index_devices 4 --datastore_device 4 2> logs165_final_20_kt_3_remove_4ids_consec_also_diff_
+removing_nums_from_context_inclduing_everything_except_number.txt
+(btp) ashwinr@iitb-dgx2:~/RoPE/unlimiformer/src$ python run_generation.py --model_type llama --model_name_or_path meta-llama/Llama-2-13b-chat-hf --prefix "" --prompt data_final_data
+1/original_data.txt --suffix "" --test_unlimiformer --fp16 --length 300 --layer_begin 0 --index_devices 4 --datastore_device 4 2> logs165_final_20_kt_3_remove_4ids_consec_also_diff_
+removing_nums_from_context_inclduing_everything_except_number.txt
+
+<</SYS>>
+
+What on the moon factsing facts of facts, which you guess me the isitesh is doing?</s>
+=== GENERATED SEQUENCE 1 (input length: 299) ===
+|||<s>[INST] <<SYS>>
+You are a helpful assistant. Answer with short responses according to the question.
+<</SYS>>
+
+What on the moon factsing facts of facts, which you guess me the is doingoking?
+/info0  Sure! Based on the list of facts you provided, Fact number 1829: Jitesh is shopping, and Fact number 1829: Lamarkin is cleaning.</s>
+=== GENERATED SEQUENCE 1 (input length: 299) ===
+|||<s>[INST] <<SYS>>
+You are a helpful assistant. Answer with short responses according to the question.
+<</SYS>>
+
+What on the moon factsing facts of facts, which you guess me the isananan doing?</s>
+=== GENERATED SEQUENCE 1 (input length: 299) ===
+|||<s>[INST] <<SYS>>
+You are a helpful assistant. Answer with short responses according to the question.
+<</SYS>>
+
+What on the moon factsing facts of facts, which you guess me the is doinging?</s>
+=== GENERATED SEQUENCE 1 (input length: 299) ===
+|||<s>[INST] <<SYS>>
+You are a helpful assistant. Answer with short responses according to the question.
+<</SYS>>
+
+What on the moon factsing facts of facts, which you guess me the isvind is doing?
+/info0  Sure! Based on the list of facts you provided, Fact number 1829: Arvind is jumping.</s>
+(btp) ashwinr@iitb-dgx2:~/RoPE/unlimiformer/src$ python run_generation.py --model_type llama --model_name_or_path meta-llama/Llama-2-13b-chat-hf --prefix "" --prompt data_final_data
+1/original_data.txt --suffix "" --test_unlimiformer --fp16 --length 300 --layer_begin 0 --index_devices 4 --datastore_device 4 2> logs165_final_20_kt_3_remove_4ids_consec_also_diff_
+removing_nums_from_context_inclduing_everything_except_number.txt
+(btp) ashwinr@iitb-dgx2:~/RoPE/unlimiformer/src$ python run_generation.py --model_type llama --model_name_or_path meta-llama/Llama-2-13b-chat-hf --prefix "" --prompt data_final_data
+1/original_data.txt --suffix "" --test_unlimiformer --fp16 --length 300 --layer_begin 0 --index_devices 4 --datastore_device 4 2> logs165_final_20_kt_3_remove_4ids_consec_also_diff_
+removing_nums_from_context_inclduing_everything_except_number.txt
+^[[A^[[A^[[A^[[B^[[B^[[B^[[B^[[B^[[B^[[B^[[B=== GENERATED SEQUENCE 1 (input length: 299) ===
+|||<s>[INST] <<SYS>>
+You are a helpful assistant. Answer with short responses according to the question.
+<</SYS>>
+
+What on the given facting facts of facts, answer you tell me the is doingaking?
+/INST0  Sure! Based on the list of facts you provided, the answer to the question "Who is baking?" is:
+
+Fact number 6803: Rithik is baking.</s>
+=== GENERATED SEQUENCE 1 (input length: 299) ===
+|||<s>[INST] <<SYS>>
+You are a helpful assistant. Answer with short responses according to the question.
+<</SYS>>
+
+What on the given facting facts of facts, answer you tell me the isakesik is doing?
+/INST0  Sure! Based on the list of facts you provided, Rithik is baking, as indicated by fact number 6803.</s>
+=== GENERATED SEQUENCE 1 (input length: 299) ===
+|||<s>[INST] <<SYS>>
+You are a helpful assistant. Answer with short responses according to the question.
+<</SYS>>
+
+What on the given facting facts of facts, answer you tell me the is doingcling?
+/INST0  Sure! Based on the list of facts you provided, the person who is cycling is:
+
+Fact number 9645: Oppenheimer.</s>
+=== GENERATED SEQUENCE 1 (input length: 299) ===
+|||<s>[INST] <<SYS>>
+You are a helpful assistant. Answer with short responses according to the question.
+<</SYS>>
+
+What on the given facting facts of facts, answer you tell me the isppenheimer is doing?
+/INST0  Sure! Based on the list of facts you provided, Oppenheimer is cycling, as indicated by fact number 9645.</s>
+=== GENERATED SEQUENCE 1 (input length: 299) ===
+|||<s>[INST] <<SYS>>
+You are a helpful assistant. Answer with short responses according to the question.
+<</SYS>>
+
+What on the given facting facts of facts, answer you tell me the is doinging?
+/INST0  Sure! Based on the list of facts you provided, the answer to the question "Who is sleeping?" is:
+
+Fact number 9825: Leechenbaum is sleeping.</s>
+=== GENERATED SEQUENCE 1 (input length: 299) ===
+|||<s>[INST] <<SYS>>
+You are a helpful assistant. Answer with short responses according to the question.
+<</SYS>>
+
+What on the given facting facts of facts, answer you tell me the ischenbaum is doing?
+/INST0  Sure! Based on the list of facts you provided, Leechenbaum is sleeping (Fact number 9825).</s>
+=== GENERATED SEQUENCE 1 (input length: 299) ===
+|||<s>[INST] <<SYS>>
+You are a helpful assistant. Answer with short responses according to the question.
+<</SYS>>
+
+What on the given facting facts of facts, answer you tell me the is doinging?
+/INST0  Sure! Based on the list of facts you provided, the person who is relaxing is:
+
+Fact number 3656: Rakesh is relaxing.</s>
+=== GENERATED SEQUENCE 1 (input length: 299) ===
+|||<s>[INST] <<SYS>>
+You are a helpful assistant. Answer with short responses according to the question.
+<</SYS>>
+
+What on the given facting facts of facts, answer you tell me the isensky is doing?
+/INST0  Sure! Based on the list of facts you provided, Fact number 3854: Zelensky is relaxing.</s>
+=== GENERATED SEQUENCE 1 (input length: 299) ===
+|||<s>[INST] <<SYS>>
+You are a helpful assistant. Answer with short responses according to the question.
+<</SYS>>
+
+What on the given facting facts of facts, answer you tell me the is doingating,
+/INST.  Sure! Based on the list of facts you provided, the answer to the question "Who is eating?" is:
+
+Fact number 2054: Murugan is eating.</s>
+=== GENERATED SEQUENCE 1 (input length: 299) ===
+|||<s>[INST] <<SYS>>
+You are a helpful assistant. Answer with short responses according to the question.
+<</SYS>>
+
+What on the given facting facts of facts, answer you tell me the isugan is doing?
+/INST.  Sure! Based on the list of facts you provided, Murugan is eating.</s>
+=== GENERATED SEQUENCE 1 (input length: 299) ===
+|||<s>[INST] <<SYS>>
+You are a helpful assistant. Answer with short responses according to the question.
+<</SYS>>
+
+What on the given facting facts of facts, answer you tell me the is doinging?
+/INST0  Sure! Based on the list of facts you provided, the answer to the question "Who is drinking?" is:
+
+Fact number 0153: Rohit is drinking.</s>
+=== GENERATED SEQUENCE 1 (input length: 299) ===
+|||<s>[INST] <<SYS>>
+You are a helpful assistant. Answer with short responses according to the question.
+<</SYS>>
+
+What on the given facting facts of facts, answer you tell me the isibhav is doing?
+/INST0  Sure! Based on the list of facts you provided, Fact number 5703 states that Vaibhav is drinking.</s>
+=== GENERATED SEQUENCE 1 (input length: 299) ===
+|||<s>[INST] <<SYS>>
+You are a helpful assistant. Answer with short responses according to the question.
+<</SYS>>
+
+What on the given facting facts of facts, answer you tell me the is doinging?
+/INST0  Sure! Based on the list of facts you provided, the answer to the question "Who is cooking?" is:
+
+Fact number 2830: Rakesh is cooking.</s>
+=== GENERATED SEQUENCE 1 (input length: 299) ===
+|||<s>[INST] <<SYS>>
+You are a helpful assistant. Answer with short responses according to the question.
+<</SYS>>
+
+What on the given facting facts of facts, answer you tell me the isakesit is doing?
+/INST0  Sure! Based on the list of facts you provided, Rohit is cooking (Fact number 2984).</s>
+=== GENERATED SEQUENCE 1 (input length: 299) ===
+|||<s>[INST] <<SYS>>
+You are a helpful assistant. Answer with short responses according to the question.
+<</SYS>>
+
+What on the given facting facts of facts, answer you tell me the is doingling?
+/INST0  Sure! Based on the list of facts you provided, the answer to the question "Who is bowling?" is:
+
+Fact number 7351: Rakesh is bowling.</s>
+=== GENERATED SEQUENCE 1 (input length: 299) ===
+|||<s>[INST] <<SYS>>
+You are a helpful assistant. Answer with short responses according to the question.
+<</SYS>>
+
+What on the given facting facts of facts, answer you tell me the isakesh is doing?
+/INST0  Sure! Based on the list of facts you provided, Rakesh is bowling (Fact number 7351).</s>
+=== GENERATED SEQUENCE 1 (input length: 299) ===
+|||<s>[INST] <<SYS>>
+You are a helpful assistant. Answer with short responses according to the question.
+<</SYS>>
+
+What on the given facting facts of facts, answer you tell me the is doinging?
+/INST0  Sure! Based on the list of facts you provided, the person who is gardening is:
+
+Fact number 0392: Dheer is gardening.</s>
+=== GENERATED SEQUENCE 1 (input length: 299) ===
+|||<s>[INST] <<SYS>>
+You are a helpful assistant. Answer with short responses according to the question.
+<</SYS>>
+
+What on the given facting facts of facts, answer you tell me the isheer is doing?
+/INST0  Sure! Based on the list of facts you provided, Fact number 0392 is "Dheer is gardening."</s>
+=== GENERATED SEQUENCE 1 (input length: 299) ===
+|||<s>[INST] <<SYS>>
+You are a helpful assistant. Answer with short responses according to the question.
+<</SYS>>
+
+What on the given facting facts of facts, answer you tell me the is doingiting?
+/INST0  Sure! Based on the list of facts you provided, the answer to the question "Who is vomiting?" is:
+
+Fact number 0018: Kimmel is vomiting.</s>
+=== GENERATED SEQUENCE 1 (input length: 299) ===
+|||<s>[INST] <<SYS>>
+You are a helpful assistant. Answer with short responses according to the question.
+<</SYS>>
+
+What on the given facting facts of facts, answer you tell me the isimmel is doing?
+/INST
+  Sure! Based on the list of facts you provided, Fact number 0018 is "Kimmel is vomiting."</s>
+=== GENERATED SEQUENCE 1 (input length: 299) ===
+|||<s>[INST] <<SYS>>
+You are a helpful assistant. Answer with short responses according to the question.
+<</SYS>>
+
+What on the given facting facts of facts, answer you tell me the is doinging?
+/INST.  Sure! Based on the list of facts you provided, the answer to the question "Who is poking?" is:
+
+Fact number 3656: Rakesh is poking.</s>
+=== GENERATED SEQUENCE 1 (input length: 299) ===
+|||<s>[INST] <<SYS>>
+You are a helpful assistant. Answer with short responses according to the question.
+<</SYS>>
+
+What on the given facting facts of facts, answer you tell me the isamanan is doing?
+/INST:  Sure! Based on the list of facts you provided, Mamanan is poking.</s>
+=== GENERATED SEQUENCE 1 (input length: 299) ===
+|||<s>[INST] <<SYS>>
+You are a helpful assistant. Answer with short responses according to the question.
+<</SYS>>
+
+What on the given facting facts of facts, answer you tell me the is doingughing?]/INST0  Sure! Based on the list of facts you provided, the person who is laughing is:
+
+Fact number 0153: Rakesh is laughing.</s>
+=== GENERATED SEQUENCE 1 (input length: 299) ===
+|||<s>[INST] <<SYS>>
+You are a helpful assistant. Answer with short responses according to the question.
+<</SYS>>
+
+What on the given facting facts of facts, answer you tell me the isaksh is doing?
+/INST:  Sure! Based on the list of facts you provided, Fact number 0392 is "Balaksh is poking."</s>
+=== GENERATED SEQUENCE 1 (input length: 299) ===
+|||<s>[INST] <<SYS>>
+You are a helpful assistant. Answer with short responses according to the question.
+<</SYS>>
+
+What on the given facting facts of facts, answer you tell me the is doinging?
+/INST.  Sure! Based on the list of facts you provided, the answer to the question "Who is directing?" is:
+
+Fact number 1092: Prabhu is directing.</s>
+=== GENERATED SEQUENCE 1 (input length: 299) ===
+|||<s>[INST] <<SYS>>
+You are a helpful assistant. Answer with short responses according to the question.
+<</SYS>>
+
+What on the given facting facts of facts, answer you tell me the israbhu is doing?
+/INST:  Sure! Based on the list of facts you provided, Fact number 1092 is "Prabhu is directing."</s>
+=== GENERATED SEQUENCE 1 (input length: 299) ===
+|||<s>[INST] <<SYS>>
+You are a helpful assistant. Answer with short responses according to the question.
+<</SYS>>
+
+What on the given facting facts of facts, answer you tell me the is doingring?
+/INST:  Sure! Based on the list of facts you provided, the person stirring is Alexisill (Fact number 2830).</s>
+=== GENERATED SEQUENCE 1 (input length: 299) ===
+|||<s>[INST] <<SYS>>
+You are a helpful assistant. Answer with short responses according to the question.
+<</SYS>>
+
+What on the given facting facts of facts, answer you tell me the isisill is doing?
+/INST:  Sure! Based on the numbered list of facts you provided, Alexisill is stirring, as indicated by fact number 2830.</s>
+=== GENERATED SEQUENCE 1 (input length: 299) ===
+|||<s>[INST] <<SYS>>
+You are a helpful assistant. Answer with short responses according to the question.
+<</SYS>>
+
+What on the given facting facts of facts, answer you tell me the is doingoking?
+/INST0  Sure! Based on the list of facts you provided, the person who is smoking is:
+
+Fact number 5839: Rajinikan.</s>
+=== GENERATED SEQUENCE 1 (input length: 299) ===
+|||<s>[INST] <<SYS>>
+You are a helpful assistant. Answer with short responses according to the question.
+<</SYS>>
+
+What on the given facting facts of facts, answer you tell me the isinikanth doing?
+/INST0  Sure! Based on the list of facts you provided, Rajinikan is smoking, as indicated by fact number 3656.</s>
+=== GENERATED SEQUENCE 1 (input length: 299) ===
+|||<s>[INST] <<SYS>>
+You are a helpful assistant. Answer with short responses according to the question.
+<</SYS>>
+
+What on the given facting facts of facts, answer you tell me the is doinging?
+/INST.  Sure! Based on the list of facts you provided, the answer to who is cleaning is:
+
+Fact number 2830: Lamarkin is cleaning.</s>
+=== GENERATED SEQUENCE 1 (input length: 299) ===
+|||<s>[INST] <<SYS>>
+You are a helpful assistant. Answer with short responses according to the question.
+<</SYS>>
+
+What on the given facting facts of facts, answer you tell me the isarkin is doing?
+/INST0  Sure! Based on the numbered list of facts you provided, Fact number 2830: Lamarkin is stirring.</s>
+=== GENERATED SEQUENCE 1 (input length: 299) ===
+|||<s>[INST] <<SYS>>
+You are a helpful assistant. Answer with short responses according to the question.
+<</SYS>>
+
+What on the given facting facts of facts, answer you tell me the is doinging?
+/INST0  Sure! Based on the list of facts you provided, Fact number 0018: Pooja is arriving.</s>
+=== GENERATED SEQUENCE 1 (input length: 299) ===
+|||<s>[INST] <<SYS>>
+You are a helpful assistant. Answer with short responses according to the question.
+<</SYS>>
+
+What on the given facting facts of facts, answer you tell me the israbja is doing?
+/INST0  Sure! Based on the list of facts you provided, Fact number 0018: Pooja is arriving.</s>
+=== GENERATED SEQUENCE 1 (input length: 299) ===
+|||<s>[INST] <<SYS>>
+You are a helpful assistant. Answer with short responses according to the question.
+<</SYS>>
+
+What on the given facting facts of facts, answer you tell me the is doingpping?
+/INST0  Sure! Based on the list of facts you provided, the answer to the question "Who is shopping?" is:
+
+Fact number 0105: Jitesh is shopping.</s>
+=== GENERATED SEQUENCE 1 (input length: 299) ===
+|||<s>[INST] <<SYS>>
+You are a helpful assistant. Answer with short responses according to the question.
+<</SYS>>
+
+What on the given facting facts of facts, answer you tell me the isitesh is doing?
+/INST:  Sure! Based on the list of facts you provided, Jitesh is shopping (Fact number 0105).</s>
+=== GENERATED SEQUENCE 1 (input length: 299) ===
+|||<s>[INST] <<SYS>>
+You are a helpful assistant. Answer with short responses according to the question.
+<</SYS>>
+
+What on the given facting facts of facts, answer you tell me the is doingoking?
+/INST:  Sure! Based on the list of facts you provided, the person who is joking is:
+
+Fact number 1829: Rajinikan.</s>
+=== GENERATED SEQUENCE 1 (input length: 299) ===
+|||<s>[INST] <<SYS>>
+You are a helpful assistant. Answer with short responses according to the question.
+<</SYS>>
+
+What on the given facting facts of facts, answer you tell me the isananan doing?
+/INST:  Sure! Based on the list of facts you provided, Fact number 1829 is "Ramanan is joking."</s>
+=== GENERATED SEQUENCE 1 (input length: 299) ===
+|||<s>[INST] <<SYS>>
+You are a helpful assistant. Answer with short responses according to the question.
+<</SYS>>
+
+What on the given facting facts of facts, answer you tell me the is doinging?
+/INST0  Sure! Based on the list of facts you provided, the answer to the question "Who is jumping?" is:
+
+Fact number 0153: Arvind is jumping.</s>
+=== GENERATED SEQUENCE 1 (input length: 299) ===
+|||<s>[INST] <<SYS>>
+You are a helpful assistant. Answer with short responses according to the question.
+<</SYS>>
+
+What on the given facting facts of facts, answer you tell me the isvind is doing?
+/INST0  Sure! Based on the list of facts you provided, Arvind is jumping, as indicated by fact number 0153.</s>
+(btp) ashwinr@iitb-dgx2:~/RoPE/unlimiformer/src$ python run_generation.py --model_type llama --model_name_or_path meta-llama/Llama-2-13b-chat-hf --prefix "" --prompt data_final_data
+1/original_data.txt --suffix "" --test_unlimiformer --fp16 --length 300 --layer_begin 0 --index_devices 4 --datastore_device 4 2> logs165_final_20_kt_3_remove_4ids_consec_also_diff_
+removing_nums_from_context_inclduing_everything_with_first_number.txt
+(btp) ashwinr@iitb-dgx2:~/RoPE/unlimiformer/src$ python run_generation.py --model_type llama --model_name_or_path meta-llama/Llama-2-13b-chat-hf --prefix "" --prompt data_final_data
+1/original_data.txt --suffix "" --test_unlimiformer --fp16 --length 300 --layer_begin 0 --index_devices 4 --datastore_device 4 2> logs165_final_20_kt_3_remove_4ids_consec_also_diff_
+removing_nums_from_context_inclduing_everything_with_first_number.txt
+
