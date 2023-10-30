@@ -58,7 +58,7 @@ from transformers import (
 )
 from transformers.modeling_outputs import CausalLMOutputWithPast
 
-from unlimiformer import Unlimiformer
+from unlimiformer_kt_2 import Unlimiformer
 from random_training_unlimiformer import RandomTrainingUnlimiformer
 
 @dataclass
@@ -405,6 +405,7 @@ def main():
     parser.add_argument("--xlm_language", type=str, default="", help="Optional language when used with the XLM model.")
 
     parser.add_argument("--seed", type=int, default=42, help="random seed for initialization")
+    parser.add_argument("--tokens_ind", type=str, default="", help="random seed for initialization")
     parser.add_argument("--data_folder", type=int, default=42, help="random seed for initialization")
     parser.add_argument("--no_cuda", action="store_true", help="Avoid using CUDA when available")
     parser.add_argument("--stream_output", action="store_true")
@@ -415,7 +416,6 @@ def main():
         help="Whether to use 16-bit (mixed) precision (through NVIDIA apex) instead of 32-bit",
     )
     parser.add_argument("--jit", action="store_true", help="Whether or not to use jit trace to accelerate inference")
-
     # args = parser.parse_args()
     args, unknown_args = parser.parse_known_args()
 
@@ -473,6 +473,7 @@ def main():
             'gpu_index': unlimiformer_args.gpu_index,
             'index_devices': unlimiformer_args.index_devices,
             'datastore_device': unlimiformer_args.datastore_device,
+            'tokens_ind': [int(i) for i in args.tokens_ind.split(" ")]
         }
         if unlimiformer_args.random_unlimiformer_training:
             model = RandomTrainingUnlimiformer.convert_model(model, **unlimiformer_kwargs)
@@ -553,7 +554,7 @@ def main():
 
     for output_sequence in output_sequences:
         for generated_sequence_idx, generated_sequence in enumerate(output_sequence):
-            print(f"=== GENERATED SEQUENCE {generated_sequence_idx + 1} (input length: {input_ids.shape[-1]}) ===")
+            logger.info(f"=== GENERATED SEQUENCE {generated_sequence_idx + 1} (input length: {input_ids.shape[-1]}) ===")
             generated_sequence = generated_sequence.tolist()
             # generated_sequence = generated_sequence[len(encoded_prompt[0]):] + tokenizer.encode(' <end_of_prompt> ') + generated_sequence[:len(encoded_prompt[0])]
 
@@ -572,7 +573,7 @@ def main():
             )
 
             generated_sequences.append(total_sequence)
-            print(total_sequence)
+            logger.info(total_sequence)
     with open('data1/predictions.txt', 'w') as file:
         import json
         json.dump(generated_sequences, file)

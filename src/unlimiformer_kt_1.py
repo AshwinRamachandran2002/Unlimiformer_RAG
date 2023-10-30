@@ -32,13 +32,13 @@ class Unlimiformer(Generic[ModelType]):
             flat_index=False,
             test_datastore=False, reconstruct_embeddings=False, 
             gpu_datastore=False, gpu_index=False,
-            index_devices=(0,), datastore_device=0, tokens_ind=[]
+            index_devices=(0,), datastore_device=0,
             ):
         super().__init__()
         self.csv_unlimiformer = True
         self.not_first_encoding_pass = False
         self.input_ids_full = []
-        self.tokens_ind = tokens_ind
+        
         self.input_ids_full_extra = []
         self.attention_weights = []
         self.my_method = False
@@ -364,7 +364,6 @@ class Unlimiformer(Generic[ModelType]):
                 self.hidden_states = [[] for _ in range(self.model.config.num_hidden_layers)[self.layer_begin:self.layer_end]]
                 self.hidden_layer_our = [[] for _ in range(self.model.config.num_hidden_layers)[self.layer_begin:self.layer_end]]
                 self.hidden_layer_our_anchor = [[] for _ in range(self.model.config.num_hidden_layers)[self.layer_begin:self.layer_end]]
-                self.hidden_layer_our_bits = [[] for _ in range(self.model.config.num_hidden_layers)[self.layer_begin:self.layer_end]]
                 self.comma_hidden_state = [[] for _ in range(self.model.config.num_hidden_layers)[self.layer_begin:self.layer_end]]
             torch.cuda.empty_cache()
         self.prompt_input_ids = input_ids
@@ -497,13 +496,9 @@ class Unlimiformer(Generic[ModelType]):
                             self.hidden_states[i].append(layer_states.to(self.datastore_device))
                         if self.csv_unlimiformer and self.ind_up <= 50:# not self.not_first_encoding_pass:
                             # self.hidden_layer_our[i] = layer_states.to(self.datastore_device)
-                            if self.ind_up == 2:
-                                self.hidden_layer_our_bits[i] = self.hidden_layer_our[i][:, self.tokens_ind].to(self.datastore_device)
-                            elif self.ind_up >2:
-                                self.hidden_layer_our_bits[i] =  torch.cat((self.hidden_layer_our_bits[i], self.hidden_layer_our[i][:, self.tokens_ind]), dim = -2).to(self.datastore_device)
-                            self.hidden_layer_our[i] = layer_states.to(self.datastore_device)
+                            self.hidden_layer_our[i] = torch.cat((layer_states[:, 0:4], layer_states[:, 4:]), dim=-2).to(self.datastore_device)
                         if self.csv_unlimiformer and not self.not_first_encoding_pass:
-                            self.hidden_layer_our_anchor[i] = layer_states[:, 0:2].reshape((1, 2, -1)).to(self.datastore_device)
+                            self.hidden_layer_our_anchor[i] = layer_states[:, 0:1].reshape((1, 1, -1)).to(self.datastore_device)
                         # if self.csv_unlimiformer and self.not_first_encoding_pass:
                         #     self.hidden_layer_our_anchor[i]  = torch.cat((self.hidden_layer_our_anchor[i] , layer_states[:, 0:1].reshape((1, 1, -1)).to(self.datastore_device)), dim = -2)
                 logger.info(f'using only the first hidden states, stablising first also, so discard baking, trying to make Lee the stabliser, third in book, also adding diff position ids, making Zelensky stabiliser')
@@ -756,9 +751,9 @@ class Unlimiformer(Generic[ModelType]):
     # format copied from https://huggingface.co/spaces/huggingface-projects/llama-2-13b-chat/blob/main/model.py
     def prefix(self, leni):
         if self.ind_up == 2:
-            return ' '.join(['Fact'] * (2 + 11))
+            return ' '.join(['Fact'] * (1))
         else:
-            return ' '.join(['Fact'] * (2 + 11 + len(self.tokens_ind) * (self.ind_up - 2)))
+            return ' '.join(['Fact'] * (1))
         if leni == 1:
             # return '{"A" : "B"},'
             return 'Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact'
@@ -1013,13 +1008,10 @@ class Unlimiformer(Generic[ModelType]):
                     # if self.is_input_encoding_pass and self.not_first_encoding_pass:
                     #     hidden_states[:, 0:2*(self.ind_up - 1)] = self.comma_hidden_state[cur_layer_num].repeat(1, 2 * (self.ind_up - 1), 1)
                     if self.not_first_encoding_pass and self.is_input_encoding_pass:
-                        topk = self.hidden_layer_our[cur_layer_num].shape[-2]
-                        topk += self.hidden_layer_our_anchor[cur_layer_num].shape[-2]
-                        if self.ind_up >= 3:
-                            topk += self.hidden_layer_our_bits[cur_layer_num].shape[-2]
-                            hidden_states = torch.cat([self.hidden_layer_our_anchor[cur_layer_num], self.hidden_layer_our_bits[cur_layer_num], self.hidden_layer_our[cur_layer_num], hidden_states[:,topk:]], dim=-2)
-                        else:
-                            hidden_states = torch.cat([self.hidden_layer_our_anchor[cur_layer_num], self.hidden_layer_our[cur_layer_num], hidden_states[:,topk:]], dim=-2)
+                        # topk = self.hidden_layer_our[cur_layer_num].shape[-2]
+                        topk = self.hidden_layer_our_anchor[cur_layer_num].shape[-2]
+                        hidden_states = torch.cat([self.hidden_layer_our_anchor[cur_layer_num], hidden_states[:,topk:]], dim=-2)
+                        # hidden_states = torch.cat([self.hidden_layer_our_anchor[cur_layer_num], self.hidden_layer_our[cur_layer_num], hidden_states[:,topk:]], dim=-2)
                     kwargs['output_attentions'] = True
                     result = original_cross_attn_forward_func(hidden_states=hidden_states, attention_mask=attention_mask, *args, **kwargs)
                     if self.is_input_encoding_pass:
