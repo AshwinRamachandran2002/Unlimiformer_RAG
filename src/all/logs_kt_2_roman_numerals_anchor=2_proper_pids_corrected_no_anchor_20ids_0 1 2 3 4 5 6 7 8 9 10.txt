@@ -1,0 +1,762 @@
+11/01/2023 19:20:37 - WARNING - __main__ - device: cuda:6, n_gpu: 8, 16-bits training: True
+Using pad_token, but it is not set yet.
+Loading checkpoint shards:   0%|          | 0/3 [00:00<?, ?it/s]Loading checkpoint shards:  33%|███▎      | 1/3 [00:28<00:57, 28.66s/it]Loading checkpoint shards:  67%|██████▋   | 2/3 [01:00<00:30, 30.46s/it]Loading checkpoint shards: 100%|██████████| 3/3 [01:19<00:00, 25.40s/it]Loading checkpoint shards: 100%|██████████| 3/3 [01:19<00:00, 26.59s/it]
+11/01/2023 19:26:03 - INFO - __main__ - Namespace(model_type='llama', model_name_or_path='meta-llama/Llama-2-13b-chat-hf', prompt='data_final_data1/original_data.txt', length=300, num_hidden_layers=None, stop_token=None, temperature=1.0, repetition_penalty=1.0, k=0, p=0, prefix='', suffix='', padding_text='', xlm_language='', seed=42, tokens_ind='0 1 2 3 4 5 6 7 8 9 10', data_folder=42, no_cuda=False, stream_output=False, num_return_sequences=1, fp16=True, jit=False, device=device(type='cuda', index=6), n_gpu=8)
+11/01/2023 19:26:03 - INFO - Unlimiformer - Encoding 0 to 11 out of 219
+11/01/2023 19:26:03 - INFO - Unlimiformer - Fact number I: Rithik is baking,
+11/01/2023 19:26:04 - INFO - Unlimiformer - Fact number I: Rithik is baking,
+11/01/2023 19:26:04 - INFO - Unlimiformer - Encoding 11 to 22 out of 219
+11/01/2023 19:26:04 - INFO - Unlimiformer - Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact number II: Oppenheimer is cycling,
+11/01/2023 19:26:05 - INFO - Unlimiformer - Fact number II: Oppenheimer is cycling,
+11/01/2023 19:26:05 - INFO - Unlimiformer - Encoding 22 to 33 out of 219
+11/01/2023 19:26:05 - INFO - Unlimiformer - Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact number III: Leechenbaum is sleeping,
+11/01/2023 19:26:05 - INFO - Unlimiformer - Fact number III: Leechenbaum is sleeping,
+11/01/2023 19:26:05 - INFO - Unlimiformer - Encoding 33 to 44 out of 219
+11/01/2023 19:26:05 - INFO - Unlimiformer - Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact number IV: Zelensky is relaxing,
+11/01/2023 19:26:05 - INFO - Unlimiformer - Fact number IV: Zelensky is relaxing,
+11/01/2023 19:26:05 - INFO - Unlimiformer - Encoding 44 to 55 out of 219
+11/01/2023 19:26:05 - INFO - Unlimiformer - Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact number V: Murugan is eating,
+11/01/2023 19:26:05 - INFO - Unlimiformer - Fact number V: Murugan is eating,
+11/01/2023 19:26:05 - INFO - Unlimiformer - Encoding 55 to 66 out of 219
+11/01/2023 19:26:05 - INFO - Unlimiformer - Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact number VI: Vaibhav is drinking,
+11/01/2023 19:26:06 - INFO - Unlimiformer - Fact number VI: Vaibhav is drinking,
+11/01/2023 19:26:06 - INFO - Unlimiformer - Encoding 66 to 77 out of 219
+11/01/2023 19:26:06 - INFO - Unlimiformer - Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact number VII: Rohit is cooking,
+11/01/2023 19:26:06 - INFO - Unlimiformer - Fact number VII: Rohit is cooking,
+11/01/2023 19:26:06 - INFO - Unlimiformer - Encoding 77 to 88 out of 219
+11/01/2023 19:26:06 - INFO - Unlimiformer - Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact number VIII: Rakesh is bowling,
+11/01/2023 19:26:06 - INFO - Unlimiformer - Fact number VIII: Rakesh is bowling,
+11/01/2023 19:26:06 - INFO - Unlimiformer - Encoding 88 to 99 out of 219
+11/01/2023 19:26:06 - INFO - Unlimiformer - Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact number IX: Dheer is gardening,
+11/01/2023 19:26:06 - INFO - Unlimiformer - Fact number IX: Dheer is gardening,
+11/01/2023 19:26:06 - INFO - Unlimiformer - Encoding 99 to 110 out of 219
+11/01/2023 19:26:06 - INFO - Unlimiformer - Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact number X: Kimmel is vomiting,
+11/01/2023 19:26:07 - INFO - Unlimiformer - Fact number X: Kimmel is vomiting,
+11/01/2023 19:26:07 - INFO - Unlimiformer - Encoding 110 to 121 out of 219
+11/01/2023 19:26:07 - INFO - Unlimiformer - Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact number XI: Mamanan is poking,
+11/01/2023 19:26:08 - INFO - Unlimiformer - Fact number XI: Mamanan is poking,
+11/01/2023 19:26:08 - INFO - Unlimiformer - Encoding 121 to 132 out of 219
+11/01/2023 19:26:08 - INFO - Unlimiformer - Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact number XII: Balaksh is laughing,
+11/01/2023 19:26:08 - INFO - Unlimiformer - Fact number XII: Balaksh is laughing,
+11/01/2023 19:26:08 - INFO - Unlimiformer - Encoding 132 to 143 out of 219
+11/01/2023 19:26:08 - INFO - Unlimiformer - Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact number XIII: Prabhu is directing,
+11/01/2023 19:26:08 - INFO - Unlimiformer - Fact number XIII: Prabhu is directing,
+11/01/2023 19:26:08 - INFO - Unlimiformer - Encoding 143 to 154 out of 219
+11/01/2023 19:26:09 - INFO - Unlimiformer - Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact number XIV: Alexisill is stirring,
+11/01/2023 19:26:09 - INFO - Unlimiformer - Fact number XIV: Alexisill is stirring,
+11/01/2023 19:26:09 - INFO - Unlimiformer - Encoding 154 to 165 out of 219
+11/01/2023 19:26:09 - INFO - Unlimiformer - Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact number XV: Rajinikan is smoking,
+11/01/2023 19:26:10 - INFO - Unlimiformer - Fact number XV: Rajinikan is smoking,
+11/01/2023 19:26:10 - INFO - Unlimiformer - Encoding 165 to 176 out of 219
+11/01/2023 19:26:10 - INFO - Unlimiformer - Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact number XVI: Lamarkin is cleaning,
+11/01/2023 19:26:10 - INFO - Unlimiformer - Fact number XVI: Lamarkin is cleaning,
+11/01/2023 19:26:10 - INFO - Unlimiformer - Encoding 176 to 187 out of 219
+11/01/2023 19:26:10 - INFO - Unlimiformer - Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact number XVII: Pooja is arriving,
+11/01/2023 19:26:11 - INFO - Unlimiformer - Fact number XVII: Pooja is arriving,
+11/01/2023 19:26:11 - INFO - Unlimiformer - Encoding 187 to 198 out of 219
+11/01/2023 19:26:11 - INFO - Unlimiformer - Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact number XVIII: Jitesh is shopping,
+11/01/2023 19:26:11 - INFO - Unlimiformer - Fact number XVIII: Jitesh is shopping,
+11/01/2023 19:26:11 - INFO - Unlimiformer - Encoding 198 to 209 out of 219
+11/01/2023 19:26:11 - INFO - Unlimiformer - Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact number XIX: Ramanan is joking,
+11/01/2023 19:26:12 - INFO - Unlimiformer - Fact number XIX: Ramanan is joking,
+11/01/2023 19:26:12 - INFO - Unlimiformer - Encoding 209 to 219 out of 219
+11/01/2023 19:26:12 - INFO - Unlimiformer - Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact Fact number XX: Arvind is jumping
+11/01/2023 19:26:12 - INFO - Unlimiformer - Fact number XX: Arvind is jumping
+11/01/2023 19:26:12 - INFO - Unlimiformer - "Pre Forward Hook", <s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s>[INST] <<SYS>>
+You are a helpful assistant. Answer with short responses according to the question. 
+<</SYS>>
+
+, 252
+11/01/2023 19:26:13 - INFO - Unlimiformer - "Pre Forward Hook", Based, 1
+11/01/2023 19:26:14 - INFO - Unlimiformer - ['▁on', 'ow', '▁On', '▁', '▁in', '▁sole', '.', ']', '<0x0A>', ')']
+11/01/2023 19:26:14 - INFO - Unlimiformer - torch.Size([1, 1, 10])_tensor([[[16.4375, 10.6875,  9.8828,  9.7578,  9.7109,  9.2656,  8.6484,
+           8.5859,  7.8789,  7.8438]]], device='cuda:6')
+11/01/2023 19:26:14 - INFO - Unlimiformer - "Pre Forward Hook", on, 1
+11/01/2023 19:26:15 - INFO - Unlimiformer - ['▁the', '▁these', '▁your', '▁this', '▁above', '▁my', '▁their', '▁Fact', '▁fact', '▁a']
+11/01/2023 19:26:15 - INFO - Unlimiformer - torch.Size([1, 1, 10])_tensor([[[16.7500, 13.5703, 13.2031, 12.2891, 11.7344, 10.7734, 10.5000,
+          10.4609, 10.3594, 10.2422]]], device='cuda:6')
+11/01/2023 19:26:15 - INFO - Unlimiformer - "Pre Forward Hook", the, 1
+11/01/2023 19:26:16 - INFO - Unlimiformer - ['▁above', '▁given', '▁information', '▁following', '▁number', '▁list', '▁question', '▁facts', '▁fact', '▁previous']
+11/01/2023 19:26:16 - INFO - Unlimiformer - torch.Size([1, 1, 10])_tensor([[[13.7734, 13.0859, 12.6250, 12.2969, 12.0234, 11.8906, 11.5703,
+          11.3750, 11.2969, 11.2656]]], device='cuda:6')
+11/01/2023 19:26:16 - INFO - Unlimiformer - "Pre Forward Hook", above, 1
+11/01/2023 19:26:17 - INFO - Unlimiformer - ['▁list', '▁information', '▁numbers', '▁facts', '▁statements', '▁fact', '▁names', ',', '▁statement', '▁given']
+11/01/2023 19:26:17 - INFO - Unlimiformer - torch.Size([1, 1, 10])_tensor([[[13.8984, 13.3984, 12.2109, 12.1641, 12.1562, 11.5781, 11.1797,
+          10.7656, 10.6250, 10.3438]]], device='cuda:6')
+11/01/2023 19:26:17 - INFO - Unlimiformer - "Pre Forward Hook", number, 1
+11/01/2023 19:26:18 - INFO - Unlimiformer - ['ed', 'ing', '▁list', '▁series', ',', '▁sequence', '▁facts', '▁and', '-', '▁fact']
+11/01/2023 19:26:18 - INFO - Unlimiformer - torch.Size([1, 1, 10])_tensor([[[16.4219, 14.7500, 13.2969, 13.2812, 12.3672, 11.7188, 11.4766,
+          11.1719, 10.4219, 10.1484]]], device='cuda:6')
+11/01/2023 19:26:18 - INFO - Unlimiformer - "Pre Forward Hook", ed, 1
+11/01/2023 19:26:19 - INFO - Unlimiformer - ['▁list', '▁facts', '▁statements', '▁items', '▁fact', '▁statement', '▁information', '▁Fact', '▁questions', '▁sentences']
+11/01/2023 19:26:19 - INFO - Unlimiformer - torch.Size([1, 1, 10])_tensor([[[16.1875, 16.0938, 15.5391, 13.5391, 13.0312, 12.6094, 11.9766,
+          11.8750, 11.5859, 11.5859]]], device='cuda:6')
+11/01/2023 19:26:19 - INFO - Unlimiformer - "Pre Forward Hook", list, 1
+11/01/2023 19:26:20 - INFO - Unlimiformer - [',', '▁of', '.', '▁and', '▁(', '▁what', 'ings', ':', '▁with', '▁please']
+11/01/2023 19:26:20 - INFO - Unlimiformer - torch.Size([1, 1, 10])_tensor([[[16.2500, 15.5703, 12.7969, 10.6250, 10.1250,  9.7578,  9.5391,
+           9.4297,  9.2266,  8.9531]]], device='cuda:6')
+11/01/2023 19:26:20 - INFO - Unlimiformer - "Pre Forward Hook", of, 1
+11/01/2023 19:26:20 - INFO - Unlimiformer - ['▁names', '▁people', '▁', '▁facts', '▁statements', '▁activities', '▁fact', '▁words', '▁actions', '▁individuals']
+11/01/2023 19:26:20 - INFO - Unlimiformer - torch.Size([1, 1, 10])_tensor([[[14.4297, 13.9922, 13.4922, 13.4844, 12.9766, 12.8047, 11.8203,
+          11.6953, 11.4531, 11.0547]]], device='cuda:6')
+11/01/2023 19:26:21 - INFO - Unlimiformer - "Pre Forward Hook", facts, 1
+11/01/2023 19:26:21 - INFO - Unlimiformer - [',', '.', '▁about', '▁and', ':', '▁,', '▁(', '▁with', '▁what', '▁do']
+11/01/2023 19:26:21 - INFO - Unlimiformer - torch.Size([1, 1, 10])_tensor([[[16.8125, 13.1250, 12.4375, 11.2422,  9.8828,  9.8281,  9.8203,
+           9.7422,  9.1172,  9.0312]]], device='cuda:6')
+11/01/2023 19:26:21 - INFO - Unlimiformer - "Pre Forward Hook", ,, 1
+11/01/2023 19:26:22 - INFO - Unlimiformer - ['▁which', '▁answer', '▁write', '▁can', '▁what', '▁please', '▁ar', '▁create', '▁who', '▁identify']
+11/01/2023 19:26:22 - INFO - Unlimiformer - torch.Size([1, 1, 10])_tensor([[[14.3672, 14.1797, 13.4844, 13.4141, 13.2578, 11.9375, 11.7812,
+          11.5312, 10.9922, 10.6562]]], device='cuda:6')
+11/01/2023 19:26:23 - INFO - Unlimiformer - "Pre Forward Hook", can, 1
+11/01/2023 19:26:23 - INFO - Unlimiformer - ['▁you', '▁I', '▁answer', '▁u', '▁we', '▁', '▁be', '▁the', '▁your', '▁Y']
+11/01/2023 19:26:23 - INFO - Unlimiformer - torch.Size([1, 1, 10])_tensor([[[19.9375, 14.7266, 12.9375, 12.5703, 12.5391, 11.9141, 10.9297,
+          10.6016, 10.4297, 10.3281]]], device='cuda:6')
+11/01/2023 19:26:24 - INFO - Unlimiformer - "Pre Forward Hook", you, 1
+11/01/2023 19:26:24 - INFO - Unlimiformer - ['▁tell', '▁answer', '▁please', '▁guess', '▁create', '▁provide', '▁write', '▁make', '▁determine', '▁ar']
+11/01/2023 19:26:24 - INFO - Unlimiformer - torch.Size([1, 1, 10])_tensor([[[14.8125, 14.7422, 14.5234, 14.4688, 13.3125, 13.2109, 13.1953,
+          13.0859, 13.0625, 12.8594]]], device='cuda:6')
+11/01/2023 19:26:24 - INFO - Unlimiformer - "Pre Forward Hook", tell, 1
+11/01/2023 19:26:25 - INFO - Unlimiformer - ['▁me', '▁which', '▁us', '▁what', '▁the', '▁who', '▁whether', '▁if', '▁how', '▁something']
+11/01/2023 19:26:25 - INFO - Unlimiformer - torch.Size([1, 1, 10])_tensor([[[20.1406, 16.1875, 15.2500, 15.2500, 14.9219, 13.4688, 12.4766,
+          12.3516, 12.1797, 11.2891]]], device='cuda:6')
+11/01/2023 19:26:25 - INFO - Unlimiformer - "Pre Forward Hook", me, 1
+11/01/2023 19:26:26 - INFO - Unlimiformer - ['▁the', '▁which', '▁what', '▁who', ':', '▁whether', '▁how', '▁something', '▁a', '▁if']
+11/01/2023 19:26:26 - INFO - Unlimiformer - torch.Size([1, 1, 10])_tensor([[[16.5625, 15.6406, 15.1797, 13.0703, 12.6875, 12.6328, 12.6172,
+          12.6094, 12.5078, 12.2109]]], device='cuda:6')
+11/01/2023 19:26:26 - INFO - Unlimiformer - "Pre Forward Hook", who, 1
+11/01/2023 19:26:27 - INFO - Unlimiformer - ['▁is', '▁among', '▁all', '▁of', '▁are', "'", '▁was', ',', '▁amongst', '▁in']
+11/01/2023 19:26:27 - INFO - Unlimiformer - torch.Size([1, 1, 10])_tensor([[[18.2031, 15.0938, 14.6094, 12.0781, 11.6250, 11.5703, 11.5156,
+          11.0547, 10.8438, 10.7656]]], device='cuda:6')
+11/01/2023 19:26:27 - INFO - Unlimiformer - "Pre Forward Hook", is, 1
+11/01/2023 19:26:28 - INFO - Unlimiformer - ['▁doing', '▁sleep', '▁currently', '▁relax', '▁the', '▁winning', '▁e', '▁performing', '▁not', '▁most']
+11/01/2023 19:26:28 - INFO - Unlimiformer - torch.Size([1, 1, 10])_tensor([[[14.1406, 12.6641, 12.1484, 11.5078, 11.3750, 11.3750, 11.2422,
+          11.0391, 10.9453, 10.3984]]], device='cuda:6')
+11/01/2023 19:26:28 - INFO - Unlimiformer - "Pre Forward Hook", b, 1
+11/01/2023 19:26:29 - INFO - Unlimiformer - ['aking', 'ik', 'ab', 'oring', 'aked', 'ored', 'unge', 'icy', 'inge', 'oss']
+11/01/2023 19:26:29 - INFO - Unlimiformer - torch.Size([1, 1, 10])_tensor([[[20.6875, 13.7891, 13.3281, 13.0391, 12.7109, 12.6641, 12.6406,
+          11.9453, 11.8594, 11.7031]]], device='cuda:6')
+11/01/2023 19:26:29 - INFO - Unlimiformer - "Pre Forward Hook", aking, 1
+11/01/2023 19:26:30 - INFO - Unlimiformer - ['?', ',', '▁and', '▁something', '▁what', '▁?', '▁a', '▁in', '▁or', '▁now']
+11/01/2023 19:26:30 - INFO - Unlimiformer - torch.Size([1, 1, 10])_tensor([[[18.2812, 16.2344, 15.5469, 13.2266, 12.4922, 12.0781, 11.8516,
+          11.7500, 11.4297, 11.2969]]], device='cuda:6')
+11/01/2023 19:26:30 - INFO - Unlimiformer - "Pre Forward Hook", ?, 1
+11/01/2023 19:26:31 - INFO - Unlimiformer - ['</', '<0x0A>', ']', '▁', '</s>', '▁Who', '》', '▁And', '▁Please', '⟩']
+11/01/2023 19:26:31 - INFO - Unlimiformer - torch.Size([1, 1, 10])_tensor([[[14.9766, 14.6094, 14.1562, 13.2344, 11.4453, 11.2031, 10.9297,
+          10.8047, 10.2812,  9.7891]]], device='cuda:6')
+11/01/2023 19:26:31 - INFO - Unlimiformer - "Pre Forward Hook", [, 1
+11/01/2023 19:26:32 - INFO - Unlimiformer - ['/', '▁/', '//', '/*', '1', '/>', '/"', 'INST', './', '/)']
+11/01/2023 19:26:32 - INFO - Unlimiformer - torch.Size([1, 1, 10])_tensor([[[21.2969, 10.1016,  9.6406,  8.4375,  8.4219,  8.2812,  8.2578,
+           8.2266,  8.1719,  8.0391]]], device='cuda:6')
+11/01/2023 19:26:32 - INFO - Unlimiformer - "Pre Forward Hook", /, 1
+11/01/2023 19:26:33 - INFO - Unlimiformer - ['INST', 'IN', 'Inst', 'SY', 'EN', 'INFO', 'COM', 'INT', 'CON', 'INTER']
+11/01/2023 19:26:33 - INFO - Unlimiformer - torch.Size([1, 1, 10])_tensor([[[14.9375, 11.5469, 10.5391, 10.3750,  9.7422,  9.6250,  9.0234,
+           8.6406,  8.4766,  8.3203]]], device='cuda:6')
+11/01/2023 19:26:33 - INFO - Unlimiformer - "Pre Forward Hook", INST, 1
+11/01/2023 19:26:34 - INFO - Unlimiformer - ['0', ':', '▁', '1', '.', '2', '<0x0A>', '9', '3', 'R']
+11/01/2023 19:26:34 - INFO - Unlimiformer - torch.Size([1, 1, 10])_tensor([[[14.7578, 12.9922, 12.5234, 12.0547, 11.1328, 10.9609, 10.6094,
+          10.2344,  9.9375,  9.7109]]], device='cuda:6')
+11/01/2023 19:26:34 - INFO - Unlimiformer - "Pre Forward Hook", ], 1
+11/01/2023 19:26:35 - INFO - Unlimiformer - ['▁', '▁▁', '▁▁▁▁', '▁Sure', '<0x09>', '▁▁▁▁▁▁', '▁▁▁▁▁', '▁▁▁', '▁sure', '▁Of']
+11/01/2023 19:26:35 - INFO - Unlimiformer - torch.Size([1, 1, 10])_tensor([[[30.9844, 19.7812, 11.0391, 10.8281,  9.5547,  8.6250,  8.4062,
+           8.3750,  8.2109,  8.2109]]], device='cuda:6')
+11/01/2023 19:26:35 - INFO - Unlimiformer - "Pre Forward Hook", , 1
+11/01/2023 19:26:36 - INFO - Unlimiformer - ['▁Sure', '▁Based', '▁Yes', '▁Fact', '▁Of', '▁Okay', '▁C', '▁Short', '▁Hey', '▁Oh']
+11/01/2023 19:26:36 - INFO - Unlimiformer - torch.Size([1, 1, 10])_tensor([[[24.5312, 18.6250, 18.5781, 16.7500, 16.0938, 15.8047, 15.7109,
+          13.9141, 12.3438, 12.1797]]], device='cuda:6')
+11/01/2023 19:26:36 - INFO - Unlimiformer - "Pre Forward Hook", Sure, 1
+11/01/2023 19:26:36 - INFO - Unlimiformer - ['!', '▁thing', ',', '▁can', '▁answer', '▁I', '?', '▁things', 'thing', '!,']
+11/01/2023 19:26:36 - INFO - Unlimiformer - torch.Size([1, 1, 10])_tensor([[[24.1562, 21.1406, 20.4219, 14.3672, 11.7344, 11.5625, 11.3984,
+          11.1641, 10.8828, 10.8359]]], device='cuda:6')
+11/01/2023 19:26:36 - INFO - Unlimiformer - "Pre Forward Hook", !, 1
+11/01/2023 19:26:37 - INFO - Unlimiformer - ['▁Based', '▁According', '▁Fact', '▁based', '▁From', '▁The', '▁', 'based', '▁fact', '▁Looking']
+11/01/2023 19:26:37 - INFO - Unlimiformer - torch.Size([1, 1, 10])_tensor([[[23.0000, 17.8906, 16.6250, 15.6094, 15.2266, 14.8672, 14.5625,
+          12.8281, 12.6328, 12.5234]]], device='cuda:6')
+11/01/2023 19:26:37 - INFO - Unlimiformer - "Pre Forward Hook", Based, 1
+11/01/2023 19:26:38 - INFO - Unlimiformer - ['▁on', '▁of', '▁off', '▁sole', '▁On', 'on', '▁', '▁the', '▁ON', '▁upon']
+11/01/2023 19:26:38 - INFO - Unlimiformer - torch.Size([1, 1, 10])_tensor([[[30.1406, 12.4609, 12.0859, 12.0625, 12.0469, 12.0078, 11.5156,
+          11.1484, 10.5859,  9.9609]]], device='cuda:6')
+11/01/2023 19:26:38 - INFO - Unlimiformer - "Pre Forward Hook", on, 1
+11/01/2023 19:26:39 - INFO - Unlimiformer - ['▁the', '▁fact', '▁Fact', '▁your', 'the', 'Fact', '▁number', '▁facts', '▁this', '▁list']
+11/01/2023 19:26:39 - INFO - Unlimiformer - torch.Size([1, 1, 10])_tensor([[[29.9844, 19.7812, 19.3281, 15.3516, 13.9062, 13.6484, 13.4141,
+          12.7109, 11.4766, 11.1250]]], device='cuda:6')
+11/01/2023 19:26:39 - INFO - Unlimiformer - "Pre Forward Hook", the, 1
+11/01/2023 19:26:40 - INFO - Unlimiformer - ['▁list', '▁number', '▁facts', '▁information', '▁fact', '▁given', '▁above', '▁listed', '▁provided', 'Fact']
+11/01/2023 19:26:40 - INFO - Unlimiformer - torch.Size([1, 1, 10])_tensor([[[25.1562, 23.5000, 20.8125, 20.1406, 19.7812, 17.8594, 17.2344,
+          15.9375, 14.9453, 14.2891]]], device='cuda:6')
+11/01/2023 19:26:40 - INFO - Unlimiformer - "Pre Forward Hook", list, 1
+11/01/2023 19:26:41 - INFO - Unlimiformer - ['▁of', ',', '▁you', '▁provided', '▁above', ':', '▁given', '▁facts', '▁number', '.']
+11/01/2023 19:26:41 - INFO - Unlimiformer - torch.Size([1, 1, 10])_tensor([[[26.8750, 23.3906, 19.2656, 16.4219, 14.9766, 14.7188, 11.7188,
+          10.5391,  9.5000,  9.5000]]], device='cuda:6')
+11/01/2023 19:26:41 - INFO - Unlimiformer - "Pre Forward Hook", of, 1
+11/01/2023 19:26:41 - INFO - Unlimiformer - ['▁facts', '▁fact', '▁number', '▁numbers', '▁Fact', 'Fact', 'fact', '▁', '▁factors', '▁statements']
+11/01/2023 19:26:41 - INFO - Unlimiformer - torch.Size([1, 1, 10])_tensor([[[28.1094, 19.2344, 18.4219, 18.1562, 18.0156, 15.8750, 15.3672,
+          13.3750, 13.2812, 12.5078]]], device='cuda:6')
+11/01/2023 19:26:41 - INFO - Unlimiformer - "Pre Forward Hook", facts, 1
+11/01/2023 19:26:42 - INFO - Unlimiformer - [',', '▁you', '▁provided', '▁given', '▁above', ':', 'you', '▁number', '▁Prov', '▁presented']
+11/01/2023 19:26:42 - INFO - Unlimiformer - torch.Size([1, 1, 10])_tensor([[[25.1094, 23.0625, 21.3281, 16.5469, 16.1406, 13.6094, 13.4531,
+          12.3906, 11.9609, 11.8281]]], device='cuda:6')
+11/01/2023 19:26:42 - INFO - Unlimiformer - "Pre Forward Hook", ,, 1
+11/01/2023 19:26:43 - INFO - Unlimiformer - ['▁R', '▁the', '▁we', '▁fact', '▁it', '▁number', '▁you', '▁Fact', '▁I', '▁answer']
+11/01/2023 19:26:43 - INFO - Unlimiformer - torch.Size([1, 1, 10])_tensor([[[18.6094, 18.5781, 17.2188, 16.5312, 15.7344, 14.8984, 14.1953,
+          14.0312, 13.1641, 12.0781]]], device='cuda:6')
+11/01/2023 19:26:43 - INFO - Unlimiformer - "Pre Forward Hook", R, 1
+11/01/2023 19:26:44 - INFO - Unlimiformer - ['ith', 'ITH', 'ites', 'it', 'oh', 'IT', 'akes', 'itu', 'yth', 'ames']
+11/01/2023 19:26:44 - INFO - Unlimiformer - torch.Size([1, 1, 10])_tensor([[[26.0312, 18.0312, 15.6250, 15.0078, 14.8516, 13.7891, 13.4297,
+          12.5312, 12.3906, 11.7266]]], device='cuda:6')
+11/01/2023 19:26:44 - INFO - Unlimiformer - "Pre Forward Hook", ith, 1
+11/01/2023 19:26:44 - INFO - Unlimiformer - ['ik', 'ick', 'vik', 'IK', 'wik', '▁ik', 'ak', 'uk', 'ikan', 'ikh']
+11/01/2023 19:26:44 - INFO - Unlimiformer - torch.Size([1, 1, 10])_tensor([[[27.8281, 15.4219, 14.9297, 14.2578, 13.4062, 12.8281, 12.6875,
+          12.6016, 12.4062, 12.3203]]], device='cuda:6')
+11/01/2023 19:26:44 - INFO - Unlimiformer - "Pre Forward Hook", ik, 1
+11/01/2023 19:26:45 - INFO - Unlimiformer - ['▁is', '▁(', '▁Is', 'is', '▁was', '▁IS', '▁', '▁are', '▁has', '▁ist']
+11/01/2023 19:26:45 - INFO - Unlimiformer - torch.Size([1, 1, 10])_tensor([[[28.7969, 14.4922, 12.9375, 12.8984, 12.1953, 11.1250, 10.6250,
+          10.4141, 10.1484, 10.0547]]], device='cuda:6')
+11/01/2023 19:26:45 - INFO - Unlimiformer - "Pre Forward Hook", is, 1
+11/01/2023 19:26:46 - INFO - Unlimiformer - ['▁b', '▁the', '▁listed', 'b', '▁B', '▁described', '▁stated', '▁reported', '▁number', '▁answering']
+11/01/2023 19:26:46 - INFO - Unlimiformer - torch.Size([1, 1, 10])_tensor([[[27.9688, 15.0625, 14.9453, 14.1484, 12.0547, 11.7656, 11.4062,
+          11.1016, 10.8984, 10.7422]]], device='cuda:6')
+11/01/2023 19:26:46 - INFO - Unlimiformer - "Pre Forward Hook", b, 1
+11/01/2023 19:26:47 - INFO - Unlimiformer - ['aking', 'aked', 'AK', 'aching', 'aki', 'ak', 'alk', 'ating', 'aka', 'aping']
+11/01/2023 19:26:47 - INFO - Unlimiformer - torch.Size([1, 1, 10])_tensor([[[31.5781, 15.3438, 14.1719, 13.6797, 13.1875, 13.1641, 11.9609,
+          11.8516, 11.5703, 11.5078]]], device='cuda:6')
+11/01/2023 19:26:47 - INFO - Unlimiformer - "Pre Forward Hook", aking, 1
+11/01/2023 19:26:48 - INFO - Unlimiformer - ['.', '▁(', '!', ',', '▁according', '▁', '.)', '.]', '?', '</s>']
+11/01/2023 19:26:48 - INFO - Unlimiformer - torch.Size([1, 1, 10])_tensor([[[28.5625, 17.4219, 15.8828, 13.5703, 12.4219, 12.0469, 11.9141,
+          11.6562, 11.1641, 11.1250]]], device='cuda:6')
+11/01/2023 19:26:48 - INFO - Unlimiformer - "Pre Forward Hook", ., 1
+11/01/2023 19:26:49 - INFO - Unlimiformer - ['</s>', '▁Fact', '▁(', '▁', '▁That', '▁This', '▁The', '▁fact', '▁It', 'Fact']
+11/01/2023 19:26:49 - INFO - Unlimiformer - torch.Size([1, 1, 10])_tensor([[[20.0156, 17.3281, 17.0781, 16.3594, 14.3203, 13.0703, 12.5938,
+          12.0703, 11.3984, 11.2656]]], device='cuda:6')
+11/01/2023 19:26:49 - INFO - Unlimiformer - "Pre Forward Hook", <s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s>[INST] <<SYS>>
+You are a helpful assistant. Answer with short responses according to the question. 
+<</SYS>>
+
+, 252
+11/01/2023 19:26:49 - INFO - Unlimiformer - "Pre Forward Hook", Based, 1
+11/01/2023 19:26:50 - INFO - Unlimiformer - ['▁on', 'ow', '▁On', '▁', '▁in', '▁sole', '.', ']', '<0x0A>', ')']
+11/01/2023 19:26:50 - INFO - Unlimiformer - torch.Size([1, 1, 10])_tensor([[[16.4375, 10.6875,  9.8828,  9.7578,  9.7109,  9.2656,  8.6484,
+           8.5859,  7.8789,  7.8438]]], device='cuda:6')
+11/01/2023 19:26:50 - INFO - Unlimiformer - "Pre Forward Hook", on, 1
+11/01/2023 19:26:51 - INFO - Unlimiformer - ['▁the', '▁these', '▁your', '▁this', '▁above', '▁my', '▁their', '▁Fact', '▁fact', '▁a']
+11/01/2023 19:26:51 - INFO - Unlimiformer - torch.Size([1, 1, 10])_tensor([[[16.7500, 13.5703, 13.2031, 12.2891, 11.7344, 10.7734, 10.5000,
+          10.4609, 10.3594, 10.2422]]], device='cuda:6')
+11/01/2023 19:26:51 - INFO - Unlimiformer - "Pre Forward Hook", the, 1
+11/01/2023 19:26:52 - INFO - Unlimiformer - ['▁above', '▁given', '▁information', '▁following', '▁number', '▁list', '▁question', '▁facts', '▁fact', '▁previous']
+11/01/2023 19:26:52 - INFO - Unlimiformer - torch.Size([1, 1, 10])_tensor([[[13.7734, 13.0859, 12.6250, 12.2969, 12.0234, 11.8906, 11.5703,
+          11.3750, 11.2969, 11.2656]]], device='cuda:6')
+11/01/2023 19:26:52 - INFO - Unlimiformer - "Pre Forward Hook", above, 1
+11/01/2023 19:26:53 - INFO - Unlimiformer - ['▁list', '▁information', '▁numbers', '▁facts', '▁statements', '▁fact', '▁names', ',', '▁statement', '▁given']
+11/01/2023 19:26:53 - INFO - Unlimiformer - torch.Size([1, 1, 10])_tensor([[[13.8984, 13.3984, 12.2109, 12.1641, 12.1562, 11.5781, 11.1797,
+          10.7656, 10.6250, 10.3438]]], device='cuda:6')
+11/01/2023 19:26:53 - INFO - Unlimiformer - "Pre Forward Hook", number, 1
+11/01/2023 19:26:54 - INFO - Unlimiformer - ['ed', 'ing', '▁list', '▁series', ',', '▁sequence', '▁facts', '▁and', '-', '▁fact']
+11/01/2023 19:26:54 - INFO - Unlimiformer - torch.Size([1, 1, 10])_tensor([[[16.4219, 14.7500, 13.2969, 13.2812, 12.3672, 11.7188, 11.4766,
+          11.1719, 10.4219, 10.1484]]], device='cuda:6')
+11/01/2023 19:26:54 - INFO - Unlimiformer - "Pre Forward Hook", ed, 1
+11/01/2023 19:26:55 - INFO - Unlimiformer - ['▁list', '▁facts', '▁statements', '▁items', '▁fact', '▁statement', '▁information', '▁Fact', '▁questions', '▁sentences']
+11/01/2023 19:26:55 - INFO - Unlimiformer - torch.Size([1, 1, 10])_tensor([[[16.1875, 16.0938, 15.5391, 13.5391, 13.0312, 12.6094, 11.9766,
+          11.8750, 11.5859, 11.5859]]], device='cuda:6')
+11/01/2023 19:26:55 - INFO - Unlimiformer - "Pre Forward Hook", list, 1
+11/01/2023 19:26:56 - INFO - Unlimiformer - [',', '▁of', '.', '▁and', '▁(', '▁what', 'ings', ':', '▁with', '▁please']
+11/01/2023 19:26:56 - INFO - Unlimiformer - torch.Size([1, 1, 10])_tensor([[[16.2500, 15.5703, 12.7969, 10.6250, 10.1250,  9.7578,  9.5391,
+           9.4297,  9.2266,  8.9531]]], device='cuda:6')
+11/01/2023 19:26:56 - INFO - Unlimiformer - "Pre Forward Hook", of, 1
+11/01/2023 19:26:56 - INFO - Unlimiformer - ['▁names', '▁people', '▁', '▁facts', '▁statements', '▁activities', '▁fact', '▁words', '▁actions', '▁individuals']
+11/01/2023 19:26:56 - INFO - Unlimiformer - torch.Size([1, 1, 10])_tensor([[[14.4297, 13.9922, 13.4922, 13.4844, 12.9766, 12.8047, 11.8203,
+          11.6953, 11.4531, 11.0547]]], device='cuda:6')
+11/01/2023 19:26:56 - INFO - Unlimiformer - "Pre Forward Hook", facts, 1
+11/01/2023 19:26:57 - INFO - Unlimiformer - [',', '.', '▁about', '▁and', ':', '▁,', '▁(', '▁with', '▁what', '▁do']
+11/01/2023 19:26:57 - INFO - Unlimiformer - torch.Size([1, 1, 10])_tensor([[[16.8125, 13.1250, 12.4375, 11.2422,  9.8828,  9.8281,  9.8203,
+           9.7422,  9.1172,  9.0312]]], device='cuda:6')
+11/01/2023 19:26:57 - INFO - Unlimiformer - "Pre Forward Hook", ,, 1
+11/01/2023 19:26:58 - INFO - Unlimiformer - ['▁which', '▁answer', '▁write', '▁can', '▁what', '▁please', '▁ar', '▁create', '▁who', '▁identify']
+11/01/2023 19:26:58 - INFO - Unlimiformer - torch.Size([1, 1, 10])_tensor([[[14.3672, 14.1797, 13.4844, 13.4141, 13.2578, 11.9375, 11.7812,
+          11.5312, 10.9922, 10.6562]]], device='cuda:6')
+11/01/2023 19:26:58 - INFO - Unlimiformer - "Pre Forward Hook", can, 1
+11/01/2023 19:26:58 - INFO - Unlimiformer - ['▁you', '▁I', '▁answer', '▁u', '▁we', '▁', '▁be', '▁the', '▁your', '▁Y']
+11/01/2023 19:26:58 - INFO - Unlimiformer - torch.Size([1, 1, 10])_tensor([[[19.9375, 14.7266, 12.9375, 12.5703, 12.5391, 11.9141, 10.9297,
+          10.6016, 10.4297, 10.3281]]], device='cuda:6')
+11/01/2023 19:26:58 - INFO - Unlimiformer - "Pre Forward Hook", you, 1
+11/01/2023 19:26:59 - INFO - Unlimiformer - ['▁tell', '▁answer', '▁please', '▁guess', '▁create', '▁provide', '▁write', '▁make', '▁determine', '▁ar']
+11/01/2023 19:26:59 - INFO - Unlimiformer - torch.Size([1, 1, 10])_tensor([[[14.8125, 14.7422, 14.5234, 14.4688, 13.3125, 13.2109, 13.1953,
+          13.0859, 13.0625, 12.8594]]], device='cuda:6')
+11/01/2023 19:26:59 - INFO - Unlimiformer - "Pre Forward Hook", tell, 1
+11/01/2023 19:27:00 - INFO - Unlimiformer - ['▁me', '▁which', '▁us', '▁what', '▁the', '▁who', '▁whether', '▁if', '▁how', '▁something']
+11/01/2023 19:27:00 - INFO - Unlimiformer - torch.Size([1, 1, 10])_tensor([[[20.1406, 16.1875, 15.2500, 15.2500, 14.9219, 13.4688, 12.4766,
+          12.3516, 12.1797, 11.2891]]], device='cuda:6')
+11/01/2023 19:27:00 - INFO - Unlimiformer - "Pre Forward Hook", me, 1
+11/01/2023 19:27:01 - INFO - Unlimiformer - ['▁the', '▁which', '▁what', '▁who', ':', '▁whether', '▁how', '▁something', '▁a', '▁if']
+11/01/2023 19:27:01 - INFO - Unlimiformer - torch.Size([1, 1, 10])_tensor([[[16.5625, 15.6406, 15.1797, 13.0703, 12.6875, 12.6328, 12.6172,
+          12.6094, 12.5078, 12.2109]]], device='cuda:6')
+11/01/2023 19:27:01 - INFO - Unlimiformer - "Pre Forward Hook", what, 1
+11/01/2023 19:27:01 - INFO - Unlimiformer - ['▁is', '▁the', '▁R', '▁activity', '▁number', '▁are', '▁K', '▁each', '▁all', '▁these']
+11/01/2023 19:27:01 - INFO - Unlimiformer - torch.Size([1, 1, 10])_tensor([[[14.2266, 13.1719, 12.6484, 11.9219, 11.7266, 11.6016, 11.5156,
+          11.3828, 10.9766, 10.9375]]], device='cuda:6')
+11/01/2023 19:27:01 - INFO - Unlimiformer - "Pre Forward Hook", R, 1
+11/01/2023 19:27:02 - INFO - Unlimiformer - ['ith', 'akes', 'oh', 'ites', 'ames', 'it', 'itt', 'ath', 'itu', 'agh']
+11/01/2023 19:27:02 - INFO - Unlimiformer - torch.Size([1, 1, 10])_tensor([[[17.3281, 14.9062, 13.4375, 12.3516, 11.5859,  9.9062,  9.5781,
+           9.3438,  9.3203,  9.1953]]], device='cuda:6')
+11/01/2023 19:27:02 - INFO - Unlimiformer - "Pre Forward Hook", ith, 1
+11/01/2023 19:27:03 - INFO - Unlimiformer - ['ik', 'vik', 'ick', 'iks', 'ika', 'ak', 'i', 'k', 'IK', 'ikes']
+11/01/2023 19:27:03 - INFO - Unlimiformer - torch.Size([1, 1, 10])_tensor([[[22.7500, 13.2188, 12.8984, 11.8906, 11.2266, 11.2031, 11.0234,
+          10.9375, 10.7188, 10.6875]]], device='cuda:6')
+11/01/2023 19:27:03 - INFO - Unlimiformer - "Pre Forward Hook", ik, 1
+11/01/2023 19:27:04 - INFO - Unlimiformer - ['▁is', '▁and', '▁was', ',', "'", '▁did', '▁might', '▁will', '▁(', '▁lik']
+11/01/2023 19:27:04 - INFO - Unlimiformer - torch.Size([1, 1, 10])_tensor([[[17.9531, 15.2031, 14.5000, 14.0859, 11.6797, 11.1797, 10.6406,
+          10.5703, 10.5312, 10.4297]]], device='cuda:6')
+11/01/2023 19:27:04 - INFO - Unlimiformer - "Pre Forward Hook", is, 1
+11/01/2023 19:27:05 - INFO - Unlimiformer - ['▁doing', '▁currently', '▁not', '▁NOT', '▁up', '▁Do', '▁most', '▁likely', '▁do', '▁_']
+11/01/2023 19:27:05 - INFO - Unlimiformer - torch.Size([1, 1, 10])_tensor([[[21.8750, 17.0156, 16.8438, 15.7578, 13.1641, 12.2500, 11.9453,
+          11.6797, 11.4375, 11.1406]]], device='cuda:6')
+11/01/2023 19:27:05 - INFO - Unlimiformer - "Pre Forward Hook", doing, 1
+11/01/2023 19:27:05 - INFO - Unlimiformer - ['?', '▁right', '▁currently', '▁at', '▁now', '▁based', '▁?', ',', '▁in', '▁or']
+11/01/2023 19:27:05 - INFO - Unlimiformer - torch.Size([1, 1, 10])_tensor([[[17.9219, 15.3594, 14.0469, 14.0234, 13.2422, 13.1641, 13.0469,
+          12.5156, 12.0000, 11.7734]]], device='cuda:6')
+11/01/2023 19:27:05 - INFO - Unlimiformer - "Pre Forward Hook", ?, 1
+11/01/2023 19:27:06 - INFO - Unlimiformer - ['<0x0A>', '</', '▁', '">', '▁>', '</s>', ']', '▁Please', '⟩', '>>']
+11/01/2023 19:27:06 - INFO - Unlimiformer - torch.Size([1, 1, 10])_tensor([[[15.3047, 14.9609, 14.2266, 12.6484, 12.3984, 11.9062, 11.7422,
+          11.4375, 11.3516, 11.0391]]], device='cuda:6')
+11/01/2023 19:27:06 - INFO - Unlimiformer - "Pre Forward Hook", [, 1
+11/01/2023 19:27:07 - INFO - Unlimiformer - ['/', '▁/', '//', './', '/>', 'INST', 'br', '/)', 'th', '/-']
+11/01/2023 19:27:07 - INFO - Unlimiformer - torch.Size([1, 1, 10])_tensor([[[20.7031,  9.9453,  9.7500,  8.7656,  8.7188,  8.1484,  8.1250,
+           8.0469,  7.7422,  7.6641]]], device='cuda:6')
+11/01/2023 19:27:07 - INFO - Unlimiformer - "Pre Forward Hook", /, 1
+11/01/2023 19:27:08 - INFO - Unlimiformer - ['INST', 'IN', 'Inst', 'SY', 'INFO', 'INT', 'COM', 'EN', 'INTER', '▁IN']
+11/01/2023 19:27:08 - INFO - Unlimiformer - torch.Size([1, 1, 10])_tensor([[[14.7656, 11.6250, 10.3516, 10.2656,  9.8281,  9.1094,  9.0312,
+           9.0078,  8.6875,  8.2188]]], device='cuda:6')
+11/01/2023 19:27:08 - INFO - Unlimiformer - "Pre Forward Hook", INST, 1
+11/01/2023 19:27:09 - INFO - Unlimiformer - ['0', '.', ':', '1', '▁', '2', '3', ']', '4', '9']
+11/01/2023 19:27:09 - INFO - Unlimiformer - torch.Size([1, 1, 10])_tensor([[[13.5078, 12.2344, 11.7891, 11.3203, 11.0156, 10.6953,  9.7031,
+           9.5234,  9.4062,  9.2188]]], device='cuda:6')
+11/01/2023 19:27:09 - INFO - Unlimiformer - "Pre Forward Hook", ], 1
+11/01/2023 19:27:10 - INFO - Unlimiformer - ['▁', '▁▁', '▁▁▁▁', '▁Sure', '<0x09>', '▁▁▁▁▁▁', '▁▁▁▁▁', '▁▁▁', '▁Of', 'Of']
+11/01/2023 19:27:10 - INFO - Unlimiformer - torch.Size([1, 1, 10])_tensor([[[31.0938, 19.6094, 11.3203, 10.6641,  9.5156,  8.9375,  8.8203,
+           8.5625,  8.5469,  8.5078]]], device='cuda:6')
+11/01/2023 19:27:10 - INFO - Unlimiformer - "Pre Forward Hook", , 1
+11/01/2023 19:27:10 - INFO - Unlimiformer - ['▁Sure', '▁Based', '▁Yes', '▁Of', '▁Fact', '▁Okay', '▁C', '▁R', '▁According', '▁Short']
+11/01/2023 19:27:10 - INFO - Unlimiformer - torch.Size([1, 1, 10])_tensor([[[24.0625, 19.9688, 17.8750, 16.1719, 16.0312, 15.1328, 15.0312,
+          14.1875, 13.0078, 12.9766]]], device='cuda:6')
+11/01/2023 19:27:11 - INFO - Unlimiformer - "Pre Forward Hook", Sure, 1
+11/01/2023 19:27:11 - INFO - Unlimiformer - ['!', ',', '▁thing', '▁can', '▁I', '!,', '?', 'thing', '▁things', '.']
+11/01/2023 19:27:11 - INFO - Unlimiformer - torch.Size([1, 1, 10])_tensor([[[24.4531, 21.4062, 20.5000, 13.5547, 11.9531, 11.4688, 11.4219,
+          11.0234, 11.0078, 10.7344]]], device='cuda:6')
+11/01/2023 19:27:11 - INFO - Unlimiformer - "Pre Forward Hook", !, 1
+11/01/2023 19:27:12 - INFO - Unlimiformer - ['▁Based', '▁According', '▁based', '▁From', '▁Fact', 'based', '▁Looking', '▁R', '▁', '▁Let']
+11/01/2023 19:27:12 - INFO - Unlimiformer - torch.Size([1, 1, 10])_tensor([[[23.6250, 18.8125, 16.1094, 15.9375, 14.5000, 13.4688, 13.0469,
+          12.8594, 12.7812, 12.6562]]], device='cuda:6')
+11/01/2023 19:27:12 - INFO - Unlimiformer - "Pre Forward Hook", Based, 1
+11/01/2023 19:27:13 - INFO - Unlimiformer - ['▁on', '▁sole', 'on', '▁On', '▁of', '▁', '▁off', '▁ON', '▁the', '▁upon']
+11/01/2023 19:27:13 - INFO - Unlimiformer - torch.Size([1, 1, 10])_tensor([[[30.0781, 12.5703, 12.2109, 12.0859, 12.0703, 11.3203, 11.0156,
+          10.5469, 10.5312, 10.3750]]], device='cuda:6')
+11/01/2023 19:27:13 - INFO - Unlimiformer - "Pre Forward Hook", on, 1
+11/01/2023 19:27:14 - INFO - Unlimiformer - ['▁the', '▁fact', '▁Fact', '▁number', 'Fact', 'the', '▁facts', '▁list', '▁your', '▁factor']
+11/01/2023 19:27:14 - INFO - Unlimiformer - torch.Size([1, 1, 10])_tensor([[[27.4531, 20.0312, 19.9375, 14.7422, 14.3828, 13.0625, 12.8047,
+          12.6562, 12.1484, 11.6719]]], device='cuda:6')
+11/01/2023 19:27:14 - INFO - Unlimiformer - "Pre Forward Hook", the, 1
+11/01/2023 19:27:15 - INFO - Unlimiformer - ['▁list', '▁number', '▁fact', '▁facts', '▁information', '▁given', '▁above', '▁listed', '▁provided', 'list']
+11/01/2023 19:27:15 - INFO - Unlimiformer - torch.Size([1, 1, 10])_tensor([[[24.0781, 22.3594, 19.2344, 18.6094, 18.5781, 17.1406, 15.2031,
+          14.8125, 13.6250, 13.1250]]], device='cuda:6')
+11/01/2023 19:27:15 - INFO - Unlimiformer - "Pre Forward Hook", list, 1
+11/01/2023 19:27:16 - INFO - Unlimiformer - ['▁of', ',', '▁you', '▁provided', ':', '▁above', '▁given', '▁facts', '▁if', '▁fact']
+11/01/2023 19:27:16 - INFO - Unlimiformer - torch.Size([1, 1, 10])_tensor([[[28.2656, 21.7656, 18.6719, 15.0625, 13.9688, 13.6953, 11.2109,
+          10.7109, 10.2812, 10.0312]]], device='cuda:6')
+11/01/2023 19:27:16 - INFO - Unlimiformer - "Pre Forward Hook", of, 1
+11/01/2023 19:27:16 - INFO - Unlimiformer - ['▁facts', '▁fact', '▁Fact', '▁numbers', '▁number', 'Fact', 'fact', '▁factors', '▁', '▁statements']
+11/01/2023 19:27:16 - INFO - Unlimiformer - torch.Size([1, 1, 10])_tensor([[[28.5781, 19.1875, 18.4062, 17.4844, 16.1719, 16.1406, 15.6328,
+          13.6016, 12.7734, 12.1641]]], device='cuda:6')
+11/01/2023 19:27:17 - INFO - Unlimiformer - "Pre Forward Hook", facts, 1
+11/01/2023 19:27:17 - INFO - Unlimiformer - [',', '▁you', '▁provided', '▁given', '▁above', ':', 'you', '▁Prov', '▁number', '▁supplied']
+11/01/2023 19:27:17 - INFO - Unlimiformer - torch.Size([1, 1, 10])_tensor([[[24.5625, 23.9062, 21.1719, 16.9531, 15.0703, 14.0625, 13.9141,
+          11.7188, 11.6953, 11.3516]]], device='cuda:6')
+11/01/2023 19:27:17 - INFO - Unlimiformer - "Pre Forward Hook", ,, 1
+11/01/2023 19:27:18 - INFO - Unlimiformer - ['▁R', '▁we', '▁fact', '▁Fact', '▁number', '▁it', '▁you', '▁the', 'R', '▁Number']
+11/01/2023 19:27:18 - INFO - Unlimiformer - torch.Size([1, 1, 10])_tensor([[[22.7344, 16.5469, 16.5156, 15.4531, 14.5391, 13.6172, 13.2031,
+          12.9453, 12.8516, 12.1250]]], device='cuda:6')
+11/01/2023 19:27:18 - INFO - Unlimiformer - "Pre Forward Hook", R, 1
+11/01/2023 19:27:19 - INFO - Unlimiformer - ['ith', 'ITH', 'it', 'oh', 'itu', 'yth', 'ital', 'itt', 'itch', 'iti']
+11/01/2023 19:27:19 - INFO - Unlimiformer - torch.Size([1, 1, 10])_tensor([[[28.2031, 16.2500, 15.2812, 13.5234, 13.4922, 13.4766, 13.3594,
+          12.9688, 12.4453, 12.0078]]], device='cuda:6')
+11/01/2023 19:27:19 - INFO - Unlimiformer - "Pre Forward Hook", ith, 1
+11/01/2023 19:27:20 - INFO - Unlimiformer - ['ik', 'ick', 'IK', 'ak', 'ic', '▁ik', 'k', 'lik', 'i', 'vik']
+11/01/2023 19:27:20 - INFO - Unlimiformer - torch.Size([1, 1, 10])_tensor([[[31.8594, 15.4844, 15.3828, 14.5859, 14.4062, 14.3984, 14.3125,
+          14.0391, 13.7031, 13.6484]]], device='cuda:6')
+11/01/2023 19:27:20 - INFO - Unlimiformer - "Pre Forward Hook", ik, 1
+11/01/2023 19:27:21 - INFO - Unlimiformer - ['▁is', '▁(', '▁was', '▁Is', '▁can', '▁fact', 'is', ',', '▁ist', '▁has']
+11/01/2023 19:27:21 - INFO - Unlimiformer - torch.Size([1, 1, 10])_tensor([[[28.6875, 14.4141, 12.7656, 12.3672, 12.2422, 12.2188, 12.1719,
+          11.1094, 11.0625, 11.0156]]], device='cuda:6')
+11/01/2023 19:27:21 - INFO - Unlimiformer - "Pre Forward Hook", is, 1
+11/01/2023 19:27:22 - INFO - Unlimiformer - ['▁b', '▁listed', '▁"', '▁number', '▁B', 'b', '...', '▁stated', '▁described', '▁(']
+11/01/2023 19:27:22 - INFO - Unlimiformer - torch.Size([1, 1, 10])_tensor([[[24.4219, 14.4141, 13.6953, 13.6719, 13.1719, 11.7734, 11.7656,
+          11.4375, 11.2812, 11.2266]]], device='cuda:6')
+11/01/2023 19:27:22 - INFO - Unlimiformer - "Pre Forward Hook", b, 1
+11/01/2023 19:27:22 - INFO - Unlimiformer - ['aking', 'aching', 'AK', 'aked', 'aki', 'ak', 'anging', 'oking', 'oding', 'ating']
+11/01/2023 19:27:22 - INFO - Unlimiformer - torch.Size([1, 1, 10])_tensor([[[29.4375, 14.3750, 14.2031, 12.8750, 12.7031, 12.5312, 12.0234,
+          11.9062, 11.5156, 11.0234]]], device='cuda:6')
+11/01/2023 19:27:22 - INFO - Unlimiformer - "Pre Forward Hook", aking, 1
+11/01/2023 19:27:23 - INFO - Unlimiformer - ['.', '▁(', ',', '▁according', '!', '▁', '▁since', '▁based', '.)', ':']
+11/01/2023 19:27:23 - INFO - Unlimiformer - torch.Size([1, 1, 10])_tensor([[[26.3438, 19.1719, 18.3438, 13.9609, 13.9219, 11.8359, 10.9375,
+          10.8516, 10.7500, 10.5312]]], device='cuda:6')
+11/01/2023 19:27:23 - INFO - Unlimiformer - "Pre Forward Hook", ., 1
+11/01/2023 19:27:24 - INFO - Unlimiformer - ['</s>', '▁(', '▁', '▁Fact', '▁That', '▁This', '▁fact', '▁[', 'Fact', '▁Therefore']
+11/01/2023 19:27:24 - INFO - Unlimiformer - torch.Size([1, 1, 10])_tensor([[[20.6562, 18.2344, 17.6406, 16.0156, 13.7266, 12.1484, 11.9297,
+          10.9141, 10.6562,  9.6484]]], device='cuda:6')
+11/01/2023 19:27:24 - INFO - Unlimiformer - "Pre Forward Hook", <s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s>[INST] <<SYS>>
+You are a helpful assistant. Answer with short responses according to the question. 
+<</SYS>>
+
+, 252
+11/01/2023 19:27:25 - INFO - Unlimiformer - "Pre Forward Hook", Based, 1
+11/01/2023 19:27:26 - INFO - Unlimiformer - ['▁on', 'ow', '▁On', '▁', '▁in', '▁sole', '.', ']', '<0x0A>', ')']
+11/01/2023 19:27:26 - INFO - Unlimiformer - torch.Size([1, 1, 10])_tensor([[[16.4375, 10.6875,  9.8828,  9.7578,  9.7109,  9.2656,  8.6484,
+           8.5859,  7.8789,  7.8438]]], device='cuda:6')
+11/01/2023 19:27:26 - INFO - Unlimiformer - "Pre Forward Hook", on, 1
+11/01/2023 19:27:26 - INFO - Unlimiformer - ['▁the', '▁these', '▁your', '▁this', '▁above', '▁my', '▁their', '▁Fact', '▁fact', '▁a']
+11/01/2023 19:27:26 - INFO - Unlimiformer - torch.Size([1, 1, 10])_tensor([[[16.7500, 13.5703, 13.2031, 12.2891, 11.7344, 10.7734, 10.5000,
+          10.4609, 10.3594, 10.2422]]], device='cuda:6')
+11/01/2023 19:27:26 - INFO - Unlimiformer - "Pre Forward Hook", the, 1
+11/01/2023 19:27:27 - INFO - Unlimiformer - ['▁above', '▁given', '▁information', '▁following', '▁number', '▁list', '▁question', '▁facts', '▁fact', '▁previous']
+11/01/2023 19:27:27 - INFO - Unlimiformer - torch.Size([1, 1, 10])_tensor([[[13.7734, 13.0859, 12.6250, 12.2969, 12.0234, 11.8906, 11.5703,
+          11.3750, 11.2969, 11.2656]]], device='cuda:6')
+11/01/2023 19:27:27 - INFO - Unlimiformer - "Pre Forward Hook", above, 1
+11/01/2023 19:27:28 - INFO - Unlimiformer - ['▁list', '▁information', '▁numbers', '▁facts', '▁statements', '▁fact', '▁names', ',', '▁statement', '▁given']
+11/01/2023 19:27:28 - INFO - Unlimiformer - torch.Size([1, 1, 10])_tensor([[[13.8984, 13.3984, 12.2109, 12.1641, 12.1562, 11.5781, 11.1797,
+          10.7656, 10.6250, 10.3438]]], device='cuda:6')
+11/01/2023 19:27:28 - INFO - Unlimiformer - "Pre Forward Hook", number, 1
+11/01/2023 19:27:29 - INFO - Unlimiformer - ['ed', 'ing', '▁list', '▁series', ',', '▁sequence', '▁facts', '▁and', '-', '▁fact']
+11/01/2023 19:27:29 - INFO - Unlimiformer - torch.Size([1, 1, 10])_tensor([[[16.4219, 14.7500, 13.2969, 13.2812, 12.3672, 11.7188, 11.4766,
+          11.1719, 10.4219, 10.1484]]], device='cuda:6')
+11/01/2023 19:27:29 - INFO - Unlimiformer - "Pre Forward Hook", ed, 1
+11/01/2023 19:27:30 - INFO - Unlimiformer - ['▁list', '▁facts', '▁statements', '▁items', '▁fact', '▁statement', '▁information', '▁Fact', '▁questions', '▁sentences']
+11/01/2023 19:27:30 - INFO - Unlimiformer - torch.Size([1, 1, 10])_tensor([[[16.1875, 16.0938, 15.5391, 13.5391, 13.0312, 12.6094, 11.9766,
+          11.8750, 11.5859, 11.5859]]], device='cuda:6')
+11/01/2023 19:27:30 - INFO - Unlimiformer - "Pre Forward Hook", list, 1
+11/01/2023 19:27:30 - INFO - Unlimiformer - [',', '▁of', '.', '▁and', '▁(', '▁what', 'ings', ':', '▁with', '▁please']
+11/01/2023 19:27:30 - INFO - Unlimiformer - torch.Size([1, 1, 10])_tensor([[[16.2500, 15.5703, 12.7969, 10.6250, 10.1250,  9.7578,  9.5391,
+           9.4297,  9.2266,  8.9531]]], device='cuda:6')
+11/01/2023 19:27:30 - INFO - Unlimiformer - "Pre Forward Hook", of, 1
+11/01/2023 19:27:31 - INFO - Unlimiformer - ['▁names', '▁people', '▁', '▁facts', '▁statements', '▁activities', '▁fact', '▁words', '▁actions', '▁individuals']
+11/01/2023 19:27:31 - INFO - Unlimiformer - torch.Size([1, 1, 10])_tensor([[[14.4297, 13.9922, 13.4922, 13.4844, 12.9766, 12.8047, 11.8203,
+          11.6953, 11.4531, 11.0547]]], device='cuda:6')
+11/01/2023 19:27:31 - INFO - Unlimiformer - "Pre Forward Hook", facts, 1
+11/01/2023 19:27:32 - INFO - Unlimiformer - [',', '.', '▁about', '▁and', ':', '▁,', '▁(', '▁with', '▁what', '▁do']
+11/01/2023 19:27:32 - INFO - Unlimiformer - torch.Size([1, 1, 10])_tensor([[[16.8125, 13.1250, 12.4375, 11.2422,  9.8828,  9.8281,  9.8203,
+           9.7422,  9.1172,  9.0312]]], device='cuda:6')
+11/01/2023 19:27:32 - INFO - Unlimiformer - "Pre Forward Hook", ,, 1
+11/01/2023 19:27:33 - INFO - Unlimiformer - ['▁which', '▁answer', '▁write', '▁can', '▁what', '▁please', '▁ar', '▁create', '▁who', '▁identify']
+11/01/2023 19:27:33 - INFO - Unlimiformer - torch.Size([1, 1, 10])_tensor([[[14.3672, 14.1797, 13.4844, 13.4141, 13.2578, 11.9375, 11.7812,
+          11.5312, 10.9922, 10.6562]]], device='cuda:6')
+11/01/2023 19:27:33 - INFO - Unlimiformer - "Pre Forward Hook", can, 1
+11/01/2023 19:27:34 - INFO - Unlimiformer - ['▁you', '▁I', '▁answer', '▁u', '▁we', '▁', '▁be', '▁the', '▁your', '▁Y']
+11/01/2023 19:27:34 - INFO - Unlimiformer - torch.Size([1, 1, 10])_tensor([[[19.9375, 14.7266, 12.9375, 12.5703, 12.5391, 11.9141, 10.9297,
+          10.6016, 10.4297, 10.3281]]], device='cuda:6')
+11/01/2023 19:27:34 - INFO - Unlimiformer - "Pre Forward Hook", you, 1
+11/01/2023 19:27:35 - INFO - Unlimiformer - ['▁tell', '▁answer', '▁please', '▁guess', '▁create', '▁provide', '▁write', '▁make', '▁determine', '▁ar']
+11/01/2023 19:27:35 - INFO - Unlimiformer - torch.Size([1, 1, 10])_tensor([[[14.8125, 14.7422, 14.5234, 14.4688, 13.3125, 13.2109, 13.1953,
+          13.0859, 13.0625, 12.8594]]], device='cuda:6')
+11/01/2023 19:27:35 - INFO - Unlimiformer - "Pre Forward Hook", tell, 1
+11/01/2023 19:27:36 - INFO - Unlimiformer - ['▁me', '▁which', '▁us', '▁what', '▁the', '▁who', '▁whether', '▁if', '▁how', '▁something']
+11/01/2023 19:27:36 - INFO - Unlimiformer - torch.Size([1, 1, 10])_tensor([[[20.1406, 16.1875, 15.2500, 15.2500, 14.9219, 13.4688, 12.4766,
+          12.3516, 12.1797, 11.2891]]], device='cuda:6')
+11/01/2023 19:27:36 - INFO - Unlimiformer - "Pre Forward Hook", me, 1
+11/01/2023 19:27:37 - INFO - Unlimiformer - ['▁the', '▁which', '▁what', '▁who', ':', '▁whether', '▁how', '▁something', '▁a', '▁if']
+11/01/2023 19:27:37 - INFO - Unlimiformer - torch.Size([1, 1, 10])_tensor([[[16.5625, 15.6406, 15.1797, 13.0703, 12.6875, 12.6328, 12.6172,
+          12.6094, 12.5078, 12.2109]]], device='cuda:6')
+11/01/2023 19:27:37 - INFO - Unlimiformer - "Pre Forward Hook", who, 1
+11/01/2023 19:27:37 - INFO - Unlimiformer - ['▁is', '▁among', '▁all', '▁of', '▁are', "'", '▁was', ',', '▁amongst', '▁in']
+11/01/2023 19:27:37 - INFO - Unlimiformer - torch.Size([1, 1, 10])_tensor([[[18.2031, 15.0938, 14.6094, 12.0781, 11.6250, 11.5703, 11.5156,
+          11.0547, 10.8438, 10.7656]]], device='cuda:6')
+11/01/2023 19:27:37 - INFO - Unlimiformer - "Pre Forward Hook", is, 1
+11/01/2023 19:27:38 - INFO - Unlimiformer - ['▁doing', '▁sleep', '▁currently', '▁relax', '▁the', '▁winning', '▁e', '▁performing', '▁not', '▁most']
+11/01/2023 19:27:38 - INFO - Unlimiformer - torch.Size([1, 1, 10])_tensor([[[14.1406, 12.6641, 12.1484, 11.5078, 11.3750, 11.3750, 11.2422,
+          11.0391, 10.9453, 10.3984]]], device='cuda:6')
+11/01/2023 19:27:38 - INFO - Unlimiformer - "Pre Forward Hook", cy, 1
+11/01/2023 19:27:39 - INFO - Unlimiformer - ['cling', 'ber', 'c', 'clo', 'ling', 'cing', 'bers', 'borg', 'bing', 'ing']
+11/01/2023 19:27:39 - INFO - Unlimiformer - torch.Size([1, 1, 10])_tensor([[[23.5781, 14.6562, 14.0156, 11.9531, 11.8359, 11.7734, 11.5938,
+          10.5938, 10.0938, 10.0234]]], device='cuda:6')
+11/01/2023 19:27:39 - INFO - Unlimiformer - "Pre Forward Hook", cling, 1
+11/01/2023 19:27:40 - INFO - Unlimiformer - ['?', '▁and', ',', '▁in', '?>', '▁among', '▁?', '▁right', '▁at', '.']
+11/01/2023 19:27:40 - INFO - Unlimiformer - torch.Size([1, 1, 10])_tensor([[[19.1719, 15.9844, 15.8984, 12.2891, 12.0391, 11.9297, 11.8438,
+          11.8359, 11.4844, 11.2422]]], device='cuda:6')
+11/01/2023 19:27:40 - INFO - Unlimiformer - "Pre Forward Hook", ?, 1
+11/01/2023 19:27:41 - INFO - Unlimiformer - ['</', '<0x0A>', '▁', ']', '</s>', '▁And', '▁Please', '▁Who', '》', '▁▁']
+11/01/2023 19:27:41 - INFO - Unlimiformer - torch.Size([1, 1, 10])_tensor([[[15.1953, 14.7422, 13.7812, 13.3828, 11.8125, 11.4219, 10.8672,
+          10.6094, 10.5859, 10.3359]]], device='cuda:6')
+11/01/2023 19:27:41 - INFO - Unlimiformer - "Pre Forward Hook", [, 1
+11/01/2023 19:27:42 - INFO - Unlimiformer - ['/', '▁/', '//', './', 'INST', '/*', '/>', '/"', '/)', '1']
+11/01/2023 19:27:42 - INFO - Unlimiformer - torch.Size([1, 1, 10])_tensor([[[21.3594, 10.1641,  9.2812,  8.9297,  8.7891,  8.5078,  8.4766,
+           8.3203,  8.2812,  7.9570]]], device='cuda:6')
+11/01/2023 19:27:42 - INFO - Unlimiformer - "Pre Forward Hook", /, 1
+11/01/2023 19:27:43 - INFO - Unlimiformer - ['INST', 'IN', 'SY', 'Inst', 'INFO', 'EN', 'COM', 'INT', 'CON', 'INTER']
+11/01/2023 19:27:43 - INFO - Unlimiformer - torch.Size([1, 1, 10])_tensor([[[14.5625, 11.5469, 10.9453, 10.2344,  9.7812,  9.4609,  9.2188,
+           8.7266,  8.3047,  8.2812]]], device='cuda:6')
+11/01/2023 19:27:43 - INFO - Unlimiformer - "Pre Forward Hook", INST, 1
+11/01/2023 19:27:44 - INFO - Unlimiformer - [':', '0', '▁', '1', '2', '3', ']', '9', '4', 'O']
+11/01/2023 19:27:44 - INFO - Unlimiformer - torch.Size([1, 1, 10])_tensor([[[14.2734, 12.1406, 11.7812, 10.7812, 10.4141,  9.5938,  9.3438,
+           8.6328,  8.6172,  8.5312]]], device='cuda:6')
+11/01/2023 19:27:44 - INFO - Unlimiformer - "Pre Forward Hook", ], 1
+11/01/2023 19:27:44 - INFO - Unlimiformer - ['▁', '▁▁', '▁▁▁▁', '▁Sure', '<0x09>', '▁▁▁▁▁▁', '▁▁▁', '▁▁▁▁▁', '▁sure', '▁Of']
+11/01/2023 19:27:44 - INFO - Unlimiformer - torch.Size([1, 1, 10])_tensor([[[31.1250, 19.7344, 11.0391, 10.9219,  9.6016,  8.5781,  8.4766,
+           8.4141,  8.2422,  8.1094]]], device='cuda:6')
+11/01/2023 19:27:44 - INFO - Unlimiformer - "Pre Forward Hook", , 1
+11/01/2023 19:27:45 - INFO - Unlimiformer - ['▁Sure', '▁Based', '▁Yes', '▁Fact', '▁C', '▁Of', '▁Okay', '▁Oh', '▁Def', '▁Short']
+11/01/2023 19:27:45 - INFO - Unlimiformer - torch.Size([1, 1, 10])_tensor([[[24.5469, 18.2031, 18.1562, 17.2812, 16.6250, 16.3906, 15.5000,
+          12.4375, 12.3594, 12.3594]]], device='cuda:6')
+11/01/2023 19:27:45 - INFO - Unlimiformer - "Pre Forward Hook", Sure, 1
+11/01/2023 19:27:46 - INFO - Unlimiformer - ['!', '▁thing', ',', '▁can', '▁I', '?', '▁answer', '!,', '▁things', 'thing']
+11/01/2023 19:27:46 - INFO - Unlimiformer - torch.Size([1, 1, 10])_tensor([[[24.0781, 20.7969, 20.6562, 14.3984, 11.6172, 11.4453, 11.3203,
+          10.9766, 10.8047, 10.7891]]], device='cuda:6')
+11/01/2023 19:27:46 - INFO - Unlimiformer - "Pre Forward Hook", !, 1
+11/01/2023 19:27:47 - INFO - Unlimiformer - ['▁Based', '▁According', '▁Fact', '▁The', '▁based', '▁From', '▁', '▁fact', 'based', '▁Look']
+11/01/2023 19:27:47 - INFO - Unlimiformer - torch.Size([1, 1, 10])_tensor([[[22.4062, 17.4531, 16.4844, 15.5156, 15.2188, 14.4609, 14.3516,
+          12.5000, 12.4062, 12.3281]]], device='cuda:6')
+11/01/2023 19:27:47 - INFO - Unlimiformer - "Pre Forward Hook", Based, 1
+11/01/2023 19:27:48 - INFO - Unlimiformer - ['▁on', '▁of', '▁off', 'on', '▁On', '▁', '▁sole', '▁the', '▁ON', '▁upon']
+11/01/2023 19:27:48 - INFO - Unlimiformer - torch.Size([1, 1, 10])_tensor([[[30.3438, 12.5703, 12.2812, 12.1562, 12.1406, 11.4922, 11.3750,
+          11.1875, 10.4453, 10.1875]]], device='cuda:6')
+11/01/2023 19:27:48 - INFO - Unlimiformer - "Pre Forward Hook", on, 1
+11/01/2023 19:27:49 - INFO - Unlimiformer - ['▁the', '▁fact', '▁Fact', '▁your', 'the', '▁number', 'Fact', '▁facts', '▁this', '▁list']
+11/01/2023 19:27:49 - INFO - Unlimiformer - torch.Size([1, 1, 10])_tensor([[[30.7812, 19.3281, 18.0000, 16.6094, 14.1406, 13.4297, 12.9609,
+          12.5469, 11.4766, 11.1953]]], device='cuda:6')
+11/01/2023 19:27:49 - INFO - Unlimiformer - "Pre Forward Hook", the, 1
+11/01/2023 19:27:50 - INFO - Unlimiformer - ['▁list', '▁number', '▁facts', '▁information', '▁fact', '▁given', '▁above', '▁listed', '▁provided', 'Fact']
+11/01/2023 19:27:50 - INFO - Unlimiformer - torch.Size([1, 1, 10])_tensor([[[25.5312, 24.1562, 21.0781, 20.4531, 20.0625, 17.8438, 17.5781,
+          16.3125, 14.8281, 14.4141]]], device='cuda:6')
+11/01/2023 19:27:50 - INFO - Unlimiformer - "Pre Forward Hook", list, 1
+11/01/2023 19:27:51 - INFO - Unlimiformer - ['▁of', ',', '▁you', '▁provided', '▁above', ':', '▁given', '▁facts', '▁number', '▁if']
+11/01/2023 19:27:51 - INFO - Unlimiformer - torch.Size([1, 1, 10])_tensor([[[27.0469, 22.8750, 19.3438, 16.0938, 15.1797, 14.5547, 11.6641,
+          10.6562,  9.8828,  9.5234]]], device='cuda:6')
+11/01/2023 19:27:51 - INFO - Unlimiformer - "Pre Forward Hook", of, 1
+11/01/2023 19:27:51 - INFO - Unlimiformer - ['▁facts', '▁fact', '▁number', '▁Fact', '▁numbers', 'Fact', 'fact', '▁', '▁factors', '▁statements']
+11/01/2023 19:27:51 - INFO - Unlimiformer - torch.Size([1, 1, 10])_tensor([[[28.5312, 19.5469, 18.4219, 18.3125, 17.9219, 15.9922, 15.7188,
+          14.0078, 13.5938, 12.5781]]], device='cuda:6')
+11/01/2023 19:27:51 - INFO - Unlimiformer - "Pre Forward Hook", facts, 1
+11/01/2023 19:27:52 - INFO - Unlimiformer - [',', '▁you', '▁provided', '▁given', '▁above', 'you', ':', '▁number', '▁Prov', '▁presented']
+11/01/2023 19:27:52 - INFO - Unlimiformer - torch.Size([1, 1, 10])_tensor([[[24.8125, 23.4219, 21.2812, 16.5312, 16.3750, 13.8828, 13.5781,
+          12.7969, 11.9375, 11.6797]]], device='cuda:6')
+11/01/2023 19:27:52 - INFO - Unlimiformer - "Pre Forward Hook", ,, 1
+11/01/2023 19:27:53 - INFO - Unlimiformer - ['▁O', '▁fact', '▁Fact', '▁the', '▁we', '▁it', '▁number', '▁you', 'Fact', '▁answer']
+11/01/2023 19:27:53 - INFO - Unlimiformer - torch.Size([1, 1, 10])_tensor([[[17.4219, 16.8438, 16.7812, 16.3438, 14.2188, 14.1641, 14.0234,
+          13.7188, 12.5859, 11.4297]]], device='cuda:6')
+11/01/2023 19:27:53 - INFO - Unlimiformer - "Pre Forward Hook", O, 1
+11/01/2023 19:27:54 - INFO - Unlimiformer - ['ppen', 'ppe', 'epen', 'пен', 'ppel', 'wen', 'pen', 'ppi', 'appen', 'bben']
+11/01/2023 19:27:54 - INFO - Unlimiformer - torch.Size([1, 1, 10])_tensor([[[24.2969, 13.0312, 12.3281, 11.5938, 11.4375, 11.0625, 10.4062,
+          10.3750, 10.3672, 10.1172]]], device='cuda:6')
+11/01/2023 19:27:54 - INFO - Unlimiformer - "Pre Forward Hook", ppen, 1
+11/01/2023 19:27:55 - INFO - Unlimiformer - ['heimer', 'heim', 'hi', 'he', 'hein', 'h', 'hem', 'immer', 'imer', 'him']
+11/01/2023 19:27:55 - INFO - Unlimiformer - torch.Size([1, 1, 10])_tensor([[[26.7969, 15.3359, 12.2266, 12.0469, 11.6328, 11.3125, 11.2656,
+          10.8750, 10.7031, 10.6719]]], device='cuda:6')
+11/01/2023 19:27:55 - INFO - Unlimiformer - "Pre Forward Hook", heimer, 1
+11/01/2023 19:27:56 - INFO - Unlimiformer - ['▁is', '▁(', '▁was', '▁Is', 'is', ',', '.', '▁cy', '▁', '▁can']
+11/01/2023 19:27:56 - INFO - Unlimiformer - torch.Size([1, 1, 10])_tensor([[[28.0312, 16.2500, 12.8516, 12.6094, 11.9375, 11.3203, 10.5547,
+          10.3906, 10.3828, 10.2266]]], device='cuda:6')
+11/01/2023 19:27:56 - INFO - Unlimiformer - "Pre Forward Hook", is, 1
+11/01/2023 19:27:57 - INFO - Unlimiformer - ['▁cy', '▁the', '▁Cy', 'cy', '▁listed', '▁cyl', '▁described', '▁cycl', '▁stated', '▁cycles']
+11/01/2023 19:27:57 - INFO - Unlimiformer - torch.Size([1, 1, 10])_tensor([[[26.1562, 17.3125, 15.5938, 15.1953, 14.6328, 13.3906, 13.2188,
+          12.5859, 12.5625, 12.3438]]], device='cuda:6')
+11/01/2023 19:27:57 - INFO - Unlimiformer - "Pre Forward Hook", cy, 1
+11/01/2023 19:27:58 - INFO - Unlimiformer - ['cling', 'cing', 'ling', 'c', 'bling', 'aling', 'eling', 'clo', 'cil', 'clic']
+11/01/2023 19:27:58 - INFO - Unlimiformer - torch.Size([1, 1, 10])_tensor([[[29.1719, 15.6641, 14.4688, 14.3438, 13.0312, 12.4141, 11.7344,
+          11.7109, 11.5391, 11.3047]]], device='cuda:6')
+11/01/2023 19:27:58 - INFO - Unlimiformer - "Pre Forward Hook", cling, 1
+11/01/2023 19:27:59 - INFO - Unlimiformer - ['.', '▁(', ',', '▁according', '!', '▁based', '▁', '.)', '?', '.]']
+11/01/2023 19:27:59 - INFO - Unlimiformer - torch.Size([1, 1, 10])_tensor([[[27.4062, 19.7656, 16.6875, 14.5547, 13.8984, 11.9922, 11.4766,
+          11.2891, 11.0000, 10.9531]]], device='cuda:6')
+11/01/2023 19:27:59 - INFO - Unlimiformer - "Pre Forward Hook", ., 1
+11/01/2023 19:27:59 - INFO - Unlimiformer - ['</s>', '▁', '▁(', '▁Fact', '▁That', '▁This', '▁The', '▁fact', '▁It', 'Fact']
+11/01/2023 19:27:59 - INFO - Unlimiformer - torch.Size([1, 1, 10])_tensor([[[20.2500, 16.4219, 16.1406, 16.0938, 15.7734, 13.7188, 11.9141,
+          11.4766, 11.3516, 10.6641]]], device='cuda:6')
+11/01/2023 19:28:00 - INFO - Unlimiformer - "Pre Forward Hook", <s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s>[INST] <<SYS>>
+You are a helpful assistant. Answer with short responses according to the question. 
+<</SYS>>
+
+, 252
+11/01/2023 19:28:00 - INFO - Unlimiformer - "Pre Forward Hook", Based, 1
+11/01/2023 19:28:01 - INFO - Unlimiformer - ['▁on', 'ow', '▁On', '▁', '▁in', '▁sole', '.', ']', '<0x0A>', ')']
+11/01/2023 19:28:01 - INFO - Unlimiformer - torch.Size([1, 1, 10])_tensor([[[16.4375, 10.6875,  9.8828,  9.7578,  9.7109,  9.2656,  8.6484,
+           8.5859,  7.8789,  7.8438]]], device='cuda:6')
+11/01/2023 19:28:01 - INFO - Unlimiformer - "Pre Forward Hook", on, 1
+11/01/2023 19:28:02 - INFO - Unlimiformer - ['▁the', '▁these', '▁your', '▁this', '▁above', '▁my', '▁their', '▁Fact', '▁fact', '▁a']
+11/01/2023 19:28:02 - INFO - Unlimiformer - torch.Size([1, 1, 10])_tensor([[[16.7500, 13.5703, 13.2031, 12.2891, 11.7344, 10.7734, 10.5000,
+          10.4609, 10.3594, 10.2422]]], device='cuda:6')
+11/01/2023 19:28:02 - INFO - Unlimiformer - "Pre Forward Hook", the, 1
+11/01/2023 19:28:03 - INFO - Unlimiformer - ['▁above', '▁given', '▁information', '▁following', '▁number', '▁list', '▁question', '▁facts', '▁fact', '▁previous']
+11/01/2023 19:28:03 - INFO - Unlimiformer - torch.Size([1, 1, 10])_tensor([[[13.7734, 13.0859, 12.6250, 12.2969, 12.0234, 11.8906, 11.5703,
+          11.3750, 11.2969, 11.2656]]], device='cuda:6')
+11/01/2023 19:28:03 - INFO - Unlimiformer - "Pre Forward Hook", above, 1
+11/01/2023 19:28:04 - INFO - Unlimiformer - ['▁list', '▁information', '▁numbers', '▁facts', '▁statements', '▁fact', '▁names', ',', '▁statement', '▁given']
+11/01/2023 19:28:04 - INFO - Unlimiformer - torch.Size([1, 1, 10])_tensor([[[13.8984, 13.3984, 12.2109, 12.1641, 12.1562, 11.5781, 11.1797,
+          10.7656, 10.6250, 10.3438]]], device='cuda:6')
+11/01/2023 19:28:04 - INFO - Unlimiformer - "Pre Forward Hook", number, 1
+11/01/2023 19:28:05 - INFO - Unlimiformer - ['ed', 'ing', '▁list', '▁series', ',', '▁sequence', '▁facts', '▁and', '-', '▁fact']
+11/01/2023 19:28:05 - INFO - Unlimiformer - torch.Size([1, 1, 10])_tensor([[[16.4219, 14.7500, 13.2969, 13.2812, 12.3672, 11.7188, 11.4766,
+          11.1719, 10.4219, 10.1484]]], device='cuda:6')
+11/01/2023 19:28:05 - INFO - Unlimiformer - "Pre Forward Hook", ed, 1
+11/01/2023 19:28:06 - INFO - Unlimiformer - ['▁list', '▁facts', '▁statements', '▁items', '▁fact', '▁statement', '▁information', '▁Fact', '▁questions', '▁sentences']
+11/01/2023 19:28:06 - INFO - Unlimiformer - torch.Size([1, 1, 10])_tensor([[[16.1875, 16.0938, 15.5391, 13.5391, 13.0312, 12.6094, 11.9766,
+          11.8750, 11.5859, 11.5859]]], device='cuda:6')
+11/01/2023 19:28:06 - INFO - Unlimiformer - "Pre Forward Hook", list, 1
+11/01/2023 19:28:07 - INFO - Unlimiformer - [',', '▁of', '.', '▁and', '▁(', '▁what', 'ings', ':', '▁with', '▁please']
+11/01/2023 19:28:07 - INFO - Unlimiformer - torch.Size([1, 1, 10])_tensor([[[16.2500, 15.5703, 12.7969, 10.6250, 10.1250,  9.7578,  9.5391,
+           9.4297,  9.2266,  8.9531]]], device='cuda:6')
+11/01/2023 19:28:07 - INFO - Unlimiformer - "Pre Forward Hook", of, 1
+11/01/2023 19:28:08 - INFO - Unlimiformer - ['▁names', '▁people', '▁', '▁facts', '▁statements', '▁activities', '▁fact', '▁words', '▁actions', '▁individuals']
+11/01/2023 19:28:08 - INFO - Unlimiformer - torch.Size([1, 1, 10])_tensor([[[14.4297, 13.9922, 13.4922, 13.4844, 12.9766, 12.8047, 11.8203,
+          11.6953, 11.4531, 11.0547]]], device='cuda:6')
+11/01/2023 19:28:08 - INFO - Unlimiformer - "Pre Forward Hook", facts, 1
+11/01/2023 19:28:09 - INFO - Unlimiformer - [',', '.', '▁about', '▁and', ':', '▁,', '▁(', '▁with', '▁what', '▁do']
+11/01/2023 19:28:09 - INFO - Unlimiformer - torch.Size([1, 1, 10])_tensor([[[16.8125, 13.1250, 12.4375, 11.2422,  9.8828,  9.8281,  9.8203,
+           9.7422,  9.1172,  9.0312]]], device='cuda:6')
+11/01/2023 19:28:09 - INFO - Unlimiformer - "Pre Forward Hook", ,, 1
+11/01/2023 19:28:10 - INFO - Unlimiformer - ['▁which', '▁answer', '▁write', '▁can', '▁what', '▁please', '▁ar', '▁create', '▁who', '▁identify']
+11/01/2023 19:28:10 - INFO - Unlimiformer - torch.Size([1, 1, 10])_tensor([[[14.3672, 14.1797, 13.4844, 13.4141, 13.2578, 11.9375, 11.7812,
+          11.5312, 10.9922, 10.6562]]], device='cuda:6')
+11/01/2023 19:28:10 - INFO - Unlimiformer - "Pre Forward Hook", can, 1
+11/01/2023 19:28:11 - INFO - Unlimiformer - ['▁you', '▁I', '▁answer', '▁u', '▁we', '▁', '▁be', '▁the', '▁your', '▁Y']
+11/01/2023 19:28:11 - INFO - Unlimiformer - torch.Size([1, 1, 10])_tensor([[[19.9375, 14.7266, 12.9375, 12.5703, 12.5391, 11.9141, 10.9297,
+          10.6016, 10.4297, 10.3281]]], device='cuda:6')
+11/01/2023 19:28:11 - INFO - Unlimiformer - "Pre Forward Hook", you, 1
+11/01/2023 19:28:12 - INFO - Unlimiformer - ['▁tell', '▁answer', '▁please', '▁guess', '▁create', '▁provide', '▁write', '▁make', '▁determine', '▁ar']
+11/01/2023 19:28:12 - INFO - Unlimiformer - torch.Size([1, 1, 10])_tensor([[[14.8125, 14.7422, 14.5234, 14.4688, 13.3125, 13.2109, 13.1953,
+          13.0859, 13.0625, 12.8594]]], device='cuda:6')
+11/01/2023 19:28:12 - INFO - Unlimiformer - "Pre Forward Hook", tell, 1
+11/01/2023 19:28:13 - INFO - Unlimiformer - ['▁me', '▁which', '▁us', '▁what', '▁the', '▁who', '▁whether', '▁if', '▁how', '▁something']
+11/01/2023 19:28:13 - INFO - Unlimiformer - torch.Size([1, 1, 10])_tensor([[[20.1406, 16.1875, 15.2500, 15.2500, 14.9219, 13.4688, 12.4766,
+          12.3516, 12.1797, 11.2891]]], device='cuda:6')
+11/01/2023 19:28:13 - INFO - Unlimiformer - "Pre Forward Hook", me, 1
+11/01/2023 19:28:14 - INFO - Unlimiformer - ['▁the', '▁which', '▁what', '▁who', ':', '▁whether', '▁how', '▁something', '▁a', '▁if']
+11/01/2023 19:28:14 - INFO - Unlimiformer - torch.Size([1, 1, 10])_tensor([[[16.5625, 15.6406, 15.1797, 13.0703, 12.6875, 12.6328, 12.6172,
+          12.6094, 12.5078, 12.2109]]], device='cuda:6')
+11/01/2023 19:28:14 - INFO - Unlimiformer - "Pre Forward Hook", what, 1
+11/01/2023 19:28:15 - INFO - Unlimiformer - ['▁is', '▁the', '▁R', '▁activity', '▁number', '▁are', '▁K', '▁each', '▁all', '▁these']
+11/01/2023 19:28:15 - INFO - Unlimiformer - torch.Size([1, 1, 10])_tensor([[[14.2266, 13.1719, 12.6484, 11.9219, 11.7266, 11.6016, 11.5156,
+          11.3828, 10.9766, 10.9375]]], device='cuda:6')
+11/01/2023 19:28:15 - INFO - Unlimiformer - "Pre Forward Hook", O, 1
+11/01/2023 19:28:16 - INFO - Unlimiformer - ['ppen', 'la', 'ppi', 'wen', 'ppo', 'ppy', 'ussen', 'ppa', 'pp', 'cken']
+11/01/2023 19:28:16 - INFO - Unlimiformer - torch.Size([1, 1, 10])_tensor([[[19.0938,  9.9375,  8.8516,  8.6797,  8.4062,  8.1875,  8.0625,
+           7.7539,  7.4883,  7.4648]]], device='cuda:6')
+11/01/2023 19:28:16 - INFO - Unlimiformer - "Pre Forward Hook", ppen, 1
+11/01/2023 19:28:17 - INFO - Unlimiformer - ['heimer', 'heim', 'hi', 'he', 'h', 'hein', 'hem', 'him', 'He', '-']
+11/01/2023 19:28:17 - INFO - Unlimiformer - torch.Size([1, 1, 10])_tensor([[[19.5938, 11.6250, 10.9062, 10.6094, 10.2188,  8.8438,  8.6406,
+           8.3984,  8.3594,  8.0312]]], device='cuda:6')
+11/01/2023 19:28:17 - INFO - Unlimiformer - "Pre Forward Hook", heimer, 1
+11/01/2023 19:28:18 - INFO - Unlimiformer - ['▁is', '▁was', '▁did', '▁and', '▁would', "'", ',', '▁does', '▁said', '▁might']
+11/01/2023 19:28:18 - INFO - Unlimiformer - torch.Size([1, 1, 10])_tensor([[[17.6250, 16.5000, 15.3516, 14.8750, 14.5234, 14.2031, 13.4844,
+          11.3516, 11.2656, 11.0078]]], device='cuda:6')
+11/01/2023 19:28:18 - INFO - Unlimiformer - "Pre Forward Hook", is, 1
+11/01/2023 19:28:18 - INFO - Unlimiformer - ['▁doing', '▁currently', '▁NOT', '▁not', '▁cy', '▁most', '▁up', '▁likely', '?', '▁Do']
+11/01/2023 19:28:18 - INFO - Unlimiformer - torch.Size([1, 1, 10])_tensor([[[21.0000, 15.1250, 14.8047, 14.7188, 14.3594, 13.4531, 12.9844,
+          12.2266, 11.4531, 11.2578]]], device='cuda:6')
+11/01/2023 19:28:18 - INFO - Unlimiformer - "Pre Forward Hook", doing, 1
+11/01/2023 19:28:19 - INFO - Unlimiformer - ['?', '▁right', '▁at', '▁based', '▁in', '▁while', ',', '▁currently', '▁?', '▁during']
+11/01/2023 19:28:19 - INFO - Unlimiformer - torch.Size([1, 1, 10])_tensor([[[17.4375, 14.2188, 14.1172, 13.7109, 12.9766, 12.9688, 12.8438,
+          12.6406, 12.4609, 12.3203]]], device='cuda:6')
+11/01/2023 19:28:19 - INFO - Unlimiformer - "Pre Forward Hook", ?, 1
+11/01/2023 19:28:20 - INFO - Unlimiformer - ['<0x0A>', '</', '▁', '▁>', '</s>', ']', '▁Please', '">', '▁And', '▁(']
+11/01/2023 19:28:20 - INFO - Unlimiformer - torch.Size([1, 1, 10])_tensor([[[15.1641, 14.6875, 14.5156, 12.1172, 11.8516, 11.5938, 11.3047,
+          11.1250, 10.6016, 10.5859]]], device='cuda:6')
+11/01/2023 19:28:20 - INFO - Unlimiformer - "Pre Forward Hook", [, 1
+11/01/2023 19:28:21 - INFO - Unlimiformer - ['/', '▁/', '//', 'br', '/>', './', '/)', 'th', '/-', 'INST']
+11/01/2023 19:28:21 - INFO - Unlimiformer - torch.Size([1, 1, 10])_tensor([[[20.5938,  9.4766,  9.2969,  9.1562,  8.9609,  8.7891,  8.6484,
+           8.2969,  7.8359,  7.7656]]], device='cuda:6')
+11/01/2023 19:28:21 - INFO - Unlimiformer - "Pre Forward Hook", /, 1
+11/01/2023 19:28:22 - INFO - Unlimiformer - ['INST', 'IN', 'SY', 'Inst', 'INFO', 'COM', 'INT', 'EN', 'INTER', '▁IN']
+11/01/2023 19:28:22 - INFO - Unlimiformer - torch.Size([1, 1, 10])_tensor([[[14.9766, 11.5703, 10.6953, 10.6016, 10.0156,  9.2188,  9.1953,
+           8.9766,  8.7500,  8.3828]]], device='cuda:6')
+11/01/2023 19:28:22 - INFO - Unlimiformer - "Pre Forward Hook", INST, 1
+11/01/2023 19:28:23 - INFO - Unlimiformer - ['0', '1', ':', '2', '▁', '.', '/', '3', ']', '▁cy']
+11/01/2023 19:28:23 - INFO - Unlimiformer - torch.Size([1, 1, 10])_tensor([[[13.1484, 12.6250, 12.0312, 11.5469, 10.8750, 10.8047,  9.8594,
+           9.6562,  9.2109,  8.5391]]], device='cuda:6')
+11/01/2023 19:28:23 - INFO - Unlimiformer - "Pre Forward Hook", ], 1
+11/01/2023 19:28:24 - INFO - Unlimiformer - ['▁', '▁▁', '▁▁▁▁', '▁Sure', '<0x09>', '▁▁▁▁▁▁', '▁▁▁▁▁', '▁▁▁', '▁Of', '▁sure']
+11/01/2023 19:28:24 - INFO - Unlimiformer - torch.Size([1, 1, 10])_tensor([[[30.9688, 19.6562, 11.2422, 10.9219,  9.5156,  8.8516,  8.7891,
+           8.3906,  8.3516,  8.3359]]], device='cuda:6')
+11/01/2023 19:28:24 - INFO - Unlimiformer - "Pre Forward Hook", , 1
+11/01/2023 19:28:25 - INFO - Unlimiformer - ['▁Sure', '▁Based', '▁Yes', '▁Fact', '▁C', '▁Of', '▁O', '▁Okay', '▁No', '▁Oh']
+11/01/2023 19:28:25 - INFO - Unlimiformer - torch.Size([1, 1, 10])_tensor([[[23.7344, 19.4219, 17.1562, 17.1406, 16.0781, 16.0469, 14.7969,
+          14.7422, 13.8281, 13.0938]]], device='cuda:6')
+11/01/2023 19:28:25 - INFO - Unlimiformer - "Pre Forward Hook", Sure, 1
+11/01/2023 19:28:26 - INFO - Unlimiformer - ['!', ',', '▁thing', '▁can', '▁I', '?', '!,', 'thing', '.', '▁things']
+11/01/2023 19:28:26 - INFO - Unlimiformer - torch.Size([1, 1, 10])_tensor([[[24.2656, 21.4219, 20.7656, 13.6250, 12.0391, 11.4062, 11.2734,
+          10.9922, 10.9531, 10.9453]]], device='cuda:6')
+11/01/2023 19:28:26 - INFO - Unlimiformer - "Pre Forward Hook", !, 1
+11/01/2023 19:28:27 - INFO - Unlimiformer - ['▁Based', '▁According', '▁based', '▁Fact', '▁From', '▁O', '▁', 'based', '▁Looking', '▁Using']
+11/01/2023 19:28:27 - INFO - Unlimiformer - torch.Size([1, 1, 10])_tensor([[[23.0781, 18.6094, 15.4844, 15.0078, 14.8516, 14.4531, 13.0000,
+          12.9141, 12.7812, 12.5703]]], device='cuda:6')
+11/01/2023 19:28:27 - INFO - Unlimiformer - "Pre Forward Hook", Based, 1
+11/01/2023 19:28:28 - INFO - Unlimiformer - ['▁on', '▁sole', 'on', '▁of', '▁On', '▁', '▁off', '▁the', '▁upon', '▁ON']
+11/01/2023 19:28:28 - INFO - Unlimiformer - torch.Size([1, 1, 10])_tensor([[[29.9531, 12.3047, 12.0781, 12.0703, 11.9844, 11.3203, 11.2578,
+          10.8203, 10.7188, 10.4219]]], device='cuda:6')
+11/01/2023 19:28:28 - INFO - Unlimiformer - "Pre Forward Hook", on, 1
+11/01/2023 19:28:28 - INFO - Unlimiformer - ['▁the', '▁fact', '▁Fact', '▁number', 'Fact', '▁list', '▁facts', '▁O', 'the', '▁your']
+11/01/2023 19:28:28 - INFO - Unlimiformer - torch.Size([1, 1, 10])_tensor([[[26.0000, 21.0469, 20.6094, 15.0781, 14.7656, 12.8281, 12.6797,
+          12.6797, 12.2109, 12.0000]]], device='cuda:6')
+11/01/2023 19:28:28 - INFO - Unlimiformer - "Pre Forward Hook", the, 1
+11/01/2023 19:28:29 - INFO - Unlimiformer - ['▁list', '▁number', '▁fact', '▁information', '▁facts', '▁given', '▁above', '▁listed', '▁third', '▁provided']
+11/01/2023 19:28:29 - INFO - Unlimiformer - torch.Size([1, 1, 10])_tensor([[[23.9375, 22.4062, 19.2188, 18.6094, 17.9688, 17.2969, 15.3281,
+          14.6562, 13.8672, 13.7578]]], device='cuda:6')
+11/01/2023 19:28:29 - INFO - Unlimiformer - "Pre Forward Hook", list, 1
+11/01/2023 19:28:30 - INFO - Unlimiformer - ['▁of', ',', '▁you', ':', '▁provided', '▁above', '▁given', '▁facts', '▁fact', '▁number']
+11/01/2023 19:28:30 - INFO - Unlimiformer - torch.Size([1, 1, 10])_tensor([[[27.8750, 21.7031, 18.5312, 14.9609, 14.8906, 13.6719, 11.1641,
+          10.4375, 10.3516, 10.1641]]], device='cuda:6')
+11/01/2023 19:28:30 - INFO - Unlimiformer - "Pre Forward Hook", of, 1
+11/01/2023 19:28:31 - INFO - Unlimiformer - ['▁facts', '▁fact', '▁Fact', '▁numbers', '▁number', 'Fact', 'fact', '▁factors', '▁', '▁statements']
+11/01/2023 19:28:31 - INFO - Unlimiformer - torch.Size([1, 1, 10])_tensor([[[28.3594, 18.9531, 17.9531, 17.0781, 16.3906, 15.6875, 15.3125,
+          13.2812, 13.0625, 12.1484]]], device='cuda:6')
+11/01/2023 19:28:31 - INFO - Unlimiformer - "Pre Forward Hook", facts, 1
+11/01/2023 19:28:32 - INFO - Unlimiformer - [',', '▁you', '▁provided', '▁given', '▁above', ':', 'you', '▁number', '▁Prov', '▁supplied']
+11/01/2023 19:28:32 - INFO - Unlimiformer - torch.Size([1, 1, 10])_tensor([[[24.3438, 23.9219, 21.1406, 16.7500, 15.0469, 14.4141, 13.9453,
+          11.7734, 11.4844, 11.3594]]], device='cuda:6')
+11/01/2023 19:28:32 - INFO - Unlimiformer - "Pre Forward Hook", ,, 1
+11/01/2023 19:28:33 - INFO - Unlimiformer - ['▁O', '▁fact', '▁Fact', '▁we', '▁you', '▁number', '▁it', '▁Number', 'Fact', '▁according']
+11/01/2023 19:28:33 - INFO - Unlimiformer - torch.Size([1, 1, 10])_tensor([[[20.7031, 15.5312, 15.2734, 15.2031, 14.3516, 13.2188, 12.2344,
+          11.8438, 11.7344, 11.4141]]], device='cuda:6')
+11/01/2023 19:28:33 - INFO - Unlimiformer - "Pre Forward Hook", O, 1
+11/01/2023 19:28:34 - INFO - Unlimiformer - ['ppen', 'pp', 'pen', 'ppe', 'epen', 'пен', 'ppel', 'wen', 'ppi', 'appen']
+11/01/2023 19:28:34 - INFO - Unlimiformer - torch.Size([1, 1, 10])_tensor([[[27.4219, 12.4922, 12.4297, 12.1641, 12.1094, 12.0078, 11.7969,
+          11.6250, 11.4766, 11.1641]]], device='cuda:6')
+11/01/2023 19:28:34 - INFO - Unlimiformer - "Pre Forward Hook", ppen, 1
+11/01/2023 19:28:35 - INFO - Unlimiformer - ['heimer', 'heim', 'hein', 'h', 'hew', 'berger', 'he', 'hem', 'hi', 'him']
+11/01/2023 19:28:35 - INFO - Unlimiformer - torch.Size([1, 1, 10])_tensor([[[26.7969, 13.7734, 13.4531, 12.0703, 11.9531, 11.8125, 11.2891,
+          11.2578, 10.9062, 10.6797]]], device='cuda:6')
+11/01/2023 19:28:35 - INFO - Unlimiformer - "Pre Forward Hook", heimer, 1
+11/01/2023 19:28:35 - INFO - Unlimiformer - ['▁is', '▁(', '▁was', '▁can', ',', '▁Is', 'is', "'", '▁would', '▁has']
+11/01/2023 19:28:35 - INFO - Unlimiformer - torch.Size([1, 1, 10])_tensor([[[28.7812, 17.3281, 14.1484, 13.9531, 13.4297, 13.0391, 12.9609,
+          12.6797, 12.0234, 11.2344]]], device='cuda:6')
+11/01/2023 19:28:35 - INFO - Unlimiformer - "Pre Forward Hook", is, 1
+11/01/2023 19:28:36 - INFO - Unlimiformer - ['▁cy', '▁Cy', 'cy', '▁listed', '▁number', '▁stated', '...', '▁described', '▁"', '▁C']
+11/01/2023 19:28:36 - INFO - Unlimiformer - torch.Size([1, 1, 10])_tensor([[[23.0469, 14.1328, 14.1094, 13.4141, 12.8359, 12.7578, 12.7266,
+          12.2812, 11.9453, 11.8047]]], device='cuda:6')
+11/01/2023 19:28:36 - INFO - Unlimiformer - "Pre Forward Hook", cy, 1
+11/01/2023 19:28:37 - INFO - Unlimiformer - ['cling', 'ling', 'cing', 'bing', 'bling', 'c', 'ber', 'clo', 'cli', 'aling']
+11/01/2023 19:28:37 - INFO - Unlimiformer - torch.Size([1, 1, 10])_tensor([[[29.9844, 15.9688, 15.9531, 13.7266, 13.3516, 12.8750, 12.7109,
+          12.4375, 11.9453, 11.9219]]], device='cuda:6')
+11/01/2023 19:28:37 - INFO - Unlimiformer - "Pre Forward Hook", cling, 1
+11/01/2023 19:28:38 - INFO - Unlimiformer - ['.', '▁(', ',', '▁according', '!', '▁based', '▁', '▁Fact', '.)', '?']
+11/01/2023 19:28:38 - INFO - Unlimiformer - torch.Size([1, 1, 10])_tensor([[[26.6250, 19.7188, 17.5781, 15.6172, 13.8125, 12.3125, 12.2500,
+          10.9766, 10.9297, 10.9219]]], device='cuda:6')
+11/01/2023 19:28:38 - INFO - Unlimiformer - "Pre Forward Hook", ., 1
+11/01/2023 19:28:39 - INFO - Unlimiformer - ['</s>', '▁(', '▁Fact', '▁', '▁That', '▁This', '▁fact', 'Fact', '▁According', '▁[']
+11/01/2023 19:28:39 - INFO - Unlimiformer - torch.Size([1, 1, 10])_tensor([[[20.7812, 17.7656, 16.8594, 16.5469, 15.5547, 12.9531, 12.1016,
+          11.2656, 11.2578, 10.9688]]], device='cuda:6')
+11/01/2023 19:28:39 - INFO - Unlimiformer - "Pre Forward Hook", <s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s>[INST] <<SYS>>
+You are a helpful assistant. Answer with short responses according to the question. 
+<</SYS>>
+
+, 252
+11/01/2023 19:28:40 - INFO - Unlimiformer - "Pre Forward Hook", Based, 1
+11/01/2023 19:28:40 - INFO - Unlimiformer - ['▁on', 'ow', '▁On', '▁', '▁in', '▁sole', '.', ']', '<0x0A>', ')']
+11/01/2023 19:28:40 - INFO - Unlimiformer - torch.Size([1, 1, 10])_tensor([[[16.4375, 10.6875,  9.8828,  9.7578,  9.7109,  9.2656,  8.6484,
+           8.5859,  7.8789,  7.8438]]], device='cuda:6')
+11/01/2023 19:28:40 - INFO - Unlimiformer - "Pre Forward Hook", on, 1
+11/01/2023 19:28:41 - INFO - Unlimiformer - ['▁the', '▁these', '▁your', '▁this', '▁above', '▁my', '▁their', '▁Fact', '▁fact', '▁a']
+11/01/2023 19:28:41 - INFO - Unlimiformer - torch.Size([1, 1, 10])_tensor([[[16.7500, 13.5703, 13.2031, 12.2891, 11.7344, 10.7734, 10.5000,
+          10.4609, 10.3594, 10.2422]]], device='cuda:6')
+11/01/2023 19:28:41 - INFO - Unlimiformer - "Pre Forward Hook", the, 1
+11/01/2023 19:28:42 - INFO - Unlimiformer - ['▁above', '▁given', '▁information', '▁following', '▁number', '▁list', '▁question', '▁facts', '▁fact', '▁previous']
+11/01/2023 19:28:42 - INFO - Unlimiformer - torch.Size([1, 1, 10])_tensor([[[13.7734, 13.0859, 12.6250, 12.2969, 12.0234, 11.8906, 11.5703,
+          11.3750, 11.2969, 11.2656]]], device='cuda:6')
+11/01/2023 19:28:42 - INFO - Unlimiformer - "Pre Forward Hook", above, 1
+11/01/2023 19:28:43 - INFO - Unlimiformer - ['▁list', '▁information', '▁numbers', '▁facts', '▁statements', '▁fact', '▁names', ',', '▁statement', '▁given']
+11/01/2023 19:28:43 - INFO - Unlimiformer - torch.Size([1, 1, 10])_tensor([[[13.8984, 13.3984, 12.2109, 12.1641, 12.1562, 11.5781, 11.1797,
+          10.7656, 10.6250, 10.3438]]], device='cuda:6')
+11/01/2023 19:28:43 - INFO - Unlimiformer - "Pre Forward Hook", number, 1

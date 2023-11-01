@@ -1,0 +1,17 @@
+11/01/2023 17:10:03 - WARNING - __main__ - device: cuda:6, n_gpu: 8, 16-bits training: True
+Using pad_token, but it is not set yet.
+Loading checkpoint shards:   0%|          | 0/3 [00:00<?, ?it/s]Loading checkpoint shards:  33%|███▎      | 1/3 [00:35<01:10, 35.03s/it]Loading checkpoint shards:  67%|██████▋   | 2/3 [01:11<00:35, 35.97s/it]Loading checkpoint shards: 100%|██████████| 3/3 [01:35<00:00, 30.34s/it]Loading checkpoint shards: 100%|██████████| 3/3 [01:35<00:00, 31.77s/it]
+11/01/2023 17:16:54 - INFO - __main__ - Namespace(model_type='llama', model_name_or_path='meta-llama/Llama-2-13b-chat-hf', prompt='data_final_data1/original_data.txt', length=300, num_hidden_layers=None, stop_token=None, temperature=1.0, repetition_penalty=1.0, k=0, p=0, prefix='', suffix='', padding_text='', xlm_language='', seed=42, tokens_ind='0 1 2 3 4 5 6 7 8 9 10', data_folder=42, no_cuda=False, stream_output=False, num_return_sequences=1, fp16=True, jit=False, device=device(type='cuda', index=6), n_gpu=8)
+11/01/2023 17:16:54 - INFO - Unlimiformer - Encoding 0 to 11 out of 109
+Traceback (most recent call last):
+  File "/raid/infolab/ashwinr/RoPE/unlimiformer/src/run_generation.py", line 584, in <module>
+    main()
+  File "/raid/infolab/ashwinr/RoPE/unlimiformer/src/run_generation.py", line 535, in main
+    output_sequences = model.generate(
+                       ^^^^^^^^^^^^^^^
+  File "/raid/infolab/ashwinr/RoPE/unlimiformer/src/unlimiformer_kt_2.py", line 620, in pre_generate_hook
+    self.reset_memory(input_ids, kwargs['attention_mask'])
+  File "/raid/infolab/ashwinr/RoPE/unlimiformer/src/unlimiformer_kt_2.py", line 392, in reset_memory
+    if ind_up >= 2:
+       ^^^^^^
+NameError: name 'ind_up' is not defined
