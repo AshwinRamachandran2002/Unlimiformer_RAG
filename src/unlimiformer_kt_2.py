@@ -39,7 +39,7 @@ class Unlimiformer(Generic[ModelType]):
         self.not_first_encoding_pass = False
         self.tokens_ind = tokens_ind
         self.num_anchors = 11
-        self.num_data = 20
+        self.num_data = 10
         self.data_len = 11
         self.num_retrieved = 0
         self.model = model
@@ -389,20 +389,20 @@ class Unlimiformer(Generic[ModelType]):
             logger.info(f'Encoding {context_start_ind} to {context_end_ind} out of {input_ids.shape[-1]}')
             if self.csv_unlimiformer:
                 self.ind_up += 1
-                if ind_up >= 2:
+                if self.ind_up >= 2:
                     prefix_input_id = self.tokenizer.encode(self.prefix(self.ind_up), add_special_tokens=False, return_tensors="pt")
                     chunk = torch.cat((prefix_input_id, input_ids[:, context_start_ind:context_end_ind]), dim = 1).to(self.device)
                     chunk_attention_mask = torch.cat((torch.ones_like(prefix_input_id), attention_mask[:, context_start_ind:context_end_ind]), dim = 1).to(self.device)
-                    if ind_up >=4:
+                    if self.ind_up >=4:
                         pos_context = torch.tensor([self.tokens_ind]).repeat(self.ind_up-3, 1)
                         for i in range(pos_context.shape[0]):
                             pos_context[i] += self.data_len * i + self.num_anchors
                         pos_context = pos_context.reshape((-1))
 
-                        if ind_up == self.num_data:
-                            chunk_position_ids = torch.cat((torch.arange(0, self.num_anchors), pos_context, torch.arange(self.num_anchors + (ind_up-3) * self.data_len, self.num_anchors - 1 + (ind_up-1) * self.data_len))).unsqueeze(0).to(self.device)
+                        if self.ind_up == self.num_data:
+                            chunk_position_ids = torch.cat((torch.arange(0, self.num_anchors), pos_context, torch.arange(self.num_anchors + (self.ind_up-3) * self.data_len, self.num_anchors - 1 + (self.ind_up-1) * self.data_len))).unsqueeze(0).to(self.device)
                         else:
-                            chunk_position_ids = torch.cat((torch.arange(0, self.num_anchors), pos_context, torch.arange(self.num_anchors + (ind_up-3) * self.data_len, self.num_anchors + (ind_up-1) * self.data_len))).unsqueeze(0).to(self.device)
+                            chunk_position_ids = torch.cat((torch.arange(0, self.num_anchors), pos_context, torch.arange(self.num_anchors + (self.ind_up-3) * self.data_len, self.num_anchors + (self.ind_up-1) * self.data_len))).unsqueeze(0).to(self.device)
                     else:
                         chunk_position_ids = None
                 else:
@@ -671,9 +671,6 @@ class Unlimiformer(Generic[ModelType]):
                 if self.csv_unlimiformer and not self.is_second_test_decoding_step and not self.is_first_test_decoding_step:
                     kwargs["position_ids"] = torch.arange(self.num_retrieved + int(kwargs["position_ids"][0]), self.num_retrieved + int(kwargs["position_ids"][0]) + 1).unsqueeze(0).to(self.device)
                 
-                if not kwargs.get('past_key_values') is None and self.csv_unlimiformer:
-                    self.input_ids_full_extra += input_ids[0]
-
                 if input_ids is not None:
                     self.input_ids_size += 1
                     if self.csv_unlimiformer:
