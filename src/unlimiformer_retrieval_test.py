@@ -35,11 +35,8 @@ class Unlimiformer(Generic[ModelType]):
             index_devices=(0,), datastore_device=0,
             ):
         super().__init__()
-        self.data_file = 'data_final_data1'
+        self.data_file = 'data_final_data2'
         self.csv_unlimiformer = True
-        self.input_ids_full = []
-        self.input_ids_full_extra = []
-        self.attention_weights = []
         self.model = model
         model.unlimiformer = self
         self.layer_begin = layer_begin
@@ -524,55 +521,25 @@ class Unlimiformer(Generic[ModelType]):
         return '<s>[INST] <<SYS>>\nYou are a helpful assistant. Answer with short responses according to the question. \n<</SYS>>\n\n'
     
     def suffix2(self, i=0):
-        if i == 0:
-            return 'Based on the above numbered list of facts, can you tell me what Oppenheimer is doing?[/INST]'
-        elif i==1:
-            # return 'Based on the above information, can you tell me the value associated with key "62eff267-d0e6-4c65-81cb-6b6b7db9c63b"?[/INST]'
-            return 'Based on the above numbered list of facts, can you tell me what Rithik is doing?[/INST]'
-            # return 'Based on the above information, can you tell me what Williamson is doing?[/INST]'
-        elif i==2:
-            # return 'Based on the above information, can you tell me the key associated with value "f3142b5e-ccc7-49c2-ab5f-fbf402b2becd"?[/INST]'
-            return 'Based on the above numbered list of facts, can you tell me who is baking?[/INST]'
-            # return 'Based on the above information, can you tell me who is baking?[/INST]'
-        elif i==3:
-            # return 'Based on the above information, can you tell me the key associated with value "a4eacd0b-5962-46d3-9877-0f0e9c5b892f"?[/INST]'
-            return 'Based on the above numbered list of facts, can you tell me who is cycling?[/INST]'
-            # return 'Based on the above information, can you tell me who is cycling?[/INST]'
-        elif i==4:
-            return 'Based on the above numbered list of facts, can you tell me who is sleeping?[/INST]'
-            # return 'Based on the above information, can you tell me who is painting?[/INST]'
-        elif i==5:
-            return 'Based on the above numbered list of facts, can you tell me what Leechenbaum is doing?[/INST]'
-        elif i==6:
-            return 'Based on the above numbered list of facts, can you tell me what Zelensky is doing?[/INST]'
-        elif i==7:
-            return 'Based on the above numbered list of facts, can you tell me who is relaxing?[/INST]'
-        elif i==8:
-            return 'Based on the above numbered list of facts, can you tell me what Murugan is doing?[/INST]'
-        elif i==9:
-            return 'Based on the above numbered list of facts, can you tell me who is eating?[/INST]'
-        elif i==10:
-            return 'Based on the above numbered list of facts, can you tell me who is drinking?[/INST]'
-            # return 'Based on the above numbered list of facts, can you tell me who is in Siberia?[/INST]'
-        elif i==11:
-            return 'Based on the above numbered list of facts, can you tell me what Vaibhav is doing?[/INST]'
-            # return 'Based on the above numbered list of facts, can you tell me who is in India?[/INST]'
-        elif i==12:
-            return 'Based on the above numbered list of facts, can you tell me what Rohit is doing?[/INST]'
-            # return 'Based on the above numbered list of facts, can you tell me who is in Mexico?[/INST]'
-        elif i==13:
-            return 'Based on the above numbered list of facts, can you tell me who is cooking?[/INST]'
-        elif i==14:
-            return 'Based on the above numbered list of facts, can you tell me what Rakesh is doing?[/INST]'
-            # return 'Based on the above numbered list of facts, can you tell me who is in America?[/INST]'
-        elif i==15:
-            return 'Based on the above numbered list of facts, can you tell me who is bowling?[/INST]'
+        with open(self.data_file + "/original_data.txt", 'r') as f:
+            cont = f.read()
+        cont = cont.split(',')
+        if i==0 or i==1:
+            if i%2:
+                return 'Based on the above numbered list of facts, can you tell me what ' + cont[i//2].split(' ')[3] + ' is doing?[/INST]'
+            else:
+                return 'Based on the above numbered list of facts, can you tell me who is ' + cont[i//2].split(' ')[5] + '?[/INST]'
+        else:
+            if i%2:
+                return 'Based on the above numbered list of facts, can you tell me what ' + cont[i//2].split(' ')[4] + ' is doing?[/INST]'
+            else:
+                return 'Based on the above numbered list of facts, can you tell me who is ' + cont[i//2].split(' ')[6] + '?[/INST]'
 
     def pre_generate_hook(self, input_ids, **kwargs):
         if 'attention_mask' not in kwargs:
             kwargs['attention_mask'] = torch.ones_like(input_ids)
         self.reset_memory(input_ids, kwargs['attention_mask'])
-        self.num_retrieved = len(input_ids[0])
+        self.num_retrieved = 10
         new_kwargs = kwargs
         if 'attention_mask' in kwargs:
             new_kwargs = {k: v for k, v in kwargs.items() if k != 'attention_mask'}
@@ -583,7 +550,7 @@ class Unlimiformer(Generic[ModelType]):
         else:
             if self.csv_unlimiformer:
                 vals_pred = []
-                for i in range(16):
+                for i in range(4):
                     self.curr_key = i
                     input_ids_prefix = self.tokenizer.encode(self.suffix(), add_special_tokens=False, return_tensors="pt")
                     self.input_ids_full += input_ids_prefix[0]
@@ -593,8 +560,7 @@ class Unlimiformer(Generic[ModelType]):
                     self.attention_weights = []
                     self.input_ids_full_extra = []
                 return vals_pred
-            else:
-                input_ids_prefix = input_ids[:, -self.actual_model_window_size:]	
+            input_ids_prefix = input_ids[:, -self.actual_model_window_size:]	
         input_ids_prefix = input_ids_prefix.to(self.device)
         return self.original_generate_func(input_ids_prefix, **new_kwargs)
 
@@ -617,7 +583,6 @@ class Unlimiformer(Generic[ModelType]):
                         self.num_generated = 0
                         kwargs["position_ids"] = torch.cat((torch.zeros(self.num_retrieved), torch.arange(1, question_len + 1))).unsqueeze(0).to(self.device)
         
-                # Here we send all the suffix that we need to push and expect attention to retrieved keys
                 if self.csv_unlimiformer and self.is_second_test_decoding_step:
                     input_ids_suffix = self.tokenizer.encode(self.suffix2(self.curr_key), add_special_tokens=False, return_tensors="pt")
                     self.curr_suffix_len = len(input_ids_suffix[0])
@@ -626,30 +591,32 @@ class Unlimiformer(Generic[ModelType]):
                     else:
                         input_ids = input_ids_suffix[:, self.num_generated - 1].unsqueeze(0).to(self.device)
                         kwargs["position_ids"] = torch.arange(self.num_retrieved + int(kwargs["position_ids"][0]), self.num_retrieved + int(kwargs["position_ids"][0]) + 1).unsqueeze(0).to(self.device)
-                    
+
                 if self.csv_unlimiformer and not self.is_second_test_decoding_step and not self.is_first_test_decoding_step:
                     kwargs["position_ids"] = torch.arange(self.num_retrieved + int(kwargs["position_ids"][0]), self.num_retrieved + int(kwargs["position_ids"][0]) + 1).unsqueeze(0).to(self.device)
-                    
-                if not kwargs.get('past_key_values') is None and self.csv_unlimiformer:
-                    self.input_ids_full_extra += input_ids[0]
                 
                 if input_ids is not None:
-                    self.input_ids_size += 1
+                    if self.is_first_test_decoding_step:
+                        self.input_ids_size += len(input_ids[0])
+                    else:
+                        self.input_ids_size += 1
                     if self.csv_unlimiformer:
                         self.num_generated += 1
+
                 if kwargs.get('decoder_input_ids') is not None:
                     self.generated_input_ids = torch.cat([self.generated_input_ids, kwargs['decoder_input_ids']], axis=-1)
             logger.info(f'"Pre Forward Hook", {self.tokenizer.decode(input_ids[0])}, {len(input_ids[0])}')
         result = self.original_forward_func(input_ids=input_ids, labels=labels, attention_mask=attention_mask, **kwargs)
-        if not self.is_input_encoding_pass and not self.is_first_test_decoding_step and self.csv_unlimiformer:
-            logits = result.logits
-            top_k_values, top_k_indices = torch.topk(logits, k=10, dim=-1)
-            top_k_token_ids = top_k_indices.tolist()[0][0]
-            top_k_tokens = [self.tokenizer.convert_ids_to_tokens(token_id) for token_id in top_k_token_ids]
-            logger.info(f'{top_k_tokens}')
-            logger.info(f'{top_k_values}')
-
+        
         if self.csv_unlimiformer:
+            if not self.is_input_encoding_pass and not self.is_first_test_decoding_step:
+                logits = result.logits
+                top_k_values, top_k_indices = torch.topk(logits, k=10, dim=-1)
+                top_k_token_ids = top_k_indices.tolist()[0][0]
+                top_k_tokens = [self.tokenizer.convert_ids_to_tokens(token_id) for token_id in top_k_token_ids]
+                logger.info(f'{top_k_tokens}')
+                logger.info(f'{top_k_values}')
+
             if self.is_first_test_decoding_step:
                 self.is_second_test_decoding_step = True
         self.is_first_test_decoding_step = False
@@ -834,10 +801,10 @@ class Unlimiformer(Generic[ModelType]):
             assert torch.mean(torch.isclose(correct_values, retrieved_values, rtol=1e-3, atol=1e-3).float()) > 0.99
 
         # retrieved_keys, retrieved_values: (batch * beam, head, encoder_len, attn_dim)
-        retrieved_keys = retrieved_keys.flatten(0, 1)[:,:,:self.num_retrieved]
-        retrieved_values = retrieved_values.flatten(0, 1)[:,:,:self.num_retrieved]
-        self.cur_layer_key_value_placeholder[0] = torch.cat([retrieved_keys, self.cur_layer_key_value_placeholder[0][:,:,self.num_retrieved:]], dim=-2)
-        self.cur_layer_key_value_placeholder[1] = torch.cat([retrieved_values, self.cur_layer_key_value_placeholder[1][:,:,self.num_retrieved:]], dim=-2)
+        retrieved_keys = retrieved_keys.flatten(0, 1)[:,:,:topk]
+        retrieved_values = retrieved_values.flatten(0, 1)[:,:,:topk]
+        self.cur_layer_key_value_placeholder[0] = torch.cat([retrieved_keys, self.cur_layer_key_value_placeholder[0][:,:,topk:]], dim=-2)
+        self.cur_layer_key_value_placeholder[1] = torch.cat([retrieved_values, self.cur_layer_key_value_placeholder[1][:,:,topk:]], dim=-2)
         return
 
     def train_attention_forward_hook(self, module, input, output):
@@ -1245,7 +1212,7 @@ class UnlimiformerLLaMa(Unlimiformer[LlamaModel]):
         cos, sin = attention.rotary_emb(retrieved_values, seq_len=self.hidden_states[0].shape[1])
         cos = cos.squeeze(1).squeeze(0)  # [seq_len, dim]
         sin = sin.squeeze(1).squeeze(0)  # [seq_len, dim]
-        if self.prompt_input_ids.shape[1] > self.actual_model_window_size:
+        if False:#self.prompt_input_ids.shape[1] > self.actual_model_window_size:
             # scale the top key indices to the actual model window size, such that the model will not see
             # positional embeddings that did not appear at training time
             scaled_key_indices = ((top_search_key_indices / self.prompt_input_ids.shape[1]) * self.actual_model_window_size).int()

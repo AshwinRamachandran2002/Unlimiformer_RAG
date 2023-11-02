@@ -36,12 +36,17 @@ class Unlimiformer(Generic[ModelType]):
             ):
         super().__init__()
         self.csv_unlimiformer = True
-        self.not_first_encoding_pass = False
-        self.tokens_ind = tokens_ind
-        self.num_anchors = 11
-        self.num_data = 10
-        self.data_len = 11
-        self.num_retrieved = 0
+        if self.csv_unlimiformer:
+            self.not_first_encoding_pass = False
+            self.tokens_ind = tokens_ind
+            self.num_anchors = 2
+            self.anchors_len = 0
+            self.num_data = 20
+            self.data_len = 13
+            self.num_retrieved = 0
+            self.include_bits = False
+            self.include_template = True
+            self.template_ids = [0, 1, 2, 5, 6, 7, 8, 9, 10, 11, 12]
         self.model = model
         model.unlimiformer = self
         self.layer_begin = layer_begin
@@ -359,7 +364,8 @@ class Unlimiformer(Generic[ModelType]):
                 self.hidden_states = [[] for _ in range(self.model.config.num_hidden_layers)[self.layer_begin:self.layer_end]]
                 self.hidden_layer_our = [[] for _ in range(self.model.config.num_hidden_layers)[self.layer_begin:self.layer_end]]
                 self.hidden_layer_our_anchor = [[] for _ in range(self.model.config.num_hidden_layers)[self.layer_begin:self.layer_end]]
-                self.hidden_layer_our_bits = [[] for _ in range(self.model.config.num_hidden_layers)[self.layer_begin:self.layer_end]]
+                if self.include_bits:
+                    self.hidden_layer_our_bits = [[] for _ in range(self.model.config.num_hidden_layers)[self.layer_begin:self.layer_end]]
             torch.cuda.empty_cache()
         self.prompt_input_ids = input_ids
         self.input_ids_size = input_ids.shape[-1]
@@ -394,15 +400,29 @@ class Unlimiformer(Generic[ModelType]):
                     chunk = torch.cat((prefix_input_id, input_ids[:, context_start_ind:context_end_ind]), dim = 1).to(self.device)
                     chunk_attention_mask = torch.cat((torch.ones_like(prefix_input_id), attention_mask[:, context_start_ind:context_end_ind]), dim = 1).to(self.device)
                     if self.ind_up >=4:
-                        pos_context = torch.tensor([self.tokens_ind]).repeat(self.ind_up-3, 1)
-                        for i in range(pos_context.shape[0]):
-                            pos_context[i] += self.data_len * i + self.num_anchors
-                        pos_context = pos_context.reshape((-1))
+                        if self.include_bits:
+                            pos_context = torch.tensor([self.tokens_ind]).repeat(self.ind_up-3, 1)
+                            for i in range(pos_context.shape[0]):
+                                # TODO
+                                pos_context[i] += self.data_len * i + self.anchors_len
+                            pos_context = pos_context.reshape((-1))
 
                         if self.ind_up == self.num_data:
-                            chunk_position_ids = torch.cat((torch.arange(0, self.num_anchors), pos_context, torch.arange(self.num_anchors + (self.ind_up-3) * self.data_len, self.num_anchors - 1 + (self.ind_up-1) * self.data_len))).unsqueeze(0).to(self.device)
+                            if self.include_bits:
+                                chunk_position_ids = torch.cat((torch.arange(0, self.anchors_len), pos_context, torch.arange(self.anchors_len + (self.ind_up-3) * self.data_len, self.anchors_len - 1 + (self.ind_up-1) * self.data_len))).unsqueeze(0).to(self.device)
+                            else:
+                                if self.include_template:
+                                    chunk_position_ids = torch.cat((torch.arange(0, self.anchors_len), torch.arange(self.anchors_len + (self.ind_up-3) * self.data_len, self.anchors_len + (self.ind_up-2) * self.data_len)[self.template_ids], torch.arange(self.anchors_len + (self.ind_up-2) * self.data_len, self.anchors_len - 1 + (self.ind_up-1) * self.data_len))).unsqueeze(0).to(self.device)
+                                else:
+                                    chunk_position_ids = torch.cat((torch.arange(0, self.anchors_len), torch.arange(self.anchors_len + (self.ind_up-2) * self.data_len, self.anchors_len - 1 + (self.ind_up-1) * self.data_len))).unsqueeze(0).to(self.device)
                         else:
-                            chunk_position_ids = torch.cat((torch.arange(0, self.num_anchors), pos_context, torch.arange(self.num_anchors + (self.ind_up-3) * self.data_len, self.num_anchors + (self.ind_up-1) * self.data_len))).unsqueeze(0).to(self.device)
+                            if self.include_bits:
+                                chunk_position_ids = torch.cat((torch.arange(0, self.anchors_len), pos_context, torch.arange(self.anchors_len + (self.ind_up-3) * self.data_len, self.anchors_len + (self.ind_up-1) * self.data_len))).unsqueeze(0).to(self.device)
+                            else:
+                                if self.include_template:
+                                    chunk_position_ids = torch.cat((torch.arange(0, self.anchors_len), torch.arange(self.anchors_len + (self.ind_up-3) * self.data_len, self.anchors_len + (self.ind_up-2) * self.data_len)[self.template_ids], torch.arange(self.anchors_len + (self.ind_up-2) * self.data_len, self.anchors_len + (self.ind_up-1) * self.data_len))).unsqueeze(0).to(self.device)
+                                else:
+                                    chunk_position_ids = torch.cat((torch.arange(0, self.anchors_len), torch.arange(self.anchors_len + (self.ind_up-2) * self.data_len, self.anchors_len + (self.ind_up-1) * self.data_len))).unsqueeze(0).to(self.device)
                     else:
                         chunk_position_ids = None
                 else:
@@ -437,14 +457,22 @@ class Unlimiformer(Generic[ModelType]):
                         self.hidden_states[i].append(layer_states.to(self.datastore_device))
 
                         if self.csv_unlimiformer:
-                            if self.ind_up == 3:
-                                self.hidden_layer_our_bits[i] = self.hidden_layer_our[i][:, self.tokens_ind].to(self.datastore_device)
-                            elif self.ind_up >3:
-                                self.hidden_layer_our_bits[i] =  torch.cat((self.hidden_layer_our_bits[i], self.hidden_layer_our[i][:, self.tokens_ind]), dim = -2).to(self.datastore_device)
+                            if self.include_bits:
+                                if self.ind_up == 3:
+                                    self.hidden_layer_our_bits[i] = self.hidden_layer_our[i][:, self.tokens_ind].to(self.datastore_device)
+                                elif self.ind_up >3:
+                                    self.hidden_layer_our_bits[i] =  torch.cat((self.hidden_layer_our_bits[i], self.hidden_layer_our[i][:, self.tokens_ind]), dim = -2).to(self.datastore_device)
+                            
                             self.hidden_layer_our[i] = layer_states.to(self.datastore_device)
-                            if not self.not_first_encoding_pass:
-                                self.hidden_layer_our_anchor[i] = layer_states[:, 0 : self.num_anchors].to(self.datastore_device)
+                            
+                            if self.ind_up <= self.num_anchors:
+                                if self.ind_up == 1:
+                                    self.hidden_layer_our_anchor[i] = layer_states.to(self.datastore_device)
+                                else:
+                                    self.hidden_layer_our_anchor[i] = torch.cat((self.hidden_layer_our_anchor[i], layer_states), dim = -2).to(self.datastore_device)
                 if self.csv_unlimiformer:
+                    if self.ind_up <= self.num_anchors:
+                        self.anchors_len += self.data_len
                     logger.info(f'{self.tokenizer.decode(chunk[0][update_start_ind:update_end_ind])}')
                     self.num_retrieved += len(to_apply_mask[0])
                     self.not_first_encoding_pass = True
@@ -537,7 +565,7 @@ class Unlimiformer(Generic[ModelType]):
             # if self.chunk_overlap == 0:
             #     stride = self.model_encoder_max_len
             if self.csv_unlimiformer:
-                with open("data_final_data1/config_data.json", "r") as f:
+                with open("data_final_data2/config_data.json", "r") as f:
                     text = f.read()
                     import json
                     parsed_data = json.loads(text)
@@ -592,7 +620,7 @@ class Unlimiformer(Generic[ModelType]):
     
     # format copied from https://huggingface.co/spaces/huggingface-projects/llama-2-13b-chat/blob/main/model.py
     def suffix2(self, i=0):
-        with open("data_final_data1/original_data.txt", 'r') as f:
+        with open("data_final_data2/original_data.txt", 'r') as f:
             cont = f.read()
         cont = cont.split(',')
         if i==0 or i==1:
@@ -608,11 +636,18 @@ class Unlimiformer(Generic[ModelType]):
             
     def prefix(self, leni):
         if self.ind_up == 2:
-            return ' '.join(['Fact'] * (self.num_anchors))
+            return ' '.join(['Fact'] * (self.anchors_len))
         elif self.ind_up == 3:
-            return ' '.join(['Fact'] * (self.num_anchors + self.data_len))
+            return ' '.join(['Fact'] * (self.anchors_len))
+            # return ' '.join(['Fact'] * (self.anchors_len + self.data_len))
         else:
-            return ' '.join(['Fact'] * (self.num_anchors + self.data_len + len(self.tokens_ind) * (self.ind_up - 3)))
+            if self.include_bits:
+                return ' '.join(['Fact'] * (self.anchors_len + self.data_len + len(self.tokens_ind) * (self.ind_up - 3)))
+            else:
+                if self.include_template:
+                    return ' '.join(['Fact'] * (self.anchors_len + len(self.template_ids)))
+                else:
+                    return ' '.join(['Fact'] * (self.anchors_len))
 
     def pre_generate_hook(self, input_ids, **kwargs):
         if 'attention_mask' not in kwargs:
@@ -670,12 +705,15 @@ class Unlimiformer(Generic[ModelType]):
                 
                 if self.csv_unlimiformer and not self.is_second_test_decoding_step and not self.is_first_test_decoding_step:
                     kwargs["position_ids"] = torch.arange(self.num_retrieved + int(kwargs["position_ids"][0]), self.num_retrieved + int(kwargs["position_ids"][0]) + 1).unsqueeze(0).to(self.device)
-                
+                    
                 if input_ids is not None:
-                    self.input_ids_size += 1
+                    if self.is_first_test_decoding_step:
+                        self.input_ids_size += len(input_ids[0])
+                    else:
+                        self.input_ids_size += 1
                     if self.csv_unlimiformer:
                         self.num_generated += 1
-                
+
                 if kwargs.get('decoder_input_ids') is not None:
                     self.generated_input_ids = torch.cat([self.generated_input_ids, kwargs['decoder_input_ids']], axis=-1)
             logger.info(f'"Pre Forward Hook", {self.tokenizer.decode(input_ids[0])}, {len(input_ids[0])}')
@@ -719,12 +757,20 @@ class Unlimiformer(Generic[ModelType]):
                     if self.not_first_encoding_pass and self.is_input_encoding_pass:
                         topk = self.hidden_layer_our_anchor[cur_layer_num].shape[-2]
                         if self.ind_up >= 4:
-                            topk += self.hidden_layer_our[cur_layer_num].shape[-2]
-                            topk += self.hidden_layer_our_bits[cur_layer_num].shape[-2]
-                            hidden_states = torch.cat([self.hidden_layer_our_anchor[cur_layer_num], self.hidden_layer_our_bits[cur_layer_num], self.hidden_layer_our[cur_layer_num], hidden_states[:,topk:]], dim=-2)
+                            if self.include_bits:
+                                topk += self.hidden_layer_our[cur_layer_num].shape[-2]
+                                topk += self.hidden_layer_our_bits[cur_layer_num].shape[-2]
+                                hidden_states = torch.cat([self.hidden_layer_our_anchor[cur_layer_num], self.hidden_layer_our_bits[cur_layer_num], self.hidden_layer_our[cur_layer_num], hidden_states[:,topk:]], dim=-2)
+                            else:
+                                if self.include_template:
+                                    topk += self.hidden_layer_our[cur_layer_num][:, self.template_ids].shape[-2]
+                                    hidden_states = torch.cat([self.hidden_layer_our_anchor[cur_layer_num], self.hidden_layer_our[cur_layer_num][:, self.template_ids], hidden_states[:,topk:]], dim=-2)
+                                else:
+                                    hidden_states = torch.cat([self.hidden_layer_our_anchor[cur_layer_num], hidden_states[:,topk:]], dim=-2)
                         elif self.ind_up == 3:
-                            topk += self.hidden_layer_our[cur_layer_num].shape[-2]
-                            hidden_states = torch.cat([self.hidden_layer_our_anchor[cur_layer_num], self.hidden_layer_our[cur_layer_num], hidden_states[:,topk:]], dim=-2)
+                            # topk += self.hidden_layer_our[cur_layer_num].shape[-2]
+                            hidden_states = torch.cat([self.hidden_layer_our_anchor[cur_layer_num], hidden_states[:,topk:]], dim=-2)
+                            # hidden_states = torch.cat([self.hidden_layer_our_anchor[cur_layer_num], self.hidden_layer_our[cur_layer_num], hidden_states[:,topk:]], dim=-2)
                         else:
                             hidden_states = torch.cat([self.hidden_layer_our_anchor[cur_layer_num], hidden_states[:,topk:]], dim=-2)
                     kwargs['output_attentions'] = True
