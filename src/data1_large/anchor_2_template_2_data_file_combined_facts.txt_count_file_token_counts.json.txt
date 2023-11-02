@@ -1,0 +1,2 @@
+11/02/2023 23:47:04 - WARNING - __main__ - device: cuda:3, n_gpu: 8, 16-bits training: True
+Using pad_token, but it is not set yet.
