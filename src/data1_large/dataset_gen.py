@@ -46,7 +46,12 @@ i = 0
 for fact in facts:
     tokens = tokenizer.tokenize(fact)
     token_count = len(tokens)
-    token_counts.append(token_count + (1 if i == 0 else 0))
+    if i == 0:
+        token_counts.append(token_count + 1)
+    elif i == len(facts) - 1:
+        token_counts.append(token_count - 1)
+    else:
+        token_counts.append(token_count)
     i += 1
 
 # Save the token counts as a JSON file
