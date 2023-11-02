@@ -24,13 +24,13 @@ results.append((context_start, context_end - 1, -segment_lengths[0], None ))
 # results.append((context_start, context_end - 1, len_prefix_id, len_prefix_id + segment_lengths[0] - 1 ))  
 
 for i in range(1, len(segment_lengths)):
-    context_start = context_start + segment_lengths[i - 1] - 1
-    context_end = context_end + segment_lengths[i] - 1
+    context_start = context_start + segment_lengths[i - 1]
+    context_end = context_end + segment_lengths[i]
     
-    update_start_ind = -segment_lengths[i] + 1
+    update_start_ind = -segment_lengths[i]
     update_end_ind = None
     
-    cs, ce, us, ue = context_start + 1, context_end  - 1, update_start_ind, update_end_ind
+    cs, ce, us, ue = context_start, context_end  - 1, update_start_ind, update_end_ind
     # cs, ce, us, ue = context_start - 1, context_end - 1, update_start_ind + len_prefix_id, update_end_ind + len_prefix_id - 1
     # cs, ce, us, ue = context_start, context_end - 1, update_start_ind + len_prefix_id, update_end_ind + len_prefix_id - 1
     results.append((cs, ce, us, ue))

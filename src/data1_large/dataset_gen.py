@@ -42,10 +42,12 @@ with open("combined_facts.txt", "r") as file:
 token_counts = []
 
 # Process each statement and count tokens
+i = 0
 for fact in facts:
     tokens = tokenizer.tokenize(fact)
     token_count = len(tokens)
-    token_counts.append(token_count + 1)
+    token_counts.append(token_count + (1 if i == 0 else 0))
+    i += 1
 
 # Save the token counts as a JSON file
 with open("token_counts.json", "w") as json_file:

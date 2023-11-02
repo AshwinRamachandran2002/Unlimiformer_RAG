@@ -476,10 +476,10 @@ def main():
             'gpu_index': unlimiformer_args.gpu_index,
             'index_devices': unlimiformer_args.index_devices,
             'datastore_device': unlimiformer_args.datastore_device,
-            'num_anchors': unlimiformer_args.num_anchors, 
-            'num_templates': unlimiformer_args.num_templates, 
-            'token_count_file': unlimiformer_args.token_count_file, 
-            'data_file': unlimiformer_args.data_file,
+            'num_anchors': args.num_anchors, 
+            'num_templates': args.num_templates, 
+            'token_count_file': args.token_count_file, 
+            'data_file': args.data_file,
             }
         if unlimiformer_args.random_unlimiformer_training:
             model = RandomTrainingUnlimiformer.convert_model(model, **unlimiformer_kwargs)

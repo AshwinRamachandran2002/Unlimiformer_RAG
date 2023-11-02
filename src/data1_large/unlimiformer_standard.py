@@ -13,8 +13,11 @@ from transformers import BartModel, BartForConditionalGeneration, \
 from typing import TypeVar, Generic
 
 from index_building import Datastore, DatastoreBatch
+
 import os
+import json
 os.environ["CUDA_LAUNCH_BLOCKING"] = "1"
+
 logger = logging.getLogger('Unlimiformer')
 logger.setLevel(20)
 
@@ -47,9 +50,14 @@ class Unlimiformer(Generic[ModelType]):
             self.is_second_test_decoding_step = False
             self.token_count_file = token_count_file
             self.data_file = data_file
-            with open("token_counts.json", "r") as f:
+            with open(self.token_count_file, "r") as f:
                 self.fact_lengths = json.loads(f.read())["fact_lengths"]
             self.anchor_length = sum(self.fact_lengths[:self.num_anchors])
+            with open("persons.txt", "r") as f:
+                self.person_list = f.read().splitlines()
+            with open("actions.txt", "r") as f:
+                self.action_list = f.read().splitlines()
+            
         self.model = model
         model.unlimiformer = self
         self.layer_begin = layer_begin
@@ -396,14 +404,15 @@ class Unlimiformer(Generic[ModelType]):
                 self.ind_up += 1
                 if self.ind_up >= 2:
                     if self.ind_up >= self.num_anchors + self.num_templates + 1:
-                        prefix = ' '.join(['Fact'] * (self.anchor_length + sum(self.fact_lengths[self.ind_up - self.num_templates - 1 : self.ind_up - 1])))
-                        total_len = len(prefix) + self.fact_lengths[self.ind_up - 1]
+                        prefix_len = self.anchor_length + sum(self.fact_lengths[self.ind_up - self.num_templates - 1 : self.ind_up - 1])
+                        prefix = ' '.join(['Fact'] * prefix_len)
+                        total_len = prefix_len + self.fact_lengths[self.ind_up - 1]
                         chunk_position_ids = torch.cat((torch.arange(0, self.anchor_length), torch.arange(0, total_len)[ -(total_len - self.anchor_length) :])).unsqueeze(0).to(self.device)
                     else:
                         prefix = ' '.join(['Fact'] * (sum(self.fact_lengths[0 : (self.ind_up - 1)])))
                         chunk_position_ids = None
 
-                    prefix_input_id = self.tokenizer.encode(self.prefix(self.ind_up), add_special_tokens=False, return_tensors="pt")
+                    prefix_input_id = self.tokenizer.encode(prefix, add_special_tokens=False, return_tensors="pt")
                     chunk = torch.cat((prefix_input_id, input_ids[:, context_start_ind:context_end_ind]), dim = 1).to(self.device)
                     chunk_attention_mask = torch.cat((torch.ones_like(prefix_input_id), attention_mask[:, context_start_ind:context_end_ind]), dim = 1).to(self.device)
                     
@@ -417,7 +426,7 @@ class Unlimiformer(Generic[ModelType]):
                 chunk_attention_mask = attention_mask[:, context_start_ind:context_end_ind].to(self.device)
                 chunk_position_ids = None
             with torch.inference_mode():
-                _ = self.model(chunk, attention_mask=chunk_attention_mask, labels=dummy_labels, position_ids=chunk_position_ids) # , return_dict=True, output_hidden_states=True)
+                _ = self.model(chunk, attention_mask=chunk_attention_mask, labels=dummy_labels, position_ids=chunk_position_ids)
             if self.use_datastore:
                 # TODO: verify with BART as well
                 # hidden_states_to_index = [hidden_states.encoder_last_hidden_state] # list of length 1 of (batch, chunked_source_len, dim)
@@ -546,13 +555,13 @@ class Unlimiformer(Generic[ModelType]):
                 results.append((context_start, context_end - 1, -segment_lengths[0], None))  
 
                 for i in range(1, len(segment_lengths)):
-                    context_start = context_start + segment_lengths[i - 1] - 1
-                    context_end = context_end + segment_lengths[i] - 1
+                    context_start = context_start + segment_lengths[i - 1]
+                    context_end = context_end + segment_lengths[i]
                     
-                    update_start_ind = -segment_lengths[i] + 1
+                    update_start_ind = -segment_lengths[i]
                     update_end_ind = None
                     
-                    cs, ce, us, ue = context_start + 1, context_end - 1, update_start_ind, update_end_ind
+                    cs, ce, us, ue = context_start, context_end - 1, update_start_ind, update_end_ind
                     results.append((cs, ce, us, ue))
                 return results
 
@@ -589,23 +598,11 @@ class Unlimiformer(Generic[ModelType]):
     
     # format copied from https://huggingface.co/spaces/huggingface-projects/llama-2-13b-chat/blob/main/model.py
     def suffix2(self, i=0):
-        with open(self.data_file, 'r') as f:
-            cont = f.read()
-        cont = cont.split(',')
-        if i==0 or i==1:
-            if i%2:
-                return 'Based on the above numbered list of facts, can you tell me what ' + cont[i//2].split(' ')[3] + ' is doing?[/INST]'
-            else:
-                return 'Based on the above numbered list of facts, can you tell me who is ' + cont[i//2].split(' ')[5] + '?[/INST]'
+        if i%2:
+            return 'Based on the above numbered list of facts, can you tell me what ' + self.person_list[i//2] + ' is doing?[/INST]'
         else:
-            if i%2:
-                return 'Based on the above numbered list of facts, can you tell me what ' + cont[i//2].split(' ')[4] + ' is doing?[/INST]'
-            else:
-                return 'Based on the above numbered list of facts, can you tell me who is ' + cont[i//2].split(' ')[6] + '?[/INST]'
-            
-    def prefix(self, leni):
-        return ' '.join(['Fact'] * (min(self.ind_up -1, self.num_anchors + self.num_templates) * self.data_len))
-            
+            return 'Based on the above numbered list of facts, can you tell me who is ' + self.action_list[i//2] + '?[/INST]'
+
     def pre_generate_hook(self, input_ids, **kwargs):
         if 'attention_mask' not in kwargs:
             kwargs['attention_mask'] = torch.ones_like(input_ids)
