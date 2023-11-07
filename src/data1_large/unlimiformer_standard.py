@@ -405,14 +405,14 @@ class Unlimiformer(Generic[ModelType]):
                 if self.ind_up >= 2:
                     if self.ind_up >= self.num_anchors + self.num_templates + 1:
                         prefix_len = self.anchor_length + sum(self.fact_lengths[self.ind_up - self.num_templates - 1 : self.ind_up - 1])
-                        prefix = ' '.join(['Fact'] * prefix_len)
+                        # prefix = ' '.join(['Fact'] * prefix_len)
                         total_len = prefix_len + self.fact_lengths[self.ind_up - 1]
-                        chunk_position_ids = torch.cat((torch.arange(0, self.anchor_length), torch.arange(0, total_len)[ -(total_len - self.anchor_length) :])).unsqueeze(0).to(self.device)
+                        chunk_position_ids = torch.cat((torch.arange(0, self.anchor_length), torch.arange(0, sum(self.fact_lengths[: self.ind_up]))[ -(total_len - self.anchor_length) :])).unsqueeze(0).to(self.device)
+                        prefix_input_id = input_ids[:, torch.cat((torch.arange(0, self.anchor_length), torch.arange(0, sum(self.fact_lengths[: self.ind_up - 1]))[ -(prefix_len - self.anchor_length) :]))]
                     else:
-                        prefix = ' '.join(['Fact'] * (sum(self.fact_lengths[0 : (self.ind_up - 1)])))
+                        prefix_input_id = input_ids[:, :sum(self.fact_lengths[0 : (self.ind_up - 1)])]
                         chunk_position_ids = None
 
-                    prefix_input_id = self.tokenizer.encode(prefix, add_special_tokens=False, return_tensors="pt")
                     chunk = torch.cat((prefix_input_id, input_ids[:, context_start_ind:context_end_ind]), dim = 1).to(self.device)
                     chunk_attention_mask = torch.cat((torch.ones_like(prefix_input_id), attention_mask[:, context_start_ind:context_end_ind]), dim = 1).to(self.device)
                     
@@ -453,7 +453,10 @@ class Unlimiformer(Generic[ModelType]):
                             elif self.ind_up <= self.num_anchors + self.num_templates:
                                 self.hidden_layer_our[i] = torch.cat((self.hidden_layer_our[i], layer_states), dim = -2).to(self.datastore_device)
                             else:
-                                self.hidden_layer_our[i] = torch.cat((self.hidden_layer_our[i][:, : self.anchor_length], self.hidden_layer_our[i][:, -sum(self.fact_lengths[ self.ind_up - self.num_templates : self.ind_up - 1 ]):], layer_states), dim = -2).to(self.datastore_device)
+                                if self.num_templates == 1:
+                                    self.hidden_layer_our[i] = torch.cat((self.hidden_layer_our[i][:, : self.anchor_length], layer_states), dim = -2).to(self.datastore_device)
+                                else:
+                                    self.hidden_layer_our[i] = torch.cat((self.hidden_layer_our[i][:, : self.anchor_length], self.hidden_layer_our[i][:, -sum(self.fact_lengths[ self.ind_up - self.num_templates : self.ind_up - 1 ]):], layer_states), dim = -2).to(self.datastore_device)
                 if self.csv_unlimiformer:
                     logger.info(f'{self.tokenizer.decode(chunk[0][update_start_ind:update_end_ind])}')
                     self.num_retrieved += len(to_apply_mask[0])
@@ -552,6 +555,8 @@ class Unlimiformer(Generic[ModelType]):
                 results = []
                 context_start = 0
                 context_end = segment_lengths[0] + 1
+                # results.append((0, None, 0, None))
+                # return results
                 results.append((context_start, context_end - 1, -segment_lengths[0], None))  
 
                 for i in range(1, len(segment_lengths)):
@@ -593,9 +598,9 @@ class Unlimiformer(Generic[ModelType]):
             return results
 
     # format copied from https://huggingface.co/spaces/huggingface-projects/llama-2-13b-chat/blob/main/model.py
-    def suffix(self, val=""):
-        return '<s>[INST] <<SYS>>\nYou are a helpful assistant. Answer with short responses according to the question. \n<</SYS>>\n\n'
-    
+    def suffix(self):
+        return '<s>[INST] <<SYS>>\nYou are a helpful assistant. Answer with short responses according to the question. \n<</SYS>>\n\nBelow is a list of facts.\n'
+
     # format copied from https://huggingface.co/spaces/huggingface-projects/llama-2-13b-chat/blob/main/model.py
     def suffix2(self, i=0):
         if i%2:
@@ -607,6 +612,7 @@ class Unlimiformer(Generic[ModelType]):
         if 'attention_mask' not in kwargs:
             kwargs['attention_mask'] = torch.ones_like(input_ids)
         self.reset_memory(input_ids, kwargs['attention_mask'])
+        self.num_retrieved -= self.fact_lengths[0]
         new_kwargs = kwargs
         if 'attention_mask' in kwargs:
             new_kwargs = {k: v for k, v in kwargs.items() if k != 'attention_mask'}
@@ -617,9 +623,9 @@ class Unlimiformer(Generic[ModelType]):
         else:
             if self.csv_unlimiformer:
                 vals_pred = []
-                for i in range(2 * len(self.fact_lengths)):
+                for i in range(2, 2 * len(self.fact_lengths)):
                     self.curr_key = i
-                    input_ids_prefix = self.tokenizer.encode(self.suffix(" "), add_special_tokens=False, return_tensors="pt")
+                    input_ids_prefix = self.tokenizer.encode(self.suffix(), add_special_tokens=False, return_tensors="pt")
                     new_kwargs["attention_mask"] = torch.cat((torch.zeros(1, self.num_retrieved), torch.ones(1, len(input_ids_prefix[0]))), dim = 1).to(self.device)
                     input_ids_prefix = torch.cat((torch.ones(1, self.num_retrieved).to(torch.int64), input_ids_prefix), dim = 1)
                     input_ids_prefix = input_ids_prefix.to(self.device)
@@ -774,7 +780,7 @@ class Unlimiformer(Generic[ModelType]):
                 else:
                     # _, top_search_key_indices = self.datastore[datastore_index].search(datastore_query, k=topk)
                     # top_search_key_indices = torch.sort(top_search_key_indices).values
-                    top_search_key_indices = torch.arange(0, self.num_retrieved).repeat(40, 1).unsqueeze(0)
+                    top_search_key_indices = torch.arange(self.fact_lengths[0], self.fact_lengths[0] + self.num_retrieved).repeat(40, 1).unsqueeze(0)
                     # self.embeddings: (batch,              src_len, dim)
                     # indices:         (batch, beam * head, actual_model_window_size)
                     # embeddings: (batch, beam * head, actual_model_window_size, dim)

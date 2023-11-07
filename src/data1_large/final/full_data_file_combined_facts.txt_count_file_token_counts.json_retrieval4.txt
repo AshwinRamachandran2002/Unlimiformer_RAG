@@ -1,0 +1,338 @@
+11/06/2023 22:37:42 - WARNING - __main__ - device: cuda:3, n_gpu: 8, 16-bits training: True
+Using pad_token, but it is not set yet.
+Loading checkpoint shards:   0%|          | 0/3 [00:00<?, ?it/s]Loading checkpoint shards:  33%|███▎      | 1/3 [00:28<00:57, 28.77s/it]Loading checkpoint shards:  67%|██████▋   | 2/3 [00:53<00:26, 26.16s/it]Loading checkpoint shards: 100%|██████████| 3/3 [01:07<00:00, 20.71s/it]Loading checkpoint shards: 100%|██████████| 3/3 [01:07<00:00, 22.44s/it]
+11/06/2023 22:43:25 - INFO - __main__ - Namespace(model_type='llama', model_name_or_path='meta-llama/Llama-2-13b-chat-hf', prompt='combined_facts.txt', length=300, num_hidden_layers=None, stop_token=None, temperature=1.0, repetition_penalty=1.0, k=0, p=0, prefix='', suffix='', padding_text='', xlm_language='', seed=42, num_anchors=2, num_templates=2, token_count_file='token_counts.json', data_file='combined_facts.txt', data_folder=42, no_cuda=False, stream_output=False, num_return_sequences=1, fp16=True, jit=False, device=device(type='cuda', index=3), n_gpu=8)
+11/06/2023 22:43:25 - INFO - Unlimiformer - Encoding 0 to None out of 709
+11/06/2023 22:43:25 - INFO - Unlimiformer - <s>[INST] <<SYS>>
+You are a helpful assistant. Answer with short responses according to the question. 
+<</SYS>>
+
+Below is a list of facts.
+Fact number 17: John Smith is Swimming, Fact number 45: Sarah Johnson is Smoking, Fact number 23: Michael Brown is Running, Fact number 89: Emily Davis is Dancing, Fact number 12: David Wilson is Reading, Fact number 56: Jennifer Lee is Teaching, Fact number 34: Robert Jones is Painting, Fact number 67: Jessica Miller is Singing, Fact number 98: William Anderson is Cycling, Fact number 29: Ashley Taylor is Snoring, Fact number 50: James White is Jumping, Fact number 78: Samantha Clark is Writing, Fact number 33: Daniel Martinez is Hiking, Fact number 41: Mary Harris is Playing guitar, Fact number 64: Christopher Wilson is Acting, Fact number 21: Amanda Thompson is Meditating, Fact number 76: Richard Garcia is Watching TV, Fact number 47: Olivia Moore is Shopping, Fact number 88: Joseph Davis is Recording, Fact number 58: Elizabeth Williams is Surfing, Fact number 13: Thomas Jackson is Biking, Fact number 72: Emma Anderson is Eating, Fact number 37: Charles Rodriguez is Drawing, Fact number 66: Sophia Taylor is Playing chess, Fact number 10: Matthew Hernandez is Skiing, Fact number 55: Grace Wilson is Texting, Fact number 38: Andrew Miller is Fishing, Fact number 80: Lily Martinez is Yoga, Fact number 92: Brian Johnson is Playing basketball, Fact number 25: Chloe Davis is Photography, Fact number 61: Nicholas Brown is Playing piano, Fact number 46: Mia Thomas is Sleeping, Fact number 30: Kevin Harris is Scuba diving, Fact number 14: Ava Jackson is Exercising, Fact number 79: Steven Robinson is Flying, Fact number 53: Natalie Lewis is Cooking, Fact number 99: George Hall is Rock climbing, Fact number 24: Sophia Evans is Bowling, Fact number 68: Samuel Scott is Taking a shower, Fact number 22: Isabella Adams is Playing soccer, Fact number 44: Patrick King is Karate, Fact number 74: Grace Carter is Gardening, Fact number 31: Joshua Foster is Jogging, Fact number 65: Victoria Baker is Ice skating, Fact number 19: Timothy Murphy is Rollerblading, Fact number 91: Zoey Green is Skateboarding, Fact number 40: Benjamin Turner is Horseback riding, Fact number 77: Harper Hayes is Knitting, Fact number 59: William Cooper is Bungee jumping, Fact number 26: Abigail Parker is Skydiving
+11/06/2023 22:43:28 - INFO - Unlimiformer - <s>[INST] <<SYS>>
+You are a helpful assistant. Answer with short responses according to the question. 
+<</SYS>>
+
+Below is a list of facts.
+Fact number 17: John Smith is Swimming, Fact number 45: Sarah Johnson is Smoking, Fact number 23: Michael Brown is Running, Fact number 89: Emily Davis is Dancing, Fact number 12: David Wilson is Reading, Fact number 56: Jennifer Lee is Teaching, Fact number 34: Robert Jones is Painting, Fact number 67: Jessica Miller is Singing, Fact number 98: William Anderson is Cycling, Fact number 29: Ashley Taylor is Snoring, Fact number 50: James White is Jumping, Fact number 78: Samantha Clark is Writing, Fact number 33: Daniel Martinez is Hiking, Fact number 41: Mary Harris is Playing guitar, Fact number 64: Christopher Wilson is Acting, Fact number 21: Amanda Thompson is Meditating, Fact number 76: Richard Garcia is Watching TV, Fact number 47: Olivia Moore is Shopping, Fact number 88: Joseph Davis is Recording, Fact number 58: Elizabeth Williams is Surfing, Fact number 13: Thomas Jackson is Biking, Fact number 72: Emma Anderson is Eating, Fact number 37: Charles Rodriguez is Drawing, Fact number 66: Sophia Taylor is Playing chess, Fact number 10: Matthew Hernandez is Skiing, Fact number 55: Grace Wilson is Texting, Fact number 38: Andrew Miller is Fishing, Fact number 80: Lily Martinez is Yoga, Fact number 92: Brian Johnson is Playing basketball, Fact number 25: Chloe Davis is Photography, Fact number 61: Nicholas Brown is Playing piano, Fact number 46: Mia Thomas is Sleeping, Fact number 30: Kevin Harris is Scuba diving, Fact number 14: Ava Jackson is Exercising, Fact number 79: Steven Robinson is Flying, Fact number 53: Natalie Lewis is Cooking, Fact number 99: George Hall is Rock climbing, Fact number 24: Sophia Evans is Bowling, Fact number 68: Samuel Scott is Taking a shower, Fact number 22: Isabella Adams is Playing soccer, Fact number 44: Patrick King is Karate, Fact number 74: Grace Carter is Gardening, Fact number 31: Joshua Foster is Jogging, Fact number 65: Victoria Baker is Ice skating, Fact number 19: Timothy Murphy is Rollerblading, Fact number 91: Zoey Green is Skateboarding, Fact number 40: Benjamin Turner is Horseback riding, Fact number 77: Harper Hayes is Knitting, Fact number 59: William Cooper is Bungee jumping, Fact number 26: Abigail Parker is Skydiving
+11/06/2023 22:43:28 - INFO - Unlimiformer - "Pre Forward Hook", <s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s><s>[INST] <<SYS>>
+You are a helpful assistant. Answer with short responses according to the question. 
+<</SYS>>
+
+Below is a numbered list of facts.
+, 544
+11/06/2023 22:43:28 - INFO - Unlimiformer - "Pre Forward Hook", Based, 1
+/raid/infolab/ashwinr/anaconda3/envs/btp/lib/python3.11/site-packages/faiss/contrib/torch_utils.py:44: UserWarning: TypedStorage is deprecated. It will be removed in the future and UntypedStorage will be the only storage class. This should only matter to you if you are using storages directly.  To access UntypedStorage directly, use tensor.untyped_storage() instead of tensor.storage()
+  x.storage().data_ptr() + x.storage_offset() * 2)
+11/06/2023 22:43:42 - INFO - Unlimiformer - 2.174999952316284
+11/06/2023 22:43:42 - INFO - Unlimiformer - 14
+11/06/2023 22:43:42 - INFO - Unlimiformer - ['▁on', ',', '▁On', '.', 'ow', '▁in', ']', '<0x0A>', '>', 'on']
+11/06/2023 22:43:42 - INFO - Unlimiformer - torch.Size([1, 1, 10])_tensor([[[18.2344, 11.2734, 10.9922, 10.7500,  9.7891,  9.7344,  9.6562,
+           9.4844,  9.1484,  8.7734]]], device='cuda:3')
+11/06/2023 22:43:42 - INFO - Unlimiformer - "Pre Forward Hook", on, 1
+11/06/2023 22:43:52 - INFO - Unlimiformer - 2.924999952316284
+11/06/2023 22:43:52 - INFO - Unlimiformer - 26
+11/06/2023 22:43:52 - INFO - Unlimiformer - ['▁the', '▁these', '▁your', '▁this', '▁their', '▁my', '▁what', '▁', '.', '▁facts']
+11/06/2023 22:43:52 - INFO - Unlimiformer - torch.Size([1, 1, 10])_tensor([[[17.1250, 13.0234, 11.9844, 11.4766, 10.8750, 10.8516, 10.4141,
+          10.1328, 10.0469,  9.8125]]], device='cuda:3')
+11/06/2023 22:43:52 - INFO - Unlimiformer - "Pre Forward Hook", the, 1
+11/06/2023 22:44:05 - INFO - Unlimiformer - 1.850000023841858
+11/06/2023 22:44:05 - INFO - Unlimiformer - 8
+11/06/2023 22:44:05 - INFO - Unlimiformer - ['▁facts', '▁list', '▁number', '▁above', '▁information', '▁given', '▁following', '▁current', '▁Fact', '▁fact']
+11/06/2023 22:44:05 - INFO - Unlimiformer - torch.Size([1, 1, 10])_tensor([[[15.1797, 15.1797, 14.0000, 13.8516, 13.7891, 13.0938, 12.9766,
+          12.2734, 11.7500, 11.5547]]], device='cuda:3')
+11/06/2023 22:44:05 - INFO - Unlimiformer - "Pre Forward Hook", above, 1
+11/06/2023 22:44:15 - INFO - Unlimiformer - 2.1500000953674316
+11/06/2023 22:44:15 - INFO - Unlimiformer - 24
+11/06/2023 22:44:15 - INFO - Unlimiformer - ['▁list', '▁facts', '▁information', '▁fact', '▁number', ',', '▁numbers', '-', '▁Fact', '▁List']
+11/06/2023 22:44:15 - INFO - Unlimiformer - torch.Size([1, 1, 10])_tensor([[[17.7656, 14.8359, 14.2500, 12.5078, 12.2891, 11.4453, 11.4219,
+          11.3984, 10.5547, 10.2422]]], device='cuda:3')
+11/06/2023 22:44:15 - INFO - Unlimiformer - "Pre Forward Hook", number, 1
+11/06/2023 22:44:27 - INFO - Unlimiformer - 3.200000047683716
+11/06/2023 22:44:27 - INFO - Unlimiformer - 29
+11/06/2023 22:44:27 - INFO - Unlimiformer - ['ed', ',', '.', '▁list', '▁', ':', '<0x0A>', '</', '▁is', ']']
+11/06/2023 22:44:27 - INFO - Unlimiformer - torch.Size([1, 1, 10])_tensor([[[15.2109, 13.8906, 12.6875, 12.2969, 11.4375, 11.3125, 10.8594,
+          10.3516, 10.0859, 10.0156]]], device='cuda:3')
+11/06/2023 22:44:27 - INFO - Unlimiformer - "Pre Forward Hook", ed, 1
+11/06/2023 22:44:40 - INFO - Unlimiformer - 2.125
+11/06/2023 22:44:40 - INFO - Unlimiformer - 13
+11/06/2023 22:44:40 - INFO - Unlimiformer - ['▁list', '▁facts', '▁items', '▁fact', '▁item', '▁', '▁Fact', '▁List', '<0x0A>', '▁lists']
+11/06/2023 22:44:40 - INFO - Unlimiformer - torch.Size([1, 1, 10])_tensor([[[19.5781, 14.7734, 13.3125, 12.2812, 10.7656, 10.7422, 10.4844,
+          10.0547,  9.9375,  9.8672]]], device='cuda:3')
+11/06/2023 22:44:40 - INFO - Unlimiformer - "Pre Forward Hook", list, 1
+11/06/2023 22:45:04 - INFO - Unlimiformer - 4.325000286102295
+11/06/2023 22:45:04 - INFO - Unlimiformer - 47
+11/06/2023 22:45:04 - INFO - Unlimiformer - ['▁of', ',', '.', '▁is', '</', '>', ':', '>.', '▁are', '<0x0A>']
+11/06/2023 22:45:04 - INFO - Unlimiformer - torch.Size([1, 1, 10])_tensor([[[15.6797, 13.9609, 13.2188, 11.4062, 11.0781, 10.7891, 10.3594,
+          10.2969, 10.0156,  9.9531]]], device='cuda:3')
+11/06/2023 22:45:04 - INFO - Unlimiformer - "Pre Forward Hook", of, 1
+11/06/2023 22:45:15 - INFO - Unlimiformer - 2.674999952316284
+11/06/2023 22:45:15 - INFO - Unlimiformer - 22
+11/06/2023 22:45:15 - INFO - Unlimiformer - ['▁facts', '▁', '▁activities', '▁random', '▁people', '▁Fact', '▁fun', '▁fact', '▁the', '▁interesting']
+11/06/2023 22:45:15 - INFO - Unlimiformer - torch.Size([1, 1, 10])_tensor([[[18.1094, 13.3047, 13.2734, 12.1328, 11.6328, 11.5469, 11.5391,
+          11.5312, 10.9531, 10.4766]]], device='cuda:3')
+11/06/2023 22:45:15 - INFO - Unlimiformer - "Pre Forward Hook", facts, 1
+11/06/2023 22:45:27 - INFO - Unlimiformer - 3.799999952316284
+11/06/2023 22:45:27 - INFO - Unlimiformer - 27
+11/06/2023 22:45:27 - INFO - Unlimiformer - [',', '.', '>', '▁about', '<0x0A>', '▁is', '▁how', '▁and', '▁are', '</']
+11/06/2023 22:45:27 - INFO - Unlimiformer - torch.Size([1, 1, 10])_tensor([[[15.2500, 13.6016, 11.4297, 10.8516, 10.0391,  9.9531,  9.8203,
+           9.6953,  9.5547,  9.4766]]], device='cuda:3')
+11/06/2023 22:45:27 - INFO - Unlimiformer - "Pre Forward Hook", ,, 1
+11/06/2023 22:45:38 - INFO - Unlimiformer - 2.9000000953674316
+11/06/2023 22:45:38 - INFO - Unlimiformer - 19
+11/06/2023 22:45:38 - INFO - Unlimiformer - ['▁which', '▁please', '▁what', '▁can', '▁answer', '▁write', '▁choose', '▁identify', '▁list', '▁how']
+11/06/2023 22:45:38 - INFO - Unlimiformer - torch.Size([1, 1, 10])_tensor([[[13.7344, 13.5312, 13.4844, 13.3594, 12.5234, 11.8125, 11.6484,
+          11.5078, 11.4141, 11.1484]]], device='cuda:3')
+11/06/2023 22:45:38 - INFO - Unlimiformer - "Pre Forward Hook", can, 1
+11/06/2023 22:45:49 - INFO - Unlimiformer - 3.075000047683716
+11/06/2023 22:45:49 - INFO - Unlimiformer - 35
+11/06/2023 22:45:49 - INFO - Unlimiformer - ['▁you', '▁', '▁u', '▁I', '▁▁', '▁we', '▁be', '<0x0A>', '▁U', '▁your']
+11/06/2023 22:45:49 - INFO - Unlimiformer - torch.Size([1, 1, 10])_tensor([[[20.7344, 14.4609, 14.3125, 11.9375, 11.8906, 10.8281, 10.7969,
+          10.5547, 10.4141,  9.8281]]], device='cuda:3')
+11/06/2023 22:45:49 - INFO - Unlimiformer - "Pre Forward Hook", you, 1
+11/06/2023 22:45:59 - INFO - Unlimiformer - 2.3500001430511475
+11/06/2023 22:45:59 - INFO - Unlimiformer - 12
+11/06/2023 22:45:59 - INFO - Unlimiformer - ['▁tell', '▁please', '▁name', '▁give', '▁provide', '▁list', '▁identify', '▁answer', '▁summar', '▁help']
+11/06/2023 22:45:59 - INFO - Unlimiformer - torch.Size([1, 1, 10])_tensor([[[16.1406, 14.5625, 13.6797, 13.6094, 13.3516, 13.0234, 12.6875,
+          12.2109, 11.3203, 11.3047]]], device='cuda:3')
+11/06/2023 22:45:59 - INFO - Unlimiformer - "Pre Forward Hook", tell, 1
+11/06/2023 22:46:10 - INFO - Unlimiformer - 2.674999952316284
+11/06/2023 22:46:10 - INFO - Unlimiformer - 30
+11/06/2023 22:46:10 - INFO - Unlimiformer - ['▁me', '▁which', '▁what', '▁the', '▁if', '▁how', '▁whether', '▁us', '▁be', '▁']
+11/06/2023 22:46:10 - INFO - Unlimiformer - torch.Size([1, 1, 10])_tensor([[[19.8750, 15.3359, 14.0156, 13.4062, 11.8828, 11.8203, 11.4219,
+          11.4141, 11.3828, 11.2578]]], device='cuda:3')
+11/06/2023 22:46:10 - INFO - Unlimiformer - "Pre Forward Hook", me, 1
+11/06/2023 22:46:25 - INFO - Unlimiformer - 2.6500000953674316
+11/06/2023 22:46:25 - INFO - Unlimiformer - 29
+11/06/2023 22:46:25 - INFO - Unlimiformer - ['▁the', '▁what', '▁which', '▁a', '▁how', '▁one', '▁about', '▁whether', '▁all', '▁something']
+11/06/2023 22:46:25 - INFO - Unlimiformer - torch.Size([1, 1, 10])_tensor([[[15.7188, 14.9922, 14.9453, 12.8828, 12.7656, 12.5859, 12.5703,
+          12.5312, 12.4375, 12.1641]]], device='cuda:3')
+11/06/2023 22:46:25 - INFO - Unlimiformer - "Pre Forward Hook", who, 1
+11/06/2023 22:46:38 - INFO - Unlimiformer - 1.975000023841858
+11/06/2023 22:46:38 - INFO - Unlimiformer - 9
+11/06/2023 22:46:38 - INFO - Unlimiformer - ['▁is', '▁of', '▁among', '▁are', '▁does', ',', '▁did', '▁has', '▁the', '▁lik']
+11/06/2023 22:46:38 - INFO - Unlimiformer - torch.Size([1, 1, 10])_tensor([[[16.7188, 13.5391, 12.3125, 12.1484, 12.0078, 10.9609, 10.9453,
+          10.8359, 10.3828,  9.9688]]], device='cuda:3')
+11/06/2023 22:46:38 - INFO - Unlimiformer - "Pre Forward Hook", is, 1
+11/06/2023 22:46:51 - INFO - Unlimiformer - 4.325000286102295
+11/06/2023 22:46:51 - INFO - Unlimiformer - 47
+11/06/2023 22:46:51 - INFO - Unlimiformer - ['▁doing', '▁Do', '▁the', '▁in', '▁who', '▁playing', '▁which', '▁Sk', '▁a', '▁performing']
+11/06/2023 22:46:51 - INFO - Unlimiformer - torch.Size([1, 1, 10])_tensor([[[13.6953, 12.1875, 11.6016, 10.6016, 10.4141, 10.2422,  9.8594,
+           9.4609,  9.3672,  9.3359]]], device='cuda:3')
+11/06/2023 22:46:51 - INFO - Unlimiformer - "Pre Forward Hook", Sm, 1
+11/06/2023 22:47:03 - INFO - Unlimiformer - 2.200000047683716
+11/06/2023 22:47:03 - INFO - Unlimiformer - 12
+11/06/2023 22:47:03 - INFO - Unlimiformer - ['iling', 'oking', 'art', 'elling', 'ugg', 'ash', 'ile', 'og', 'irk', 'o']
+11/06/2023 22:47:03 - INFO - Unlimiformer - torch.Size([1, 1, 10])_tensor([[[19.6562, 17.3281, 15.9453, 15.3203, 15.2969, 15.1719, 14.0234,
+          12.0391, 11.7969, 11.6641]]], device='cuda:3')
+11/06/2023 22:47:03 - INFO - Unlimiformer - "Pre Forward Hook", oking, 1
+11/06/2023 22:47:15 - INFO - Unlimiformer - 2.3500001430511475
+11/06/2023 22:47:15 - INFO - Unlimiformer - 10
+11/06/2023 22:47:15 - INFO - Unlimiformer - [',', '.', '▁a', '?', '.</', '].', '</', '.]', '▁c', '▁hot']
+11/06/2023 22:47:15 - INFO - Unlimiformer - torch.Size([1, 1, 10])_tensor([[[13.4297, 12.9375, 12.4141, 12.1719, 10.0078,  9.9297,  9.5547,
+           9.4375,  9.2578,  9.2578]]], device='cuda:3')
+11/06/2023 22:47:15 - INFO - Unlimiformer - "Pre Forward Hook", ?, 1
+11/06/2023 22:47:30 - INFO - Unlimiformer - 8.40000057220459
+11/06/2023 22:47:30 - INFO - Unlimiformer - 145
+11/06/2023 22:47:30 - INFO - Unlimiformer - ['<0x0A>', '">', '>>', '</', '⟩', '▁', '▁>', '>', '>.', '▁>>']
+11/06/2023 22:47:30 - INFO - Unlimiformer - torch.Size([1, 1, 10])_tensor([[[15.1562, 13.6094, 13.5000, 13.0625, 12.6484, 12.5391, 11.8203,
+          11.1875, 10.6328, 10.6016]]], device='cuda:3')
+11/06/2023 22:47:30 - INFO - Unlimiformer - "Pre Forward Hook", [, 1
+11/06/2023 22:47:44 - INFO - Unlimiformer - 5.25
+11/06/2023 22:47:44 - INFO - Unlimiformer - 52
+11/06/2023 22:47:44 - INFO - Unlimiformer - ['/', 'INST', '▁/', 'IN', '▁', 'Inst', 'B', 'P', 'inst', '//']
+11/06/2023 22:47:44 - INFO - Unlimiformer - torch.Size([1, 1, 10])_tensor([[[17.8125, 11.6562,  9.3984,  8.6953,  8.3984,  8.3672,  8.1484,
+           7.9141,  7.7852,  7.7812]]], device='cuda:3')
+11/06/2023 22:47:44 - INFO - Unlimiformer - "Pre Forward Hook", /, 1
+11/06/2023 22:47:57 - INFO - Unlimiformer - 3.8500001430511475
+11/06/2023 22:47:57 - INFO - Unlimiformer - 37
+11/06/2023 22:47:57 - INFO - Unlimiformer - ['INST', 'from', 'b', 'usr', 'span', 'del', 'div', 'inst', 'g', 'SY']
+11/06/2023 22:47:57 - INFO - Unlimiformer - torch.Size([1, 1, 10])_tensor([[[9.1406, 8.9297, 8.7734, 8.1016, 8.0000, 7.8125, 7.7500, 7.7266,
+          7.6211, 7.5898]]], device='cuda:3')
+11/06/2023 22:47:57 - INFO - Unlimiformer - "Pre Forward Hook", INST, 1
+11/06/2023 22:48:10 - INFO - Unlimiformer - 5.525000095367432
+11/06/2023 22:48:10 - INFO - Unlimiformer - 99
+11/06/2023 22:48:10 - INFO - Unlimiformer - [']', '>', ':', '>>', 'ALL', '].', ']]', '.', '][', 'SY']
+11/06/2023 22:48:10 - INFO - Unlimiformer - torch.Size([1, 1, 10])_tensor([[[13.0547, 10.9219, 10.8516,  9.5391,  9.1641,  8.7188,  8.5156,
+           8.4531,  7.9805,  7.8711]]], device='cuda:3')
+11/06/2023 22:48:10 - INFO - Unlimiformer - "Pre Forward Hook", ], 1
+11/06/2023 22:48:22 - INFO - Unlimiformer - 7.75
+11/06/2023 22:48:22 - INFO - Unlimiformer - 89
+11/06/2023 22:48:22 - INFO - Unlimiformer - ['▁', '▁▁', '<0x0A>', 'Fact', '▁Fact', '▁What', '▁facts', '▁]', '\xa0', '</s>']
+11/06/2023 22:48:22 - INFO - Unlimiformer - torch.Size([1, 1, 10])_tensor([[[21.1562, 11.0156, 10.0547,  7.7188,  7.6367,  6.9453,  6.8047,
+           6.6992,  6.6367,  6.4609]]], device='cuda:3')
+11/06/2023 22:48:22 - INFO - Unlimiformer - "Pre Forward Hook", , 1
+11/06/2023 22:48:34 - INFO - Unlimiformer - 7.925000190734863
+11/06/2023 22:48:34 - INFO - Unlimiformer - 185
+11/06/2023 22:48:34 - INFO - Unlimiformer - ['<0x0A>', '</s>', '▁Sure', '▁Based', '▁<', '▁Please', '▁Yes', '▁Can', '▁What', '▁There']
+11/06/2023 22:48:34 - INFO - Unlimiformer - torch.Size([1, 1, 10])_tensor([[[15.9609, 15.3281, 11.1953, 10.9922, 10.5078, 10.4688,  9.6328,
+           9.5391,  9.2578,  9.2266]]], device='cuda:3')
+11/06/2023 22:48:34 - INFO - Unlimiformer - "Pre Forward Hook", 
+, 1
+11/06/2023 22:48:47 - INFO - Unlimiformer - 8.550000190734863
+11/06/2023 22:48:47 - INFO - Unlimiformer - 118
+11/06/2023 22:48:47 - INFO - Unlimiformer - ['<0x0A>', '</', '<', 'Fact', 'Please', 'What', 'Who', 'I', 'Wh', 'You']
+11/06/2023 22:48:47 - INFO - Unlimiformer - torch.Size([1, 1, 10])_tensor([[[19.1562, 14.8516, 12.1406, 10.5469, 10.2969,  9.8672,  9.5703,
+           9.4766,  9.3359,  9.1172]]], device='cuda:3')
+11/06/2023 22:48:47 - INFO - Unlimiformer - "Pre Forward Hook", 
+, 1
+11/06/2023 22:49:00 - INFO - Unlimiformer - 6.425000190734863
+11/06/2023 22:49:00 - INFO - Unlimiformer - 64
+11/06/2023 22:49:00 - INFO - Unlimiformer - ['<0x0A>', '</', '<', 'Please', 'What', 'I', 'Fact', '```', 'Can', 'You']
+11/06/2023 22:49:00 - INFO - Unlimiformer - torch.Size([1, 1, 10])_tensor([[[18.3438, 14.7578, 11.6719, 10.9219,  9.9844,  9.9375,  9.9141,
+           9.6719,  9.6562,  9.4531]]], device='cuda:3')
+11/06/2023 22:49:00 - INFO - Unlimiformer - "Pre Forward Hook", 
+, 1
+11/06/2023 22:49:15 - INFO - Unlimiformer - 5.875
+11/06/2023 22:49:15 - INFO - Unlimiformer - 63
+11/06/2023 22:49:15 - INFO - Unlimiformer - ['<0x0A>', '</', 'Please', '<', '```', 'I', 'You', 'What', 'Can', 'Fact']
+11/06/2023 22:49:15 - INFO - Unlimiformer - torch.Size([1, 1, 10])_tensor([[[17.2656, 14.2891, 11.4922, 11.4219, 10.3359, 10.1562, 10.0938,
+           9.9375,  9.5703,  9.4844]]], device='cuda:3')
+11/06/2023 22:49:15 - INFO - Unlimiformer - "Pre Forward Hook", 
+, 1
+11/06/2023 22:49:29 - INFO - Unlimiformer - 5.900000095367432
+11/06/2023 22:49:29 - INFO - Unlimiformer - 66
+11/06/2023 22:49:29 - INFO - Unlimiformer - ['<0x0A>', '</', 'Please', '```', '<', '================', '[', 'You', 'I', 'What']
+11/06/2023 22:49:29 - INFO - Unlimiformer - torch.Size([1, 1, 10])_tensor([[[16.9219, 14.9375, 11.8828, 11.7109, 11.5781, 10.5703, 10.2109,
+          10.1172,  9.8594,  9.6641]]], device='cuda:3')
+11/06/2023 22:49:29 - INFO - Unlimiformer - "Pre Forward Hook", 
+, 1
+11/06/2023 22:49:49 - INFO - Unlimiformer - 6.200000286102295
+11/06/2023 22:49:49 - INFO - Unlimiformer - 77
+11/06/2023 22:49:49 - INFO - Unlimiformer - ['<0x0A>', '</', 'Please', '```', '<', '================', '[', 'How', 'You', 'I']
+11/06/2023 22:49:49 - INFO - Unlimiformer - torch.Size([1, 1, 10])_tensor([[[16.6719, 15.4141, 12.3047, 11.9609, 11.5781, 10.9219, 10.9062,
+          10.1562, 10.0625,  9.7578]]], device='cuda:3')
+11/06/2023 22:49:49 - INFO - Unlimiformer - "Pre Forward Hook", 
+, 1
+11/06/2023 22:50:02 - INFO - Unlimiformer - 6.125
+11/06/2023 22:50:02 - INFO - Unlimiformer - 69
+11/06/2023 22:50:02 - INFO - Unlimiformer - ['<0x0A>', '</', 'Please', '```', '<', '[', '================', 'How', 'You', 'What']
+11/06/2023 22:50:02 - INFO - Unlimiformer - torch.Size([1, 1, 10])_tensor([[[15.6875, 15.0547, 12.7031, 11.5781, 10.9609, 10.8125, 10.6562,
+          10.6172,  9.9062,  9.7656]]], device='cuda:3')
+11/06/2023 22:50:02 - INFO - Unlimiformer - "Pre Forward Hook", 
+, 1
+11/06/2023 22:50:13 - INFO - Unlimiformer - 5.175000190734863
+11/06/2023 22:50:13 - INFO - Unlimiformer - 47
+11/06/2023 22:50:13 - INFO - Unlimiformer - ['<0x0A>', '</', 'Please', '```', 'How', '<', '[', 'What', 'Who', 'I']
+11/06/2023 22:50:13 - INFO - Unlimiformer - torch.Size([1, 1, 10])_tensor([[[14.7031, 14.6484, 13.0312, 11.0547, 10.8750, 10.6797, 10.5391,
+          10.1953, 10.0078, 10.0000]]], device='cuda:3')
+11/06/2023 22:50:13 - INFO - Unlimiformer - "Pre Forward Hook", 
+, 1
+11/06/2023 22:50:23 - INFO - Unlimiformer - 4.800000190734863
+11/06/2023 22:50:23 - INFO - Unlimiformer - 38
+11/06/2023 22:50:23 - INFO - Unlimiformer - ['</', '<0x0A>', 'Please', '<', 'How', '[', '```', 'What', 'Who', 'Can']
+11/06/2023 22:50:23 - INFO - Unlimiformer - torch.Size([1, 1, 10])_tensor([[[14.2812, 14.0703, 12.6484, 11.1641, 10.9609, 10.8047, 10.7266,
+          10.4609, 10.1484,  9.9453]]], device='cuda:3')
+11/06/2023 22:50:23 - INFO - Unlimiformer - "Pre Forward Hook", </, 1
+11/06/2023 22:50:34 - INFO - Unlimiformer - 5.900000095367432
+11/06/2023 22:50:34 - INFO - Unlimiformer - 72
+11/06/2023 22:50:34 - INFO - Unlimiformer - ['INST', 'SY', 'COM', 'PRE', 'SP', 'ST', 'Inst', 'IST', 'IN', 'TEXT']
+11/06/2023 22:50:34 - INFO - Unlimiformer - torch.Size([1, 1, 10])_tensor([[[16.6250, 15.6328, 10.3047, 10.0469,  9.6250,  9.3984,  9.3594,
+           9.0547,  9.0234,  8.9453]]], device='cuda:3')
+11/06/2023 22:50:34 - INFO - Unlimiformer - "Pre Forward Hook", INST, 1
+11/06/2023 22:50:44 - INFO - Unlimiformer - 3.7750000953674316
+11/06/2023 22:50:44 - INFO - Unlimiformer - 44
+11/06/2023 22:50:44 - INFO - Unlimiformer - ['>', '>>', ':', '>.', '>)', '>/', '></', 'SY', '▁inst', '>"']
+11/06/2023 22:50:44 - INFO - Unlimiformer - torch.Size([1, 1, 10])_tensor([[[18.3281, 13.9453, 11.6875, 11.4844, 10.1328,  9.8125,  9.5547,
+           9.5391,  9.4141,  9.4141]]], device='cuda:3')
+11/06/2023 22:50:44 - INFO - Unlimiformer - "Pre Forward Hook", >, 1
+11/06/2023 22:50:55 - INFO - Unlimiformer - 5.099999904632568
+11/06/2023 22:50:55 - INFO - Unlimiformer - 36
+11/06/2023 22:50:55 - INFO - Unlimiformer - ['▁', '<0x0A>', '</s>', ']', '▁▁', '▁]', '])', '▁What', '▁Please', 'What']
+11/06/2023 22:50:55 - INFO - Unlimiformer - torch.Size([1, 1, 10])_tensor([[[19.1250, 13.8047, 12.2266, 11.1562, 10.8750,  9.4609,  8.0469,
+           7.4102,  7.0742,  7.0625]]], device='cuda:3')
+11/06/2023 22:50:55 - INFO - Unlimiformer - "Pre Forward Hook", , 1
+11/06/2023 22:51:07 - INFO - Unlimiformer - 5.900000095367432
+11/06/2023 22:51:07 - INFO - Unlimiformer - 86
+11/06/2023 22:51:07 - INFO - Unlimiformer - ['</s>', '<0x0A>', '▁Sure', '▁Please', '▁Can', '▁You', '▁I', '▁Yes', '▁What', '▁Are']
+11/06/2023 22:51:07 - INFO - Unlimiformer - torch.Size([1, 1, 10])_tensor([[[15.6328, 15.3125, 14.1250, 12.8516, 12.0938, 11.7188, 11.3359,
+          11.0781, 10.9375, 10.6797]]], device='cuda:3')
+11/06/2023 22:51:07 - INFO - Unlimiformer - average pos scores in a head in layer: 0, 0.0
+11/06/2023 22:51:07 - INFO - Unlimiformer - max pos scores in a head in layer: 0, 0.0
+11/06/2023 22:51:07 - INFO - Unlimiformer - average pos scores in a head in layer: 1, 0.0
+11/06/2023 22:51:07 - INFO - Unlimiformer - max pos scores in a head in layer: 1, 0.0
+11/06/2023 22:51:07 - INFO - Unlimiformer - average pos scores in a head in layer: 2, 0.0
+11/06/2023 22:51:07 - INFO - Unlimiformer - max pos scores in a head in layer: 2, 0.0
+11/06/2023 22:51:07 - INFO - Unlimiformer - average pos scores in a head in layer: 3, 0.0
+11/06/2023 22:51:07 - INFO - Unlimiformer - max pos scores in a head in layer: 3, 0.0
+11/06/2023 22:51:07 - INFO - Unlimiformer - average pos scores in a head in layer: 4, 0.0
+11/06/2023 22:51:07 - INFO - Unlimiformer - max pos scores in a head in layer: 4, 0.0
+11/06/2023 22:51:07 - INFO - Unlimiformer - average pos scores in a head in layer: 5, 0.0
+11/06/2023 22:51:07 - INFO - Unlimiformer - max pos scores in a head in layer: 5, 0.0
+11/06/2023 22:51:07 - INFO - Unlimiformer - average pos scores in a head in layer: 6, 0.0
+11/06/2023 22:51:07 - INFO - Unlimiformer - max pos scores in a head in layer: 6, 0.0
+11/06/2023 22:51:07 - INFO - Unlimiformer - average pos scores in a head in layer: 7, 0.0
+11/06/2023 22:51:07 - INFO - Unlimiformer - max pos scores in a head in layer: 7, 0.0
+11/06/2023 22:51:07 - INFO - Unlimiformer - average pos scores in a head in layer: 8, 0.0
+11/06/2023 22:51:07 - INFO - Unlimiformer - max pos scores in a head in layer: 8, 0.0
+11/06/2023 22:51:07 - INFO - Unlimiformer - average pos scores in a head in layer: 9, 0.0
+11/06/2023 22:51:07 - INFO - Unlimiformer - max pos scores in a head in layer: 9, 0.0
+11/06/2023 22:51:07 - INFO - Unlimiformer - average pos scores in a head in layer: 10, 0.0
+11/06/2023 22:51:07 - INFO - Unlimiformer - max pos scores in a head in layer: 10, 0.0
+11/06/2023 22:51:07 - INFO - Unlimiformer - average pos scores in a head in layer: 11, 0.0
+11/06/2023 22:51:07 - INFO - Unlimiformer - max pos scores in a head in layer: 11, 0.0
+11/06/2023 22:51:07 - INFO - Unlimiformer - average pos scores in a head in layer: 12, 0.0
+11/06/2023 22:51:07 - INFO - Unlimiformer - max pos scores in a head in layer: 12, 0.0
+11/06/2023 22:51:07 - INFO - Unlimiformer - average pos scores in a head in layer: 13, 0.0
+11/06/2023 22:51:07 - INFO - Unlimiformer - max pos scores in a head in layer: 13, 0.0
+11/06/2023 22:51:07 - INFO - Unlimiformer - average pos scores in a head in layer: 14, 0.0
+11/06/2023 22:51:07 - INFO - Unlimiformer - max pos scores in a head in layer: 14, 0.0
+11/06/2023 22:51:07 - INFO - Unlimiformer - average pos scores in a head in layer: 15, 0.0
+11/06/2023 22:51:07 - INFO - Unlimiformer - max pos scores in a head in layer: 15, 0.0
+11/06/2023 22:51:07 - INFO - Unlimiformer - average pos scores in a head in layer: 16, 0.0
+11/06/2023 22:51:07 - INFO - Unlimiformer - max pos scores in a head in layer: 16, 0.0
+11/06/2023 22:51:07 - INFO - Unlimiformer - average pos scores in a head in layer: 17, 0.0
+11/06/2023 22:51:07 - INFO - Unlimiformer - max pos scores in a head in layer: 17, 0.0
+11/06/2023 22:51:07 - INFO - Unlimiformer - average pos scores in a head in layer: 18, 0.0
+11/06/2023 22:51:07 - INFO - Unlimiformer - max pos scores in a head in layer: 18, 0.0
+11/06/2023 22:51:07 - INFO - Unlimiformer - average pos scores in a head in layer: 19, 0.0
+11/06/2023 22:51:07 - INFO - Unlimiformer - max pos scores in a head in layer: 19, 0.0
+11/06/2023 22:51:07 - INFO - Unlimiformer - average pos scores in a head in layer: 20, 0.0
+11/06/2023 22:51:07 - INFO - Unlimiformer - max pos scores in a head in layer: 20, 0.0
+11/06/2023 22:51:07 - INFO - Unlimiformer - average pos scores in a head in layer: 21, 0.0
+11/06/2023 22:51:07 - INFO - Unlimiformer - max pos scores in a head in layer: 21, 0.0
+11/06/2023 22:51:07 - INFO - Unlimiformer - average pos scores in a head in layer: 22, 0.0
+11/06/2023 22:51:07 - INFO - Unlimiformer - max pos scores in a head in layer: 22, 0.0
+11/06/2023 22:51:07 - INFO - Unlimiformer - average pos scores in a head in layer: 23, 0.0
+11/06/2023 22:51:07 - INFO - Unlimiformer - max pos scores in a head in layer: 23, 0.0
+11/06/2023 22:51:07 - INFO - Unlimiformer - average pos scores in a head in layer: 24, 0.0
+11/06/2023 22:51:07 - INFO - Unlimiformer - max pos scores in a head in layer: 24, 0.0
+11/06/2023 22:51:07 - INFO - Unlimiformer - average pos scores in a head in layer: 25, 0.0
+11/06/2023 22:51:07 - INFO - Unlimiformer - max pos scores in a head in layer: 25, 0.0
+11/06/2023 22:51:07 - INFO - Unlimiformer - average pos scores in a head in layer: 26, 0.0
+11/06/2023 22:51:07 - INFO - Unlimiformer - max pos scores in a head in layer: 26, 0.0
+11/06/2023 22:51:07 - INFO - Unlimiformer - average pos scores in a head in layer: 27, 0.0
+11/06/2023 22:51:07 - INFO - Unlimiformer - max pos scores in a head in layer: 27, 0.0
+11/06/2023 22:51:07 - INFO - Unlimiformer - average pos scores in a head in layer: 28, 0.0
+11/06/2023 22:51:07 - INFO - Unlimiformer - max pos scores in a head in layer: 28, 0.0
+11/06/2023 22:51:07 - INFO - Unlimiformer - average pos scores in a head in layer: 29, 0.0
+11/06/2023 22:51:07 - INFO - Unlimiformer - max pos scores in a head in layer: 29, 0.0
+11/06/2023 22:51:07 - INFO - Unlimiformer - average pos scores in a head in layer: 30, 0.0
+11/06/2023 22:51:07 - INFO - Unlimiformer - max pos scores in a head in layer: 30, 0.0
+11/06/2023 22:51:07 - INFO - Unlimiformer - average pos scores in a head in layer: 31, 0.0
+11/06/2023 22:51:07 - INFO - Unlimiformer - max pos scores in a head in layer: 31, 0.0
+11/06/2023 22:51:07 - INFO - Unlimiformer - average pos scores in a head in layer: 32, 0.0
+11/06/2023 22:51:07 - INFO - Unlimiformer - max pos scores in a head in layer: 32, 0.0
+11/06/2023 22:51:07 - INFO - Unlimiformer - average pos scores in a head in layer: 33, 0.0
+11/06/2023 22:51:07 - INFO - Unlimiformer - max pos scores in a head in layer: 33, 0.0
+11/06/2023 22:51:07 - INFO - Unlimiformer - average pos scores in a head in layer: 34, 0.0
+11/06/2023 22:51:07 - INFO - Unlimiformer - max pos scores in a head in layer: 34, 0.0
+11/06/2023 22:51:07 - INFO - Unlimiformer - average pos scores in a head in layer: 35, 0.0
+11/06/2023 22:51:07 - INFO - Unlimiformer - max pos scores in a head in layer: 35, 0.0
+11/06/2023 22:51:07 - INFO - Unlimiformer - average pos scores in a head in layer: 36, 0.0
+11/06/2023 22:51:07 - INFO - Unlimiformer - max pos scores in a head in layer: 36, 0.0
+11/06/2023 22:51:07 - INFO - Unlimiformer - average pos scores in a head in layer: 37, 0.0
+11/06/2023 22:51:07 - INFO - Unlimiformer - max pos scores in a head in layer: 37, 0.0
+11/06/2023 22:51:07 - INFO - Unlimiformer - average pos scores in a head in layer: 38, 0.0
+11/06/2023 22:51:07 - INFO - Unlimiformer - max pos scores in a head in layer: 38, 0.0
+11/06/2023 22:51:07 - INFO - Unlimiformer - average pos scores in a head in layer: 39, 4.393055555555557
+11/06/2023 22:51:07 - INFO - Unlimiformer - max pos scores in a head in layer: 39, 50.0
+11/06/2023 22:51:07 - INFO - __main__ - === GENERATED SEQUENCE 1 (input length: 709) ===
+11/06/2023 22:51:07 - INFO - __main__ - |||
+Traceback (most recent call last):
+  File "/raid/infolab/ashwinr/RoPE/unlimiformer/src/data1_large/run_generation_retrieval_standard.py", line 590, in <module>
+    main()
+  File "/raid/infolab/ashwinr/RoPE/unlimiformer/src/data1_large/run_generation_retrieval_standard.py", line 583, in main
+    with open('data1/predictions.txt', 'w') as file:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: 'data1/predictions.txt'
