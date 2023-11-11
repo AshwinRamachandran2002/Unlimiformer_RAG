@@ -16,10 +16,16 @@ else:
     with open('combined_facts.txt', 'w') as output_file:
         for i in range(len(numbers)):
             if i == len(numbers) - 1:
-                fact = f"Fact number {numbers[i]}: {persons[i]} is {actions[i]}"
+                fact = f"Fact: {persons[i]} is {actions[i]}"
+                # fact = f"Fact number {numbers[i]}: {persons[i]} is {actions[i]}"
+                output_file.write(fact)
+            elif i == 0:
+                fact = f"<s>[INST] <<SYS>>\nYou are a helpful assistant. Answer with short responses according to the question. \n<</SYS>>\n\nBelow is a list of facts in the format (Fact: <PERSON> is <ACTION>).\nFact: {persons[i]} is {actions[i]}, "
+                # fact = f"<s>[INST] <<SYS>>\nYou are a helpful assistant. Answer with short responses according to the question. \n<</SYS>>\n\nBelow is a numbered list of facts in the format (Fact number <FACT-NUMBER>: <PERSON> is <ACTION>).\nFact number {numbers[i]}: {persons[i]} is {actions[i]}, "
                 output_file.write(fact)
             else:
-                fact = f"Fact number {numbers[i]}: {persons[i]} is {actions[i]},"
+                fact = f"Fact: {persons[i]} is {actions[i]},"
+                # fact = f"Fact number {numbers[i]}: {persons[i]} is {actions[i]},"
                 output_file.write(fact + ' ')
 
 print("Facts have been combined and saved in combined_facts.txt.")
@@ -59,3 +65,21 @@ with open("token_counts.json", "w") as json_file:
     json.dump({"fact_lengths": token_counts}, json_file, indent=4)
 
 print("Token counts have been saved in token_counts.json.")
+
+
+###########################################################################
+
+token_ind_to_token_pos = {}
+curr_pos = 0
+curr_fact = 0
+for token_ind in range(sum(token_counts)):
+    if curr_pos == token_counts[curr_fact]:
+        curr_pos = 0
+        curr_fact += 1
+    token_ind_to_token_pos[token_ind] = curr_pos
+    curr_pos += 1
+
+with open("ind_to_pos.json", "w") as json_file:
+    json.dump(token_ind_to_token_pos, json_file, indent=4)
+
+print("Index to Position Mapping has been saved in ind_to_pos.json.")

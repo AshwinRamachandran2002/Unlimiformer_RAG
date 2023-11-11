@@ -37,7 +37,9 @@ class Unlimiformer(Generic[ModelType]):
             gpu_datastore=False, gpu_index=False,
             index_devices=(0,), datastore_device=0, 
             num_anchors=2, num_templates=2, 
-            token_count_file="token_counts.json", data_file = "combined_facts.txt",
+            token_count_file="token_counts.json", 
+            data_file = "combined_facts.txt",
+            num_extract=20, split_data=True
             ):
         super().__init__()
         self.csv_unlimiformer = True
@@ -46,7 +48,9 @@ class Unlimiformer(Generic[ModelType]):
             self.num_anchors = num_anchors
             self.num_templates = num_templates
             self.num_retrieved = 0
+            self.num_extract = num_extract
             self.ind_up = 0
+            self.split_data = False#split_data
             self.is_second_test_decoding_step = False
             self.token_count_file = token_count_file
             self.data_file = data_file
@@ -374,11 +378,7 @@ class Unlimiformer(Generic[ModelType]):
                 self.hidden_states = [[] for _ in range(self.model.config.num_hidden_layers)[self.layer_begin:self.layer_end]]
                 if self.csv_unlimiformer:
                     self.hidden_layer_our = [[] for _ in range(self.model.config.num_hidden_layers)[self.layer_begin:self.layer_end]]
-                    self.num_pos_scores = [0 for _ in range(self.model.config.num_hidden_layers)[self.layer_begin:self.layer_end]]
-                    self.disp_num_pos_scores = [0 for _ in range(self.model.config.num_hidden_layers)[self.layer_begin:self.layer_end]]
-                    self.max_pos_scores = [0 for _ in range(self.model.config.num_hidden_layers)[self.layer_begin:self.layer_end]]
-                    self.disp_max_pos_scores = [0 for _ in range(self.model.config.num_hidden_layers)[self.layer_begin:self.layer_end]]
-                    self.nums_scores = 0
+                    self.inputs_head = [None for _ in range(40)]
             torch.cuda.empty_cache()
         self.prompt_input_ids = input_ids
         self.input_ids_size = input_ids.shape[-1]
@@ -424,7 +424,19 @@ class Unlimiformer(Generic[ModelType]):
                 else:
                     chunk = input_ids[:, context_start_ind:context_end_ind].to(self.device)
                     chunk_attention_mask = attention_mask[:, context_start_ind:context_end_ind].to(self.device)
-                    chunk_position_ids = None
+                    if self.split_data:
+                        chunk_position_ids = None
+                    else:
+                        chunk_position_ids = []
+                        prev_end = 0
+                        const_dist = 0
+                        for fact in range(len(self.fact_lengths)):
+                            chunk_position_ids.append(torch.arange(prev_end, prev_end + self.fact_lengths[fact]))
+                            prev_end += const_dist + self.fact_lengths[fact]
+                            if fact % 10 == 0:
+                                const_dist += 1
+                        chunk_position_ids = torch.cat(chunk_position_ids, dim=0).unsqueeze(0).to(self.device)
+                        self.chunk_position_ids = chunk_position_ids[:, update_start_ind:update_end_ind]
                 logger.info(f'{(self.tokenizer.decode(chunk[0]))}')
             else:
                 chunk = input_ids[:, context_start_ind:context_end_ind].to(self.device)
@@ -451,7 +463,6 @@ class Unlimiformer(Generic[ModelType]):
                     for i, layer_states in enumerate(to_add_embeddings):
                         layer_states = layer_states * to_apply_mask.unsqueeze(-1)
                         self.hidden_states[i].append(layer_states.to(self.datastore_device))
-                        # self.hidden_states[i].append(layer_states[:, self.fact_lengths[0]:].to(self.datastore_device))
 
                         if self.csv_unlimiformer:
                             if self.ind_up == 1:
@@ -467,13 +478,7 @@ class Unlimiformer(Generic[ModelType]):
                     logger.info(f'{self.tokenizer.decode(chunk[0][update_start_ind:update_end_ind])}')
                     self.num_retrieved += len(to_apply_mask[0])
                     self.not_first_encoding_pass = True
-                    self.input_ids = input_ids
-                    print(len(self.input_ids[0]))
-                    print(len(self.hidden_states))
-                    print(len(self.hidden_states[0]))
-                    print(len(self.hidden_states[0][0]))
-                    print(len(self.hidden_states[0][0][0]))
-                    # hidden -> (40,1,1,S)
+                    self.input_ids = input_ids[:, update_start_ind:update_end_ind]
                 # list of len layers, inside it there is a list of len batch, each item is (masked_time, dim)
                 # for i, to_add_layer in enumerate(to_add):
                 #     keys = [key[mask.bool()] for key, mask in zip(to_add_layer, to_apply_mask)]
@@ -568,8 +573,9 @@ class Unlimiformer(Generic[ModelType]):
                 results = []
                 context_start = 0
                 context_end = segment_lengths[0] + 1
-                results.append((0, None, 0, None))
-                return results
+                if not self.split_data:
+                    results.append((0, None, self.fact_lengths[0], None))
+                    return results
                 results.append((context_start, context_end - 1, -segment_lengths[0], None))  
 
                 for i in range(1, len(segment_lengths)):
@@ -612,20 +618,23 @@ class Unlimiformer(Generic[ModelType]):
 
     # format copied from https://huggingface.co/spaces/huggingface-projects/llama-2-13b-chat/blob/main/model.py
     def suffix(self):
-        return '<s>[INST] <<SYS>>\nYou are a helpful assistant. Answer with short responses according to the question. \n<</SYS>>\n\nBelow is a numbered list of facts.\n'
+        return '<s>[INST] <<SYS>>\nYou are a helpful assistant. Answer with short responses according to the question. \n<</SYS>>\n\nBelow is a list of facts in the format (Fact: <PERSON> is <ACTION>).\nFact: Ethan is Swimming, '
+        # return '<s>[INST] <<SYS>>\nYou are a helpful assistant. Answer with short responses according to the question. \n<</SYS>>\n\nBelow is a numbered list of facts in the format (Fact number <FACT-NUMBER>: <PERSON> is <ACTION>).\n'
+        # return '<s>[INST] <<SYS>>\nYou are a helpful assistant. Answer with short responses according to the question. \n<</SYS>>\n\nBelow is a numbered list of facts in the format (fact-number, person, action) written as (Fact number <fact-number>: <person> is <action>).\n'
 
     # format copied from https://huggingface.co/spaces/huggingface-projects/llama-2-13b-chat/blob/main/model.py
     def suffix2(self, i=0):
         if i%2:
-            return 'Based on the above numbered list of facts, can you tell me what ' + self.person_list[i//2] + ' is doing?[/INST]'
+            return 'Based on the above list of facts, can you tell me the action associated with the person: ' + self.person_list[i//2] + '?[/INST]'
+            # return 'Based on the above numbered list of facts, can you tell me the action associated with the person: ' + self.person_list[i//2] + '?[/INST]'
         else:
-            return 'Based on the above numbered list of facts, can you tell me who is ' + self.action_list[i//2] + '?[/INST]'
+            return 'Based on the above list of facts, can you tell me the person associated with the action: ' + self.action_list[i//2] + '?[/INST]'
+            # return 'Based on the above numbered list of facts, can you tell me the person associated with the action: ' + self.action_list[i//2] + '?[/INST]'
 
     def pre_generate_hook(self, input_ids, **kwargs):
         if 'attention_mask' not in kwargs:
             kwargs['attention_mask'] = torch.ones_like(input_ids)
         self.reset_memory(input_ids, kwargs['attention_mask'])
-        self.num_retrieved = 20
         new_kwargs = kwargs
         if 'attention_mask' in kwargs:
             new_kwargs = {k: v for k, v in kwargs.items() if k != 'attention_mask'}
@@ -636,16 +645,14 @@ class Unlimiformer(Generic[ModelType]):
         else:
             if self.csv_unlimiformer:
                 vals_pred = []
-                for i in range(2, 2 * len(self.fact_lengths)):
+                for i in [42, 43, 44, 45]:
+                # for i in [2, 3, 4, 5]:
+                # for i in range(2, 2 * len(self.fact_lengths)):
                     self.curr_key = i
                     input_ids_prefix = self.tokenizer.encode(self.suffix(), add_special_tokens=False, return_tensors="pt")
-                    new_kwargs["attention_mask"] = torch.cat((torch.zeros(1, self.num_retrieved), torch.ones(1, len(input_ids_prefix[0]))), dim = 1).to(self.device)
-                    input_ids_prefix = torch.cat((torch.ones(1, self.num_retrieved).to(torch.int64), input_ids_prefix), dim = 1)
-                    input_ids_prefix = input_ids_prefix.to(self.device)
+                    new_kwargs["attention_mask"] = torch.cat((torch.zeros(1, self.num_extract), torch.ones(1, len(input_ids_prefix[0]))), dim = 1).to(self.device)
+                    input_ids_prefix = torch.cat((torch.ones(1, self.num_extract).to(torch.int64), input_ids_prefix), dim = 1).to(self.device)
                     vals_pred.append(self.original_generate_func(input_ids_prefix, **new_kwargs))
-                    # for layer in range(len(self.num_pos_scores)):
-                    #     logger.info(f"average pos scores in a head in layer: {layer}, {self.disp_num_pos_scores[layer] / self.nums_scores}")
-                    #     logger.info(f"max pos scores in a head in layer: {layer}, {self.disp_max_pos_scores[layer] / self.nums_scores}")
                 return vals_pred
             input_ids_prefix = input_ids[:, -self.actual_model_window_size:]	
         input_ids_prefix = input_ids_prefix.to(self.device)
@@ -668,7 +675,7 @@ class Unlimiformer(Generic[ModelType]):
                         self.question_len = (attention_mask[0] == 1).sum(dim=0)
                         self.is_second_test_decoding_step = False
                         self.num_generated = 0
-                        kwargs["position_ids"] = torch.cat((torch.zeros(self.num_retrieved), torch.arange(1, self.question_len + 1))).unsqueeze(0).to(self.device)
+                        kwargs["position_ids"] = torch.cat((torch.zeros(self.num_extract), torch.arange(0, self.question_len))).unsqueeze(0).to(self.device)
                 
                 if self.csv_unlimiformer and self.is_second_test_decoding_step:
                     input_ids_suffix = self.tokenizer.encode(self.suffix2(self.curr_key), add_special_tokens=False, return_tensors="pt")
@@ -677,11 +684,11 @@ class Unlimiformer(Generic[ModelType]):
                         self.is_second_test_decoding_step = False
                     else:
                         input_ids = input_ids_suffix[:, self.num_generated - 1].unsqueeze(0).to(self.device)
-                        self.query_pos_id = len(self.input_ids[0]) + self.question_len + int(kwargs["position_ids"][0])
+                        self.query_pos_id = self.chunk_position_ids[0][-1] + int(kwargs["position_ids"][0])
                         kwargs["position_ids"] = torch.arange(self.query_pos_id, self.query_pos_id + 1).unsqueeze(0).to(self.device)
 
                 if self.csv_unlimiformer and not self.is_second_test_decoding_step and not self.is_first_test_decoding_step:
-                    self.query_pos_id = len(self.input_ids[0]) + self.question_len + int(kwargs["position_ids"][0])
+                    self.query_pos_id = self.chunk_position_ids[0][-1] + int(kwargs["position_ids"][0])
                     kwargs["position_ids"] = torch.arange(self.query_pos_id, self.query_pos_id + 1).unsqueeze(0).to(self.device)
                     
                 if input_ids is not None:
@@ -694,7 +701,7 @@ class Unlimiformer(Generic[ModelType]):
 
                 if kwargs.get('decoder_input_ids') is not None:
                     self.generated_input_ids = torch.cat([self.generated_input_ids, kwargs['decoder_input_ids']], axis=-1)
-            logger.info(f'"Pre Forward Hook", {self.tokenizer.decode(input_ids[0])}, {len(input_ids[0])}')
+            logger.info(f'"Pre Forward Hook", {self.tokenizer.decode(input_ids[0])}')
         result = self.original_forward_func(input_ids=input_ids, labels=labels, attention_mask=attention_mask, **kwargs)
         
         if self.csv_unlimiformer: 
@@ -740,14 +747,15 @@ class Unlimiformer(Generic[ModelType]):
                     attention_mask = torch.ones_like(attention_mask)
                     kwargs['output_attentions'] = True
                     result = original_cross_attn_forward_func(hidden_states=hidden_states, attention_mask=attention_mask, *args, **kwargs)
-                    # attn_wts = result[1].squeeze(0).squeeze(1)
-                    # logger.info(f"layer {cur_layer_num}")
-                    # for head in range(len(attn_wts)):
-                    #     logger.info(f"head {head}")
-                    #     # attn_wts_indices = torch.sort(-attn_wts[head][:self.num_retrieved]).indices
-                    #     logger.info(f"{attn_wts[head][:self.num_retrieved]}")
-                    #     # logger.info(f"{self.tokenizer.decode(torch.tensor(self.input_ids[0])[attn_wts_indices[:20].cpu()].tolist())}")
-                    #     logger.info(f"")
+                    attn_wts = result[1].squeeze(0).squeeze(1)
+                    for head in range(len(attn_wts)):
+                        sort_indices = torch.topk(attn_wts[head][:self.num_extract], 5).indices
+                        if attn_wts[head][:self.num_extract][sort_indices][0] >= 0.09:
+                            logger.info(f"layer {cur_layer_num}")
+                            logger.info(f"head {head}")
+                            logger.info(f"{attn_wts[head][:self.num_extract][sort_indices]}")
+                            logger.info(f"{self.tokenizer.decode(self.inputs_head[head][sort_indices.cpu()].tolist())}")
+                            logger.info(f"")
                 # Uri: this part adds the generated tokens to the prompt. 
                 # However it was commented out because currently we always keep the generated tokens in the attention window
                 # if not self.is_encoder_decoder and not self.is_input_encoding_pass and \
@@ -777,7 +785,7 @@ class Unlimiformer(Generic[ModelType]):
                 topk = min(topk, window_size - generated_size + 1)
             if self.gpu_index:
                 if self.csv_unlimiformer:
-                    topk = self.num_retrieved
+                    topk = self.num_extract
                     # topk = min(2048, self.num_retrieved)
                 else:
                     topk = min(topk, 2048)
@@ -806,42 +814,22 @@ class Unlimiformer(Generic[ModelType]):
                 else:
                     def do_scoring(vecs, query, topk):
                         s = []
+                        t = []
                         for q in range(len(query[0])):
                             similarities = torch.mv(vecs, query[0][q]) / (torch.norm(vecs, dim=1) * torch.norm(query[0][q]))
                             _, ind = torch.topk(similarities, k=topk)
+                            t.append(self.chunk_position_ids[0][ind].unsqueeze(0))
                             s.append(ind.unsqueeze(0))
-                        ind = torch.cat(s, dim=0)
-                        return ind
+                        ind = torch.cat(s, dim=0).unsqueeze(0)
+                        ch = torch.cat(t, dim=0).unsqueeze(0)
+                        return ind, ch
                     # top_search_key_scores, top_search_key_indices = self.datastore[datastore_index].search(datastore_query, k=topk)
-                    top_search_key_indices = do_scoring(self.hidden_states[datastore_index][0], datastore_query, self.num_retrieved).unsqueeze(0)
-                    # top_search_key_scores, top_search_key_indices = self.datastore[datastore_index].search(datastore_query, k=topk)
-                    # self.num_pos_scores[datastore_index] = (top_search_key_scores > 0).sum() / 40
-                    # self.max_pos_scores[datastore_index] = max(0, torch.max((top_search_key_scores > 0).sum(2)))
-                    # if datastore_index == len(self.num_pos_scores) -1:
-                    #     import copy
-                    #     for layer in range(len(self.num_pos_scores)):
-                    #         logger.info(f"{self.num_pos_scores[layer]}")
-                    #         logger.info(f"{self.max_pos_scores[layer]}")
-                    #     # self.disp_num_pos_scores[datastore_index] += copy.deepcopy(int(self.num_pos_scores[datastore_index])) / 40
-                    #     self.num_pos_scores[datastore_index] = 0
-                    #     # self.disp_max_pos_scores[datastore_index] += copy.deepcopy(int(self.max_pos_scores[datastore_index]))
-                    #     self.max_pos_scores[datastore_index] = 0
-                    #     self.nums_scores += 1
-                    top_search_key_indices = torch.sort(top_search_key_indices).values
-                    # def find_sudden_decrease(softmax_values, threshold=15):
-                    #     for i in range(1, len(softmax_values)):
-                    #         if softmax_values[i - 1] - softmax_values[i] > threshold or softmax_values[i] < 0:
-                    #             return i
-                    #     return len(softmax_values)
-                    # for head in range(40):
-                    #     num_good_values = find_sudden_decrease(top_search_key_scores[0, head])
-                    #     logger.info(f"Good values, layer {datastore_index}, head {head}: {num_good_values}")
-                        
-                    # logger.info(f"{top_search_key_scores}")
-                    # for head in range(40):
-                    #     logger.info(f"head {head}")
-                    #     logger.info(f"{self.tokenizer.decode(torch.tensor(self.input_ids[0])[top_search_key_indices[0,head].cpu()].tolist())}")
                     # top_search_key_indices = torch.arange(0, self.num_retrieved).repeat(40, 1).unsqueeze(0)
+                    top_search_key_indices, send_indices = do_scoring(self.hidden_states[datastore_index][0], datastore_query, topk)
+                    top_search_key_indices = torch.sort(top_search_key_indices).values                      
+                    send_indices = torch.sort(send_indices).values                      
+                    for head in range(40):
+                        self.inputs_head[head] = torch.tensor(self.input_ids[0])[top_search_key_indices[0,head].cpu()]
                     # self.embeddings: (batch,              src_len, dim)
                     # indices:         (batch, beam * head, actual_model_window_size)
                     # embeddings: (batch, beam * head, actual_model_window_size, dim)
@@ -851,6 +839,7 @@ class Unlimiformer(Generic[ModelType]):
                 # (batch, beam, head, actual_model_window_size)
                 # top_search_key_scores = top_search_key_scores.reshape(batch_size, -1, *top_search_key_scores.shape[1:])
                 top_search_key_indices = top_search_key_indices.reshape(batch_size, -1, *top_search_key_indices.shape[1:])
+                send_indices = send_indices.reshape(batch_size, -1, *send_indices.shape[1:])
                 # embeddings: (batch, beam, head, actual_model_window_size, dim)
                 embeddings = embeddings.reshape(batch_size, -1, self.num_heads, *embeddings.shape[2:])
 
@@ -900,7 +889,7 @@ class Unlimiformer(Generic[ModelType]):
         if self.use_datastore:
             # k_proj_layer.weight, v_proj_layer.weight: (embed_dim, embed_dim)
             # embeddings: (batch, beam, head, encoder_len, embed_dim)
-            retrieved_keys, retrieved_values = self.post_process_retrieved(embeddings, k_proj_layer, v_proj_layer, top_search_key_indices)
+            retrieved_keys, retrieved_values = self.post_process_retrieved(embeddings, k_proj_layer, v_proj_layer, send_indices)
         else:
             # this_layer_prompt_keys:   (batch,       head, source_len, dim)
             # top_key_indices:          (batch, beam, head, trunc_source)
@@ -1297,7 +1286,7 @@ class UnlimiformerLLaMa(Unlimiformer[LlamaModel]):
         # query: (batch * time, head, dim)
         attention = self.model.base_model.layers[-1].self_attn
         # num_generated = min(self.input_ids_size - self.prompt_input_ids.shape[1], self.actual_model_window_size)
-        cos, sin = attention.rotary_emb(query, seq_len=self.query_pos_id)
+        cos, sin = attention.rotary_emb(query, seq_len=self.num_generated)
         cos = cos[:,:,-1]  # [1, 1, dim]
         sin = sin[:,:,-1]  # [1, 1, dim]
         # cos = cos[-1].unsqueeze(0).unsqueeze(0)  # [bs, 1, seq_len, dim]
@@ -1336,7 +1325,9 @@ class UnlimiformerLLaMa(Unlimiformer[LlamaModel]):
             # positional embeddings that did not appear at training time
             scaled_key_indices = ((top_search_key_indices / self.prompt_input_ids.shape[1]) * self.actual_model_window_size).int()
         else:
-            scaled_key_indices = top_search_key_indices.to(cos.device) + torch.tensor(self.question_len).to(cos.device)
+            # scaled_key_indices = torch.zeros_like(top_search_key_indices).to(cos.device)
+            # scaled_key_indices = torch.tensor(len(self.input_ids[0])).to(cos.device) + torch.tensor(self.question_len).to(cos.device) - top_search_key_indices.to(cos.device)
+            scaled_key_indices = torch.tensor(self.question_len).to(cos.device) + top_search_key_indices.to(cos.device)
         # top_search_key_indices = top_search_key_indices.to(cos.device)
         scaled_key_indices = scaled_key_indices.to(cos.device)
         cos = cos[scaled_key_indices]  # [bs, 1, seq_len, dim]
