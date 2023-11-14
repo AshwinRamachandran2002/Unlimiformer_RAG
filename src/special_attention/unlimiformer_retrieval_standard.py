@@ -57,8 +57,9 @@ class Unlimiformer(Generic[ModelType]):
             self.anchor_length = sum(self.fact_lengths[:self.num_anchors])
             # self.update_begin = 0
             self.update_begin = self.fact_lengths[0]
-            # self.update_end = sum(self.fact_lengths)
-            self.update_end = -sum(self.fact_lengths[-7:])
+            self.update_end = sum(self.fact_lengths)
+            # self.update_end = -sum(self.fact_lengths[-7:])
+            self.cover_end = sum(self.fact_lengths[-7:])
             with open("persons.txt", "r") as f:
                 self.person_list = f.read().splitlines()
             with open("actions.txt", "r") as f:
@@ -606,11 +607,12 @@ class Unlimiformer(Generic[ModelType]):
                 vals_pred = []
                 # for i in [42, 43, 44, 45]:
                 for i in [38, 39, 52, 53, 72, 73, 66, 67, 2, 3, 6, 7, 86, 87]:
+                # for i in [38, 39, 52, 53, 72, 73, 66, 67, 2, 3, 6, 7, 86, 87]:
                 # for i in range(2, 2 * len(self.fact_lengths)):
                     self.curr_key = i
                     input_ids_prefix = self.tokenizer.encode(self.suffix(), add_special_tokens=False, return_tensors="pt")
-                    new_kwargs["attention_mask"] = torch.cat((torch.zeros(1, self.num_extract), torch.ones(1, len(input_ids_prefix[0]))), dim = 1).to(self.device)
-                    input_ids_prefix = torch.cat((torch.ones(1, self.num_extract).to(torch.int64), input_ids_prefix), dim = 1).to(self.device)
+                    new_kwargs["attention_mask"] = torch.cat((torch.zeros(1, self.num_extract + self.cover_end), torch.ones(1, len(input_ids_prefix[0]))), dim = 1).to(self.device)
+                    input_ids_prefix = torch.cat((torch.ones(1, self.num_extract + self.cover_end).to(torch.int64), input_ids_prefix), dim = 1).to(self.device)
                     vals_pred.append(self.original_generate_func(input_ids_prefix, **new_kwargs))
                 return vals_pred
             input_ids_prefix = input_ids[:, -self.actual_model_window_size:]	
@@ -634,7 +636,7 @@ class Unlimiformer(Generic[ModelType]):
                         self.question_len = (attention_mask[0] == 1).sum(dim=0)
                         self.is_second_test_decoding_step = False
                         self.num_generated = 0
-                        kwargs["position_ids"] = torch.cat((torch.zeros(self.num_extract), torch.arange(0, self.question_len))).unsqueeze(0).to(self.device)
+                        kwargs["position_ids"] = torch.cat((torch.zeros(self.num_extract + self.cover_end), torch.arange(0, self.question_len))).unsqueeze(0).to(self.device)
 
                 if self.csv_unlimiformer and self.is_second_test_decoding_step:
                     input_ids_suffix = self.tokenizer.encode(self.suffix2(self.curr_key), add_special_tokens=False, return_tensors="pt")
@@ -702,20 +704,26 @@ class Unlimiformer(Generic[ModelType]):
                 else:
                     attention_mask = attention_mask.repeat(1,40,1,1)
                     config_layer_head = {1:[35]}
+                    filter_layer = [1]
+                    # config_layer_head = {1:[35], 4:[2,16,29,33], 6:[12,31,36]}
                     for head in range(40):
-                        if cur_layer_num <= 1:
+                        if cur_layer_num in filter_layer:
                             if cur_layer_num in config_layer_head.keys():
                                 if head in config_layer_head[cur_layer_num]:
                                     attention_mask[:, head] = torch.ones_like(attention_mask[:, head])
+                                else:
+                                    attention_mask[:, head, :, self.num_extract:] = 1
+                            else:
+                                attention_mask[:, head, :, self.num_extract:] = 1
                         else:
                             attention_mask[:, head] = torch.ones_like(attention_mask[:, head])
-                    # attention_mask = torch.ones_like(attention_mask)
+                    attention_mask = torch.ones_like(attention_mask)
                     kwargs['output_attentions'] = True
                     result = original_cross_attn_forward_func(hidden_states=hidden_states, attention_mask=attention_mask, *args, **kwargs)
                     attn_wts = result[1].squeeze(0).squeeze(1)
                     for head in range(len(attn_wts)):
                         sort_indices = torch.topk(attn_wts[head][:self.num_extract], 5).indices
-                        if attn_wts[head][:self.num_extract][sort_indices][0] >= 0.08:
+                        if attn_wts[head][:self.num_extract][sort_indices][0] >= 0.01:
                             logger.info(f"layer {cur_layer_num}")
                             logger.info(f"head {head}")
                             logger.info(f"{attn_wts[head][:self.num_extract][sort_indices]}")
@@ -790,11 +798,11 @@ class Unlimiformer(Generic[ModelType]):
                         return ind, ch
                     # top_search_key_scores, top_search_key_indices = self.datastore[datastore_index].search(datastore_query, k=topk)
                     # top_search_key_indices = torch.arange(0, self.num_retrieved).repeat(40, 1).unsqueeze(0)
-                    top_search_key_indices, send_indices = do_scoring(self.hidden_states[datastore_index][0], datastore_query, topk)
-                    top_search_key_indices = torch.sort(top_search_key_indices).values                      
-                    send_indices = torch.sort(send_indices).values                      
+                    top_search_key_indices, send_indices = do_scoring(self.hidden_states[datastore_index][0][:-self.cover_end], datastore_query, topk)
+                    top_search_key_indices = torch.cat((torch.sort(top_search_key_indices).values, torch.arange(self.update_end - self.update_begin - self.cover_end, self.update_end - self.update_begin).unsqueeze(0).unsqueeze(0).repeat(1, 40, 1).to(self.device)), dim=2)
+                    # send_indices = torch.cat((torch.sort(send_indices).values, self.chunk_position_ids[0][torch.arange(self.update_end - self.cover_end, self.update_end)].unsqueeze(0).unsqueeze(0).repeat(1, 40, 1).to(self.device)), dim=2)     
                     for head in range(40):
-                        self.inputs_head[head] = torch.tensor(self.input_ids)[top_search_key_indices[0,head].cpu()]
+                        self.inputs_head[head] = torch.tensor(self.input_ids)[top_search_key_indices[0,head,:self.num_extract].cpu()]
                     # self.embeddings: (batch,              src_len, dim)
                     # indices:         (batch, beam * head, actual_model_window_size)
                     # embeddings: (batch, beam * head, actual_model_window_size, dim)
@@ -854,7 +862,7 @@ class Unlimiformer(Generic[ModelType]):
         if self.use_datastore:
             # k_proj_layer.weight, v_proj_layer.weight: (embed_dim, embed_dim)
             # embeddings: (batch, beam, head, encoder_len, embed_dim)
-            retrieved_keys, retrieved_values = self.post_process_retrieved(embeddings, k_proj_layer, v_proj_layer, send_indices)
+            retrieved_keys, retrieved_values = self.post_process_retrieved(embeddings, k_proj_layer, v_proj_layer, top_search_key_indices)
         else:
             # this_layer_prompt_keys:   (batch,       head, source_len, dim)
             # top_key_indices:          (batch, beam, head, trunc_source)
@@ -874,10 +882,10 @@ class Unlimiformer(Generic[ModelType]):
             assert torch.mean(torch.isclose(correct_values, retrieved_values, rtol=1e-3, atol=1e-3).float()) > 0.99
 
         # retrieved_keys, retrieved_values: (batch * beam, head, encoder_len, attn_dim)
-        retrieved_keys = retrieved_keys.flatten(0, 1)[:,:,:topk]
-        retrieved_values = retrieved_values.flatten(0, 1)[:,:,:topk]
-        self.cur_layer_key_value_placeholder[0] = torch.cat([retrieved_keys, self.cur_layer_key_value_placeholder[0][:,:,topk:]], dim=-2)
-        self.cur_layer_key_value_placeholder[1] = torch.cat([retrieved_values, self.cur_layer_key_value_placeholder[1][:,:,topk:]], dim=-2)
+        retrieved_keys = retrieved_keys.flatten(0, 1)[:,:,:topk + self.cover_end]
+        retrieved_values = retrieved_values.flatten(0, 1)[:,:,:topk + self.cover_end]
+        self.cur_layer_key_value_placeholder[0] = torch.cat([retrieved_keys, self.cur_layer_key_value_placeholder[0][:,:,topk + self.cover_end:]], dim=-2)
+        self.cur_layer_key_value_placeholder[1] = torch.cat([retrieved_values, self.cur_layer_key_value_placeholder[1][:,:,topk + self.cover_end:]], dim=-2)
         return
 
     def train_attention_forward_hook(self, module, input, output):
