@@ -60,6 +60,7 @@ class Unlimiformer(Generic[ModelType]):
             self.update_end = sum(self.fact_lengths)
             # self.update_end = -sum(self.fact_lengths[-7:])
             self.cover_end = sum(self.fact_lengths[-7:])
+            self.cover_start = sum(self.fact_lengths[1:7])
             with open("persons.txt", "r") as f:
                 self.person_list = f.read().splitlines()
             with open("actions.txt", "r") as f:
@@ -583,7 +584,7 @@ class Unlimiformer(Generic[ModelType]):
 
     # format copied from https://huggingface.co/spaces/huggingface-projects/llama-2-13b-chat/blob/main/model.py
     def suffix(self):
-        return '<s>[INST] <<SYS>>\nYou are a helpful assistant. Answer with short responses according to the question. \n<</SYS>>\n\nBelow is a list of facts in the format (Fact: <PERSON> is <ACTION>).\nFact: Ethan is Swimming, '
+        return '<s>[INST] <<SYS>>\nYou are a helpful assistant. Answer with short responses according to the question. \n<</SYS>>\n\nBelow is a list of facts in the format (Fact: <PERSON> is <ACTION>).\nFact: Emma is Singing, '
         
     # format copied from https://huggingface.co/spaces/huggingface-projects/llama-2-13b-chat/blob/main/model.py
     def suffix2(self, i=0):
@@ -610,16 +611,21 @@ class Unlimiformer(Generic[ModelType]):
                 # for i in [38, 39, 52, 53, 72, 73, 66, 67, 2, 3, 6, 7, 86, 87]:
                 # for i in [42, 43]:
                 # for i in [54,55]:
-                for i in [38, 39, 14, 15, 70, 71, 54, 55]:
+                # for i in [38, 39, 14, 15, 70, 71, 54, 55]:
                 # for i in [52]:
                 # for i in [38, 39, 52, 53, 72, 73, 66, 67, 2, 3, 6, 7, 86, 87, 20, 21, 40, 41, 58, 59]:
                 # for i in [26, 27, 70, 71]:
                 # for i in range(2, 2 * len(self.fact_lengths)):
-                    self.curr_key = i
-                    input_ids_prefix = self.tokenizer.encode(self.suffix(), add_special_tokens=False, return_tensors="pt")
-                    new_kwargs["attention_mask"] = torch.cat((torch.zeros(1, self.num_extract + self.cover_end), torch.ones(1, len(input_ids_prefix[0]))), dim = 1).to(self.device)
-                    input_ids_prefix = torch.cat((torch.ones(1, self.num_extract + self.cover_end).to(torch.int64), input_ids_prefix), dim = 1).to(self.device)
-                    vals_pred.append(self.original_generate_func(input_ids_prefix, **new_kwargs))
+                # for i in range(7, len(self.fact_lengths), 2):
+                # for i in range(7, len(self.fact_lengths), 2):
+                # for i in [19, 27, 35]:
+                for i in [25]:
+                    for j in [i*2, i*2+1]:
+                        self.curr_key = j
+                        input_ids_prefix = self.tokenizer.encode(self.suffix(), add_special_tokens=False, return_tensors="pt")
+                        new_kwargs["attention_mask"] = torch.cat((torch.zeros(1, self.num_extract + self.cover_end + self.cover_start), torch.ones(1, len(input_ids_prefix[0]))), dim = 1).to(self.device)
+                        input_ids_prefix = torch.cat((torch.ones(1, self.num_extract + self.cover_end + self.cover_start).to(torch.int64), input_ids_prefix), dim = 1).to(self.device)
+                        vals_pred.append(self.original_generate_func(input_ids_prefix, **new_kwargs))
                 return vals_pred
             input_ids_prefix = input_ids[:, -self.actual_model_window_size:]	
         input_ids_prefix = input_ids_prefix.to(self.device)
@@ -642,7 +648,7 @@ class Unlimiformer(Generic[ModelType]):
                         self.question_len = (attention_mask[0] == 1).sum(dim=0)
                         self.is_second_test_decoding_step = False
                         self.num_generated = 0
-                        kwargs["position_ids"] = torch.cat((torch.zeros(self.num_extract + self.cover_end), torch.arange(0, self.question_len))).unsqueeze(0).to(self.device)
+                        kwargs["position_ids"] = torch.cat((torch.zeros(self.num_extract + self.cover_end + self.cover_start), torch.arange(0, self.question_len))).unsqueeze(0).to(self.device)
 
                 if self.csv_unlimiformer and self.is_second_test_decoding_step:
                     input_ids_suffix = self.tokenizer.encode(self.suffix2(self.curr_key), add_special_tokens=False, return_tensors="pt")
@@ -753,45 +759,50 @@ class Unlimiformer(Generic[ModelType]):
                     # config_layer_head = {1:[35], 2:[5], 3:[33, 17], 4: [16, 29, 2, 33, 12], 5: [4, 21, 26, 28, 35, 32], 6: [36, 12, 31], 7: [15, 21, 24, 17, 4, 14, 36], 8: [11, 33, 14, 24], 9: [32, 29, 20], 10: [13, 6, 19, 25, 29, 30, 3, 18, 10], 11: [6, 7, 37, 5, 33], 12: [24, 16, 20, 28, 31, 34, 5, 26, 21], 13: [2, 26, 9, 14, 17, 21, 23, 24, 30, 32, 36, 5, 12, 16, 11, 33, 18], 14: [31, 26, 0, 2, 13, 19, 20, 21, 28, 39, 1, 4, 15, 11, 22, 36, 38], 15: [7, 2, 16, 23, 24, 26, 37, 39, 22, 3, 15, 34, 25, 4, 8, 10, 31], 16: [9, 30, 25, 1, 20, 21, 31, 3, 2, 5, 7, 12, 14, 33, 6, 11, 28, 29, 32, 10, 39], 17: [0, 7, 19, 16, 3, 5, 8, 25, 4, 37, 2, 11, 28, 30, 33, 12], 18: [32, 19, 5, 20, 15, 26, 16, 30, 14, 31, 35, 34, 11, 18], 19: [26, 4, 10, 3, 8, 27, 33, 0, 1, 5, 6, 14, 16, 21, 37, 29, 2, 7], 20: [18, 23, 31, 11, 16, 22, 24, 34, 9, 25, 19, 26, 36, 8], 21: [5, 7, 6, 1, 4, 15, 14, 19, 22, 25, 27, 33, 34, 35, 39, 37, 0, 28], 22: [3, 29, 16, 4, 8, 6, 13], 23: [15, 18, 0, 1, 9, 23, 38, 2, 13], 24: [6, 19, 2, 16, 24], 25: [4, 30, 36, 33, 9, 5, 18], 26: [13, 33, 29, 5, 9, 30], 27: [29, 1, 33, 36], 28: [8, 9, 22, 24], 29: [27], 30: [24, 14], 31: [], 32: [35, 19, 8, 5, 25, 32], 33: [28, 24], 34: [38, 2, 6, 25, 7], 35: [24, 30], 36: [32, 29, 3, 16, 27, 23], 37: [1, 11, 4, 15, 16, 0], 38: [13, 37, 39, 19], 39: [9, 21, 23, 32, 35, 4, 24, 30, 27]}
                     # config_layer_head = {1:[35], 2:[5], 3:[33, 17], 4: [16, 29, 2, 33, 12], 5: [4, 21, 26, 28, 35, 32], 6: [36, 12, 31], 7: [15, 21, 24, 17, 4, 14, 36], 8: [11, 33, 4, 14, 24], 9: [33, 34, 29, 20, 32], 10: [13, 6, 19, 25, 29, 30, 3, 18, 10], 11: [6, 7, 37, 5, 33], 12: [24, 16, 20, 28, 31, 34, 5, 26, 21], 13: [2, 26, 9, 14, 17, 21, 23, 24, 30, 32, 36, 5, 12, 16, 11, 33, 18], 14: [31, 26, 0, 2, 13, 19, 20, 21, 28, 39, 1, 4, 15, 11, 22, 36, 38], 15: [7, 2, 16, 23, 24, 26, 37, 39, 22, 3, 15, 34, 25, 4, 8, 10, 31], 16: [9, 30, 25, 1, 20, 21, 31, 3, 2, 5, 7, 12, 14, 33, 6, 11, 28, 29, 32, 10, 39], 17: [0, 7, 19, 16, 3, 5, 8, 25, 4, 37, 2, 11, 28, 30, 33, 12], 18: [32, 19, 5, 20, 15, 26, 16, 30, 14, 31, 35, 34, 11, 18], 19: [26, 4, 10, 3, 8, 27, 33, 0, 1, 5, 6, 14, 16, 21, 37, 29, 2, 7], 20: [18, 23, 31, 11, 16, 22, 24, 34, 9, 25, 19, 26, 36, 8], 21: [5, 7, 6, 1, 4, 15, 14, 19, 22, 25, 27, 33, 34, 35, 39, 37, 0, 28], 22: [3, 29, 16, 4, 8, 6, 13], 23: [15, 18, 0, 1, 9, 23, 38, 2, 13], 24: [6, 19, 2, 16, 24], 25: [4, 30, 36, 33, 9, 5, 18], 26: [13, 33, 29, 5, 9, 30], 27: [29, 1, 33, 36], 28: [8, 9, 22, 24], 29: [27], 30: [24, 14], 31: [], 32: [35, 19, 8, 5, 25, 32], 33: [28, 24], 34: [38, 2, 6, 25, 7], 35: [24, 30], 36: [32, 29, 3, 16, 27, 23], 37: [1, 11, 4, 15, 16, 0], 38: [13, 37, 39, 19], 39: [9, 21, 23, 32, 35, 4, 24, 30, 27]}
                     # filter_layer = [0,1,2,3,4,5]
-                    config_layer_head = {
-                        1: [35],
-                        4: [16, 2, 29, 33],
-                        5: [26, 28, 4, 32],
-                        6: [36, 31, 12],
-                        7: [24],
-                        8: [33],
-                        9: [29, 20, 34, 32],
-                        10: [30, 18, 13, 6],
-                        11: [7],
-                        12: [28, 5],
-                        13: [26, 21, 2, 30, 36, 23, 24],
-                        14: [26, 4, 13, 20, 31],
-                        15: [16, 2, 23, 24, 34, 39],
-                        16: [25, 30, 9, 20, 12, 33, 31, 7, 21, 2, 5, 1],
-                        17: [16, 2, 5, 12, 3, 28, 11, 8, 19, 33],
-                        18: [16, 30, 20, 35, 11, 18, 34],
-                        19: [16, 21, 0, 10, 5, 4, 3, 37, 8, 29, 33, 14],
-                        20: [26, 25, 36, 9, 31, 23, 11, 18, 19, 24, 34],
-                        21: [25, 0, 7, 5, 39, 15, 4, 35, 37, 19, 6, 1, 22, 34, 14],
-                        22: [8, 13, 6, 29],
-                        23: [0, 2, 15, 23, 13, 1],
-                        24: [16, 24, 19, 6],
-                        25: [4, 36, 30, 9, 33],
-                        26: [5, 30, 29],
-                        27: [29, 33, 36],
-                        28: [8, 22, 9, 24],
-                        29: [],
-                        30: [24],
-                        31: [],
-                        32: [19, 35],
-                        33: [],
-                        34: [7, 38, 6],
-                        35: [30],
-                        36: [27, 16, 3],
-                        37: [15, 16, 4],
-                        38: [19],
-                        39: [27, 30, 24, 35, 23]
-                    }
+                    # config_layer_head = {
+                    #     1: [35],
+                    #     4: [16, 2, 29, 33],
+                    #     5: [26, 28, 4, 32],
+                    #     6: [36, 31, 12],
+                    #     7: [24],
+                    #     8: [33],
+                    #     9: [29, 20, 34, 32],
+                    #     10: [30, 18, 13, 6],
+                    #     11: [7],
+                    #     12: [28, 5],
+                    #     13: [26, 21, 2, 30, 36, 23, 24],
+                    #     14: [26, 4, 13, 20, 31],
+                    #     15: [16, 2, 23, 24, 34, 39],
+                    #     16: [25, 30, 9, 20, 12, 33, 31, 7, 21, 2, 5, 1],
+                    #     17: [16, 2, 5, 12, 3, 28, 11, 8, 19, 33],
+                    #     18: [16, 30, 20, 35, 11, 18, 34],
+                    #     19: [16, 21, 0, 10, 5, 4, 3, 37, 8, 29, 33, 14],
+                    #     20: [26, 25, 36, 9, 31, 23, 11, 18, 19, 24, 34],
+                    #     21: [25, 0, 7, 5, 39, 15, 4, 35, 37, 19, 6, 1, 22, 34, 14],
+                    #     22: [8, 13, 6, 29],
+                    #     23: [0, 2, 15, 23, 13, 1],
+                    #     24: [16, 24, 19, 6],
+                    #     25: [4, 36, 30, 9, 33],
+                    #     26: [5, 30, 29],
+                    #     27: [29, 33, 36],
+                    #     28: [8, 22, 9, 24],
+                    #     29: [],
+                    #     30: [24],
+                    #     31: [],
+                    #     32: [19, 35],
+                    #     33: [],
+                    #     34: [7, 38, 6],
+                    #     35: [30],
+                    #     36: [27, 16, 3],
+                    #     37: [15, 16, 4],
+                    #     38: [19],
+                    #     39: [27, 30, 24, 35, 23]
+                    # }
+
+                    config_layer_head = {1: [35], 2: [], 3: [0], 4: [33, 2, 16, 29], 5: [0, 32, 4, 21, 26, 28], 6: [36, 7, 12, 31], 7: [36, 21, 24, 14], 8: [33, 36, 10, 14, 17, 24, 31], 9: [32, 34, 6, 14, 20, 29], 10: [3, 4, 6, 13, 18, 30, 31], 11: [33, 1, 4, 37, 7, 11], 12: [5, 19, 20, 21, 24, 28, 31], 13: [1, 2, 4, 5, 11, 12, 13, 17, 21, 23, 24, 26, 30, 33, 36, 39], 14: [4, 7, 10, 11, 12, 13, 15, 19, 20, 26, 27, 28, 31, 34, 36, 39], 15: [0, 2, 7, 16, 19, 23, 24, 25, 26, 34, 37, 39], 16: [1, 2, 3, 5, 6, 7, 9, 11, 12, 14, 20, 21, 25, 30, 31, 32, 33, 39], 17: [3, 5, 8, 11, 16, 19, 22, 25, 28, 30, 33, 36, 37], 18: [11, 16, 18, 19, 20, 27, 30, 31, 32, 34, 35], 19: [1, 3, 5, 7, 8, 10, 14, 16, 21, 25, 29, 33, 37], 20: [0, 1, 9, 11, 18, 19, 22, 23, 25, 26, 31, 34, 36], 21: [0, 1, 4, 5, 6, 7, 15, 19, 22, 25, 27, 34, 35, 37, 39], 22: [16, 33, 29, 3, 8, 13], 23: [0, 1, 2, 3, 33, 38, 9, 13, 23], 24: [16, 17, 2, 19, 24, 25], 25: [5, 4, 9, 18, 30], 26: [5, 30, 15], 27: [33, 1, 18, 36, 29], 28: [20, 8, 24], 29: [26, 31], 30: [5, 14], 31: [1, 21, 5], 32: [25, 19, 4], 33: [], 34: [32, 34, 2, 38, 7, 6], 35: [17, 29, 30], 36: [23, 8, 27], 37: [0, 4, 8, 14, 16, 24], 38: [37, 22, 12, 13], 39: [35, 36, 37, 39, 27]}
+                    # config_layer_head = {1: [35], 2: [], 3: [0], 4: [33, 2, 16, 29], 5: [0, 32, 4, 21, 26, 28], 6: [36, 7, 12, 31], 7: [36, 21, 24, 14], 8: [33, 36, 10, 14, 17, 24, 31], 9: [32, 6, 14, 20, 29], 10: [3, 4, 6, 13, 18, 30, 31], 11: [33, 1, 4, 7, 11], 12: [5, 19, 20, 21, 24, 28, 31], 13: [1, 2, 4, 5, 12, 13, 17, 23, 26, 30, 33, 36, 39], 14: [4, 7, 10, 11, 12, 13, 19, 20, 26, 27, 28, 31, 34, 36, 39], 15: [0, 2, 7, 16, 19, 23, 24, 25, 26, 34, 37, 39], 16: [2, 3, 5, 6, 7, 9, 11, 12, 14, 21, 25, 30, 31, 32, 33, 39], 17: [3, 5, 8, 11, 16, 19, 22, 25, 28, 33, 36, 37], 18: [11, 16, 18, 19, 20, 27, 30, 31, 32, 34, 35], 19: [1, 3, 5, 7, 8, 10, 14, 16, 21, 25, 29, 37], 20: [0, 1, 11, 18, 19, 22, 23, 25, 26, 31, 34, 36], 21: [0, 4, 5, 6, 7, 15, 19, 22, 27, 34, 35, 37, 39], 22: [16, 33, 29, 3, 8, 13], 23: [1, 2, 3, 33, 38, 9, 13], 24: [16, 17, 2, 19, 24, 25], 25: [5, 4, 9, 18, 30], 26: [5, 30, 15], 27: [1, 18, 36, 29], 28: [20, 24], 29: [26, 31], 30: [5, 14], 31: [1, 21, 5], 32: [25, 19, 4], 33: [], 34: [32, 34, 2, 38, 7, 6], 35: [29, 30], 36: [23, 8, 27], 37: [0, 4, 8, 14, 16, 24], 38: [37, 22, 12, 13], 39: [35, 36, 37, 39, 27]}
+                    # config_layer_head = {1: [35], 2: [], 3: [0], 4: [33, 2, 16, 29], 5: [0, 32, 4, 21, 26, 28], 6: [36, 7, 12, 31], 7: [36, 21, 24, 14], 8: [33, 4, 36, 10, 14, 17, 24, 31], 9: [32, 33, 34, 6, 14, 20, 29], 10: [3, 4, 6, 13, 18, 25, 30, 31], 11: [33, 1, 4, 37, 7, 11], 12: [34, 5, 16, 19, 20, 21, 24, 28, 31], 13: [1, 2, 4, 5, 9, 11, 12, 13, 14, 17, 21, 23, 24, 26, 30, 33, 36, 39], 14: [0, 2, 4, 7, 10, 11, 12, 13, 15, 19, 20, 21, 26, 27, 28, 31, 34, 36, 39], 15: [0, 2, 7, 16, 19, 23, 24, 25, 26, 34, 37, 39], 16: [1, 2, 3, 5, 6, 7, 9, 11, 12, 14, 20, 21, 25, 30, 31, 32, 33, 39], 17: [2, 3, 4, 5, 8, 11, 16, 19, 22, 25, 28, 30, 33, 36, 37], 18: [11, 14, 15, 16, 18, 19, 20, 27, 30, 31, 32, 34, 35], 19: [0, 1, 3, 4, 5, 7, 8, 10, 14, 16, 21, 25, 27, 29, 33, 37], 20: [0, 1, 9, 11, 18, 19, 22, 23, 25, 26, 31, 34, 36], 21: [0, 1, 4, 5, 6, 7, 14, 15, 19, 22, 25, 27, 34, 35, 37, 39], 22: [16, 33, 29, 3, 8, 13], 23: [0, 1, 2, 3, 33, 38, 9, 13, 15, 23], 24: [16, 17, 2, 19, 24, 25], 25: [33, 36, 5, 4, 9, 18, 30], 26: [29, 5, 13, 30, 15], 27: [33, 1, 18, 36, 29], 28: [20, 22, 8, 9, 24], 29: [26, 31], 30: [5, 24, 14], 31: [1, 21, 5], 32: [25, 19, 4], 33: [], 34: [32, 34, 2, 38, 7, 6], 35: [17, 29, 30], 36: [2, 23, 8, 27], 37: [0, 4, 8, 14, 15, 16, 21, 24], 38: [28, 37, 22, 12, 13], 39: [35, 36, 37, 39, 24, 27]}
+                    
                     for head in range(40):
                         if cur_layer_num != 0:# and cur_layer_num<=4:
                             if cur_layer_num in config_layer_head.keys():
@@ -803,16 +814,16 @@ class Unlimiformer(Generic[ModelType]):
                                 attention_mask[:, head, :, self.num_extract:] = 1
                         else:
                             attention_mask[:, head] = torch.ones_like(attention_mask[:, head])
-                    # attention_mask = torch.ones_like(attention_mask)
+                    attention_mask = torch.ones_like(attention_mask)
                     kwargs['output_attentions'] = True
                     result = original_cross_attn_forward_func(hidden_states=hidden_states, attention_mask=attention_mask, *args, **kwargs)
                     attn_wts = result[1].squeeze(0).squeeze(1)
                     for head in range(len(attn_wts)):
-                        sort_indices = torch.topk(attn_wts[head][:self.num_extract], 5).indices
-                        if attn_wts[head][:self.num_extract][sort_indices][0] >= 0.01:
+                        sort_indices = torch.topk(attn_wts[head][self.cover_start: self.cover_start + self.num_extract], 5).indices
+                        if attn_wts[head][self.cover_start: self.cover_start + self.num_extract][sort_indices][0] >= 0.01:
                             logger.info(f"layer {cur_layer_num}")
                             logger.info(f"head {head}")
-                            logger.info(f"{attn_wts[head][:self.num_extract][sort_indices]}")
+                            logger.info(f"{attn_wts[head][self.cover_start:self.cover_start + self.num_extract][sort_indices]}")
                             logger.info(f"{self.tokenizer.decode(self.inputs_head[head][sort_indices.cpu()].tolist())}")
                             logger.info(f"{self.tokens_head[head][sort_indices.cpu()]}")
                             logger.info(f"")
@@ -885,15 +896,15 @@ class Unlimiformer(Generic[ModelType]):
                         return ind, ch
                     # top_search_key_scores, top_search_key_indices = self.datastore[datastore_index].search(datastore_query, k=topk)
                     # top_search_key_indices = torch.arange(0, self.num_retrieved).repeat(40, 1).unsqueeze(0)
-                    new_hidden_states = self.hidden_states[datastore_index][0][:-self.cover_end]
-                    new_hidden_states = torch.cat(torch.split(new_hidden_states, self.fact_lengths[1:-7])[::2])
-                    new_indices = torch.cat(torch.split(torch.arange(0, sum(self.fact_lengths[1:-7])), self.fact_lengths[1:-7])[::2]).to(self.device)
+                    new_hidden_states = self.hidden_states[datastore_index][0][self.cover_start:-self.cover_end]
+                    new_hidden_states = torch.cat(torch.split(new_hidden_states, self.fact_lengths[7:-7])[::2])
+                    new_indices = torch.cat(torch.split(torch.arange(sum(self.fact_lengths[1:7]), sum(self.fact_lengths[1:-7])), self.fact_lengths[7:-7])[::2]).to(self.device)
                     top_search_key_indices, send_indices = do_scoring(new_hidden_states, datastore_query, topk, new_indices)
-                    top_search_key_indices = torch.cat((torch.sort(top_search_key_indices).values, torch.arange(self.update_end - self.update_begin - self.cover_end, self.update_end - self.update_begin).unsqueeze(0).unsqueeze(0).repeat(1, 40, 1).to(self.device)), dim=2)
+                    top_search_key_indices = torch.cat((torch.arange(0, self.cover_start).unsqueeze(0).unsqueeze(0).repeat(1, 40, 1).to(self.device), torch.sort(top_search_key_indices).values, torch.arange(self.update_end - self.update_begin - self.cover_end, self.update_end - self.update_begin).unsqueeze(0).unsqueeze(0).repeat(1, 40, 1).to(self.device)), dim=2)
                     # send_indices = torch.cat((torch.sort(send_indices).values, self.chunk_position_ids[0][torch.arange(self.update_end - self.cover_end, self.update_end)].unsqueeze(0).unsqueeze(0).repeat(1, 40, 1).to(self.device)), dim=2)     
                     for head in range(40):
-                        self.inputs_head[head] = torch.tensor(self.input_ids)[top_search_key_indices[0,head,:self.num_extract].cpu()]
-                        self.tokens_head[head] = top_search_key_indices[0,head,:self.num_extract].cpu()
+                        self.inputs_head[head] = torch.tensor(self.input_ids)[top_search_key_indices[0,head,self.cover_start:self.cover_start + self.num_extract].cpu()]
+                        self.tokens_head[head] = top_search_key_indices[0,head,self.cover_start:self.cover_start+ self.num_extract].cpu()
                     # self.embeddings: (batch,              src_len, dim)
                     # indices:         (batch, beam * head, actual_model_window_size)
                     # embeddings: (batch, beam * head, actual_model_window_size, dim)
@@ -973,10 +984,10 @@ class Unlimiformer(Generic[ModelType]):
             assert torch.mean(torch.isclose(correct_values, retrieved_values, rtol=1e-3, atol=1e-3).float()) > 0.99
 
         # retrieved_keys, retrieved_values: (batch * beam, head, encoder_len, attn_dim)
-        retrieved_keys = retrieved_keys.flatten(0, 1)[:,:,:topk + self.cover_end]
-        retrieved_values = retrieved_values.flatten(0, 1)[:,:,:topk + self.cover_end]
-        self.cur_layer_key_value_placeholder[0] = torch.cat([retrieved_keys, self.cur_layer_key_value_placeholder[0][:,:,topk + self.cover_end:]], dim=-2)
-        self.cur_layer_key_value_placeholder[1] = torch.cat([retrieved_values, self.cur_layer_key_value_placeholder[1][:,:,topk + self.cover_end:]], dim=-2)
+        retrieved_keys = retrieved_keys.flatten(0, 1)[:,:,:topk + self.cover_end + self.cover_start]
+        retrieved_values = retrieved_values.flatten(0, 1)[:,:,:topk + self.cover_end + self.cover_start]
+        self.cur_layer_key_value_placeholder[0] = torch.cat([retrieved_keys, self.cur_layer_key_value_placeholder[0][:,:,topk + self.cover_end + self.cover_start:]], dim=-2)
+        self.cur_layer_key_value_placeholder[1] = torch.cat([retrieved_values, self.cur_layer_key_value_placeholder[1][:,:,topk + self.cover_end + self.cover_start:]], dim=-2)
         return
 
     def train_attention_forward_hook(self, module, input, output):
