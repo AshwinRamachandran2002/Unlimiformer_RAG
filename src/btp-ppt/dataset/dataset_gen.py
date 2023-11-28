@@ -1,7 +1,7 @@
-with open('persons.txt', 'r') as persons_file:
+with open('persons_tiny.txt', 'r') as persons_file:
     persons = persons_file.read().splitlines()
 
-with open('actions.txt', 'r') as actions_file:
+with open('actions_tiny.txt', 'r') as actions_file:
     actions = actions_file.read().splitlines()
 
 if len(persons) != len(actions):

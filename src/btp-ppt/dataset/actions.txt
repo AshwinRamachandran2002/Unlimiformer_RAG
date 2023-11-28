@@ -11,9 +11,9 @@ Dancing
 Jumping
 Sleeping
 Cycling
-Playing guitar
 Drawing
 Hiking
+Playing guitar
 Meditating
 Yoga
 Playing chess
@@ -37,9 +37,9 @@ Juggling
 Doing a puzzle
 Playing basketball
 Playing volleyball
+Playing tennis
 Baking
 Ice skating
-Playing tennis
 Martial arts
 Birdwatching
 Origami

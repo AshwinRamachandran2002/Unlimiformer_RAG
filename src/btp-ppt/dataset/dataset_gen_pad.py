@@ -16,7 +16,7 @@ with open('extra_persons.txt', 'r') as extra_persons_file:
 pad_persons = persons[:7]
 for i in range(7, len(persons)-7):
     pad_persons.append(persons[i])
-    for j in range(2):
+    for j in range(0):
         pad_person = random.choice(extra_persons)
         while pad_person in pad_persons:
             pad_person = random.choice(extra_persons)
@@ -27,7 +27,7 @@ pad_persons.extend(persons[-7:])
 pad_actions = actions[:7]
 for i in range(7, len(actions)-7):
     pad_actions.append(actions[i])
-    for j in range(2):
+    for j in range(0):
         pad_location = random.choice(extra_locations)
         while pad_location in pad_actions:
             pad_location = random.choice(extra_locations)
