@@ -691,8 +691,8 @@ class Unlimiformer(Generic[ModelType]):
                 result = (attn_output, attn_weights_reshaped, past_key_value)
             else:
                 if not self.csv_unlimiformer or self.is_first_test_decoding_step or self.is_input_encoding_pass:
+                    attention_mask = attention_mask.repeat(1,40,1,1)
                     if self.is_input_encoding_pass and self.not_first_encoding_pass:
-                        attention_mask = attention_mask.repeat(1,40,1,1)
                         attention_mask = torch.ones_like(attention_mask)
                         topk = self.curr_our_size
                         query_len = attention_mask.shape[-2]
@@ -740,12 +740,17 @@ class Unlimiformer(Generic[ModelType]):
                         for head in range(len(query[0][0])):
                             similarities = torch.mv(vecs, query[0][q][head]) / (torch.norm(vecs, dim=1) * torch.norm(query[0][q][head]))
                             _, ind = torch.topk(similarities, k=topk)
-                            s.append(ind.unsqueeze(0))
-                        l.append(torch.sort(torch.cat(s, dim=0).unsqueeze(0)).values) # (1, 40, N)
+                            ind = torch.sort(ind).values
+                            unselected = torch.ones(len(vecs), dtype=int)
+                            unselected[ind] = 0
+                            uns_ind = np.where(unselected==1)
+                            rest_ind = torch.arange(len(vecs))[uns_ind].to(self.datastore_device)
+                            s.append(torch.cat((ind, rest_ind)).unsqueeze(0)) # (1, N)
+                        l.append(torch.cat(s, dim=0).unsqueeze(0)) # (1, 40, N)
                     ind = torch.cat(l, dim=2) # (1, 40, NN)
                     return ind
 
-                topk = self.curr_our_size
+                topk = 20
                 query_len = datastore_query.shape[1]
                 new_hidden_states = self.hidden_layer_our[self.cur_decoder_layer_index][0]
                 top_search_key_indices = do_scoring(new_hidden_states, datastore_query, topk)
