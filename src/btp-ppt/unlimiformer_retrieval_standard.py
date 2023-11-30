@@ -415,7 +415,7 @@ class Unlimiformer(Generic[ModelType]):
                     _ = self.model(chunk, labels=dummy_labels, position_ids=chunk_position_ids)
                 else:
                     self.curr_our_size = context_start_ind
-                    _ = self.model(chunk, labels=dummy_labels, position_ids=chunk_position_ids, past_key_values=tuple([tuple([torch.zeros((1, 40, self.curr_our_size, 128), dtype=torch.float16).to(self.datastore_device)] * 2) for _ in range(40)]))
+                    _ = self.model(chunk, labels=dummy_labels, position_ids=chunk_position_ids, past_key_values=tuple([tuple([torch.zeros((1, 40, self.curr_our_size * len(chunk[0]), 128), dtype=torch.float16).to(self.datastore_device)] * 2) for _ in range(40)]))
             if self.use_datastore:
                 # TODO: verify with BART as well
                 # hidden_states_to_index = [hidden_states.encoder_last_hidden_state] # list of length 1 of (batch, chunked_source_len, dim)
@@ -678,6 +678,10 @@ class Unlimiformer(Generic[ModelType]):
                     attention_mask = attention_mask.repeat(1,40,1,1)
                     if self.is_input_encoding_pass and self.not_first_encoding_pass:
                         query_len = attention_mask.shape[-2]
+                        topk = self.curr_our_size
+                        for query in range(query_len):
+                            attention_mask[:, :, query, :query_len*topk] = self.mask_number
+                            attention_mask[:, :, query, query*topk:(query+1)*topk] = 0
                     result = original_cross_attn_forward_func(hidden_states=hidden_states, attention_mask=attention_mask, *args, **kwargs)
                 else:
                     attention_mask_shape = list(attention_mask.shape)
@@ -709,8 +713,32 @@ class Unlimiformer(Generic[ModelType]):
                 k_proj_layer = [layers[0] for layers in attention_layer_list][self.cur_decoder_layer_index]
                 v_proj_layer = [layers[1] for layers in attention_layer_list][self.cur_decoder_layer_index]
                 
-                top_search_key_indices = torch.arange(self.curr_our_size).unsqueeze(0).repeat(1,40,1).to(self.datastore_device)
+                query = self.process_query(output)
+                k_proj = k_proj_layer.weight
+                datastore_query = self.preprocess_query(query, k_proj) # (1, 8, 40, 5120)
+                
+                def do_scoring(vecs, query, topk):
+                    l = []
+                    for q in range(len(query[0])):
+                        s = []
+                        for head in range(len(query[0][0])):
+                            similarities = torch.mv(vecs, query[0][q][head]) / (torch.norm(vecs, dim=1) * torch.norm(query[0][q][head]))
+                            _, ind = torch.topk(similarities, k=topk)
+                            ind = torch.sort(ind).values
+                            unselected = torch.ones(len(vecs), dtype=int)
+                            unselected[ind] = 0
+                            uns_ind = np.where(unselected==1)
+                            rest_ind = torch.arange(len(vecs))[uns_ind].to(self.datastore_device)
+                            s.append(torch.cat((ind, rest_ind)).unsqueeze(0)) # (1, N)
+                        l.append(torch.cat(s, dim=0).unsqueeze(0)) # (1, 40, N)
+                    ind = torch.cat(l, dim=2) # (1, 40, NN)
+                    return ind
 
+                topk = self.curr_our_size
+                query_len = datastore_query.shape[1]
+                new_hidden_states = self.hidden_layer_our[self.cur_decoder_layer_index][0]
+                top_search_key_indices = do_scoring(new_hidden_states, datastore_query, topk)
+                
                 embeddings = torch.take_along_dim(input=self.hidden_layer_our[self.cur_decoder_layer_index].unsqueeze(1), 
                         indices=top_search_key_indices.unsqueeze(-1).to(self.hidden_layer_our[self.cur_decoder_layer_index].device), dim=-2)
                 embeddings = embeddings.to(self.device)
@@ -720,10 +748,10 @@ class Unlimiformer(Generic[ModelType]):
                 embeddings = embeddings.reshape(batch_size, -1, self.num_heads, *embeddings.shape[2:])
 
                 retrieved_keys, retrieved_values = self.post_process_retrieved(embeddings, k_proj_layer, v_proj_layer, top_search_key_indices)
-                retrieved_keys = retrieved_keys.flatten(0, 1)[:,:,:self.curr_our_size]
-                retrieved_values = retrieved_values.flatten(0, 1)[:,:,:self.curr_our_size]
-                self.cur_layer_key_value_placeholder[0] = torch.cat([retrieved_keys, self.cur_layer_key_value_placeholder[0][:,:,self.curr_our_size:]], dim=-2)
-                self.cur_layer_key_value_placeholder[1] = torch.cat([retrieved_values, self.cur_layer_key_value_placeholder[1][:,:,self.curr_our_size:]], dim=-2)
+                retrieved_keys = retrieved_keys.flatten(0, 1)[:,:,:self.curr_our_size * query_len]
+                retrieved_values = retrieved_values.flatten(0, 1)[:,:,:self.curr_our_size * query_len]
+                self.cur_layer_key_value_placeholder[0] = torch.cat([retrieved_keys, self.cur_layer_key_value_placeholder[0][:,:,self.curr_our_size * query_len:]], dim=-2)
+                self.cur_layer_key_value_placeholder[1] = torch.cat([retrieved_values, self.cur_layer_key_value_placeholder[1][:,:,self.curr_our_size * query_len:]], dim=-2)
             return
         with torch.no_grad():
             prompt_size = self.prompt_input_ids.shape[1]
@@ -1219,8 +1247,8 @@ class UnlimiformerLLaMa(Unlimiformer[LlamaModel]):
         # num_generated = min(self.input_ids_size - self.prompt_input_ids.shape[1], self.actual_model_window_size)
         if self.is_input_encoding_pass:
             cos, sin = attention.rotary_emb(query, seq_len = self.query_pos_id[-1]+1)
-            cos = cos[:,:,self.query_pos_id].squeeze(0).squeeze(0).unsqueeze(1).repeat(1,40,1)
-            sin = sin[:,:,self.query_pos_id].squeeze(0).squeeze(0).unsqueeze(1).repeat(1,40,1)
+            cos = cos[self.query_pos_id].unsqueeze(1).repeat(1,40,1)
+            sin = sin[self.query_pos_id].unsqueeze(1).repeat(1,40,1)
         else:
             cos, sin = attention.rotary_emb(query, seq_len = self.query_pos_id)
             cos = cos[-1]  # [1, 1, dim]
