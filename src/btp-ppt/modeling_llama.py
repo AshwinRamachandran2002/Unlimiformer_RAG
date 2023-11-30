@@ -404,6 +404,16 @@ class LlamaAttention(nn.Module):
 
         # upcast attention to fp32
         attn_weights = nn.functional.softmax(attn_weights, dim=-1, dtype=torch.float32).to(query_states.dtype)
+        if q_len == 7:
+            for query in range(q_len):
+                topk = (kv_seq_len // q_len) - 1
+                wts_query = attn_weights[0, :, query, query*topk:(query+1)*topk]
+                for head in range(self.num_heads):
+                    heads_query = wts_query[head]
+                    chosen_weight = torch.sum(heads_query[:20])
+                    unchosen_weight = torch.sum(heads_query[20:])
+                    print("head", head)
+                    print(chosen_weight, unchosen_weight)
         attn_output = torch.matmul(attn_weights, value_states)
 
         if attn_output.size() != (bsz, self.num_heads, q_len, self.head_dim):

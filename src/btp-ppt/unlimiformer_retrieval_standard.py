@@ -682,6 +682,7 @@ class Unlimiformer(Generic[ModelType]):
                         for query in range(query_len):
                             attention_mask[:, :, query, :query_len*topk] = self.mask_number
                             attention_mask[:, :, query, query*topk:(query+1)*topk] = 0
+                        print("layer", self.cur_decoder_layer_index)
                     result = original_cross_attn_forward_func(hidden_states=hidden_states, attention_mask=attention_mask, *args, **kwargs)
                 else:
                     attention_mask_shape = list(attention_mask.shape)
@@ -734,7 +735,7 @@ class Unlimiformer(Generic[ModelType]):
                     ind = torch.cat(l, dim=2) # (1, 40, NN)
                     return ind
 
-                topk = self.curr_our_size
+                topk = 20
                 query_len = datastore_query.shape[1]
                 new_hidden_states = self.hidden_layer_our[self.cur_decoder_layer_index][0]
                 top_search_key_indices = do_scoring(new_hidden_states, datastore_query, topk)

@@ -16,7 +16,7 @@ for index in "${!cuda_list[@]}"; do
     split_data="${split_data_list[$index]}"
     num_extract="${num_extract_list[$index]}"
     layer_begin="${layer_begin_list[$index]}"
-    file_name="encode4.txt"
+    file_name="encode7.txt"
     echo "$file_name"
-    python run_generation_retrieval_standard.py --split_data $split_data --num_extract $num_extract --num_anchors $anchor --num_templates $template --data_file "$data_file" --token_count_file "$count_file" --model_type llama --model_name_or_path meta-llama/Llama-2-13b-chat-hf --prefix "" --prompt $data_file --suffix "" --test_unlimiformer --fp16 --length 300 --layer_begin $layer_begin --index_devices "$cuda" --datastore_device "$cuda" 2> "$file_name" &
+    python run_generation_retrieval_standard.py --split_data $split_data --num_extract $num_extract --num_anchors $anchor --num_templates $template --data_file "$data_file" --token_count_file "$count_file" --model_type llama --model_name_or_path meta-llama/Llama-2-13b-chat-hf --prefix "" --prompt $data_file --suffix "" --test_unlimiformer --fp16 --length 300 --layer_begin $layer_begin --index_devices "$cuda" --datastore_device "$cuda" 2> "$file_name" | tee -a python_script_log.txt &
 done
