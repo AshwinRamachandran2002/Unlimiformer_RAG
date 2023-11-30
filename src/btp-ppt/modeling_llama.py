@@ -351,7 +351,7 @@ class LlamaAttention(nn.Module):
                 f" {attn_weights.size()}"
             )
 
-        if True:#attention_mask is not None:
+        if attention_mask is not None:
             # if attention_mask.size() != (bsz, 1, q_len, kv_seq_len):
             #     raise ValueError(
             #         f"Attention mask should be of size {(bsz, 1, q_len, kv_seq_len)}, but is {attention_mask.size()}"
@@ -360,17 +360,27 @@ class LlamaAttention(nn.Module):
                 raise ValueError(
                     f"Attention mask should be of size {(bsz, 1, q_len, kv_seq_len)}, but is {attention_mask.size()}"
                 )
+            # attn_weights = attn_weights * attention_mask
             attn_weights = attn_weights + attention_mask
 
         # upcast attention to fp32
         attn_weights = nn.functional.softmax(attn_weights, dim=-1, dtype=torch.float32).to(query_states.dtype)
-        if attention_mask is not None:
-            unchosen_indices = torch.where(attention_mask == 0)
-            attn_weights[unchosen_indices] = 0
-            discarded_weight = 1 - torch.sum(attn_weights, -1)
-            attn_weights += (discarded_weight / torch.sum(attention_mask, -1)).unsqueeze(-1)
-            attn_weights[unchosen_indices] = 0
-            attn_weights = attn_weights.to(dtype=query_states.dtype)
+        # if attention_mask is not None:
+        #     unchosen_indices = torch.where(attention_mask == 0)
+        #     attn_weights[unchosen_indices] = 0
+        #     not_discarded_weight = torch.sum(attn_weights, -1).unsqueeze(-1)
+        #     # discarded_weight = 1 - torch.sum(attn_weights, -1)
+        #     # contains_nan = torch.isnan(attn_weights).any().item()
+        #     # print(contains_nan)
+        #     factor = (1.0 / not_discarded_weight)
+        #     # contains_nan = torch.isnan(factor).any().item()
+        #     # print(contains_nan)
+        #     attn_weights = torch.mul(attn_weights, factor)
+        #     # contains_nan = torch.isnan(attn_weights).any().item()
+        #     # print(contains_nan)
+        #     # attn_weights += (discarded_weight / torch.sum(attention_mask, -1)).unsqueeze(-1)
+        #     # attn_weights[unchosen_indices] = 0
+        #     attn_weights = attn_weights.to(dtype=query_states.dtype)
         attn_output = torch.matmul(attn_weights, value_states)
 
         if attn_output.size() != (bsz, self.num_heads, q_len, self.head_dim):

@@ -50,7 +50,8 @@ class Unlimiformer(Generic[ModelType]):
             with open(self.token_count_file, "r") as f:
                 self.fact_lengths = json.loads(f.read())["fact_lengths"]
 
-            self.num_extract = sum(self.fact_lengths[1:])
+            self.num_extract = sum(self.fact_lengths)
+            self.num_generated = 0
 
             with open("dataset/persons_tiny.txt", "r") as f:
                 self.person_list = f.read().splitlines()
@@ -88,7 +89,6 @@ class Unlimiformer(Generic[ModelType]):
         self.is_encoder_decoder = model.config.is_encoder_decoder
         self.hook_handles = []
         self.is_input_encoding_pass = False
-        self.is_first_test_decoding_step = False
         self.prev_tokens = None
         self.last_beam_idx = None
         self.heatmap = None
@@ -600,11 +600,11 @@ class Unlimiformer(Generic[ModelType]):
                 vals_pred = []
                 for i in range(10):
                     for j in [i*2, i*2+1]:
-                        self.curr_key = j
-                        input_ids_prefix = self.tokenizer.encode(self.suffix(), add_special_tokens=False, return_tensors="pt")
-                        new_kwargs["attention_mask"] = torch.cat((torch.zeros(1, self.num_extract), torch.ones(1, len(input_ids_prefix[0]))), dim = 1).to(self.device)
-                        input_ids_prefix = torch.cat((torch.ones(1, self.num_extract).to(torch.int64), input_ids_prefix), dim = 1).to(self.device)
-                        vals_pred.append(self.original_generate_func(input_ids_prefix, **new_kwargs))
+                        self.num_generated = 0
+                        self.input_ids_prefix = self.tokenizer.encode(self.suffix2(j), add_special_tokens=False, return_tensors="pt").to(self.device)
+                        new_kwargs["past_key_values"] = tuple([tuple([torch.zeros((1, 40, self.num_extract, 128), dtype=torch.float16).to(self.device)] * 2) for _ in range(40)])
+                        new_kwargs["attention_mask"] = torch.ones(1, self.num_extract + 1)
+                        vals_pred.append(self.original_generate_func(self.input_ids_prefix[:, :1], **new_kwargs))
                 return vals_pred
             input_ids_prefix = input_ids[:, -self.actual_model_window_size:]	
         input_ids_prefix = input_ids_prefix.to(self.device)
@@ -621,35 +621,14 @@ class Unlimiformer(Generic[ModelType]):
                 # input_ids = input_ids[:, :self.model_encoder_max_len]
                 # labels = labels[:, :self.model_encoder_max_len] if labels is not None else None
             else:
-                if kwargs.get('past_key_values') is None:
-                    self.is_first_test_decoding_step = True
-                    if self.csv_unlimiformer:
-                        self.question_len = (attention_mask[0] == 1).sum(dim=0)
-                        self.is_second_test_decoding_step = False
-                        self.num_generated = 0
-                        kwargs["position_ids"] = torch.cat((torch.zeros(self.num_extract), torch.arange(0, self.question_len))).unsqueeze(0).to(self.device)
-
-                if self.csv_unlimiformer and self.is_second_test_decoding_step:
-                    input_ids_suffix = self.tokenizer.encode(self.suffix2(self.curr_key), add_special_tokens=False, return_tensors="pt")
-                    self.curr_suffix_len = len(input_ids_suffix[0])
-                    if self.num_generated == (len(input_ids_suffix[0]) + 1):
-                        self.is_second_test_decoding_step = False
-                    else:
-                        input_ids = input_ids_suffix[:, self.num_generated - 1].unsqueeze(0).to(self.device)
-                        self.query_pos_id = self.num_extract + int(kwargs["position_ids"][0])
-                        kwargs["position_ids"] = torch.arange(self.query_pos_id, self.query_pos_id + 1).unsqueeze(0).to(self.device)
-
-                if self.csv_unlimiformer and not self.is_second_test_decoding_step and not self.is_first_test_decoding_step:
-                    self.query_pos_id = self.num_extract + int(kwargs["position_ids"][0])
-                    kwargs["position_ids"] = torch.arange(self.query_pos_id, self.query_pos_id + 1).unsqueeze(0).to(self.device)
+                if self.csv_unlimiformer:
+                    self.query_pos_id = kwargs["position_ids"].item()
+                    if self.num_generated < len(self.input_ids_prefix[0]):
+                        input_ids = self.input_ids_prefix[:, self.num_generated:self.num_generated+1]
+                        self.num_generated += 1
 
                 if input_ids is not None:
-                    if self.is_first_test_decoding_step:
-                        self.input_ids_size += len(input_ids[0])
-                    else:
-                        self.input_ids_size += 1
-                    if self.csv_unlimiformer:
-                        self.num_generated += 1
+                    self.input_ids_size += 1
 
                 if kwargs.get('decoder_input_ids') is not None:
                     self.generated_input_ids = torch.cat([self.generated_input_ids, kwargs['decoder_input_ids']], axis=-1)
@@ -657,7 +636,7 @@ class Unlimiformer(Generic[ModelType]):
         result = self.original_forward_func(input_ids=input_ids, labels=labels, attention_mask=attention_mask, **kwargs)
         
         if self.csv_unlimiformer: 
-            if not self.is_input_encoding_pass and not self.is_first_test_decoding_step:
+            if not self.is_input_encoding_pass:
                 logits = result.logits
                 top_k_values, top_k_indices = torch.topk(logits, k=10, dim=-1)
                 top_k_token_ids = top_k_indices.tolist()[0][0]
@@ -665,9 +644,6 @@ class Unlimiformer(Generic[ModelType]):
                 logger.info(f'{top_k_tokens}')
                 logger.info(f'{top_k_values}')
 
-            if self.is_first_test_decoding_step:
-                self.is_second_test_decoding_step = True
-        self.is_first_test_decoding_step = False
         return result
 
     def create_cross_attn_pre_forward_hook(self, original_cross_attn_forward_func, cur_layer_num):
@@ -690,15 +666,21 @@ class Unlimiformer(Generic[ModelType]):
                 attn_output = attn_output.reshape(batch_size, tgt_len, dim)
                 result = (attn_output, attn_weights_reshaped, past_key_value)
             else:
-                if not self.csv_unlimiformer or self.is_first_test_decoding_step or self.is_input_encoding_pass:
+                if not self.csv_unlimiformer or self.is_input_encoding_pass:
                     attention_mask = attention_mask.repeat(1,40,1,1)
                     if self.is_input_encoding_pass and self.not_first_encoding_pass:
                         attention_mask = torch.ones_like(attention_mask)
-                        topk = self.curr_our_size
                         query_len = attention_mask.shape[-2]
+                        for query in range(query_len - 1):
+                            attention_mask[:, :, query, -(query_len - query - 1):] = 0
+                        topk = self.curr_our_size
                         for query in range(query_len):
                             attention_mask[:, :, query, :query_len*topk] = 0
                             attention_mask[:, :, query, query*topk:(query+1)*topk] = 1
+                    elif self.is_input_encoding_pass:
+                        attention_mask = torch.ones_like(attention_mask)
+                        for query in range(attention_mask.shape[2]):
+                            attention_mask[:, :, query, query + 1:] = 0
                     result = original_cross_attn_forward_func(hidden_states=hidden_states, attention_mask=attention_mask, *args, **kwargs)
                 else:
                     attention_mask = attention_mask.repeat(1,40,1,1) 
@@ -722,7 +704,7 @@ class Unlimiformer(Generic[ModelType]):
 
     def attention_forward_hook(self, module, input, output):
         # output: (batch, time, 3 * heads * attention_dim)
-        if self.is_input_encoding_pass or self.is_first_test_decoding_step:
+        if self.is_input_encoding_pass:
             if self.is_input_encoding_pass and self.not_first_encoding_pass:
                 query = self.process_query(output) # (1, 8, 40, 128)
                 attention_layer_list = self.get_kv_projections(self.layer_begin, self.layer_end)
@@ -750,7 +732,7 @@ class Unlimiformer(Generic[ModelType]):
                     ind = torch.cat(l, dim=2) # (1, 40, NN)
                     return ind
 
-                topk = 20
+                topk = self.curr_our_size
                 query_len = datastore_query.shape[1]
                 new_hidden_states = self.hidden_layer_our[self.cur_decoder_layer_index][0]
                 top_search_key_indices = do_scoring(new_hidden_states, datastore_query, topk)
@@ -805,7 +787,7 @@ class Unlimiformer(Generic[ModelType]):
                     # embeddings: (batch, beam * head, actual_model_window_size, dim)
                     _, top_search_key_indices, embeddings = self.datastore[datastore_index].search_and_reconstruct(datastore_query, k=topk) 
                 else:
-                    top_search_key_indices = torch.arange(self.fact_lengths[0], self.fact_lengths[0] + self.num_extract).unsqueeze(0).unsqueeze(0).repeat(1, 40, 1).to(self.device)
+                    top_search_key_indices = torch.arange(self.num_extract).unsqueeze(0).unsqueeze(0).repeat(1, 40, 1).to(self.device)
                     # self.embeddings: (batch,              src_len, dim)
                     # indices:         (batch, beam * head, actual_model_window_size)
                     # embeddings: (batch, beam * head, actual_model_window_size, dim)
@@ -892,7 +874,7 @@ class Unlimiformer(Generic[ModelType]):
 
     def train_attention_forward_hook(self, module, input, output):
         # output: (batch, time, 3 * heads * attention_dim)
-        if self.is_input_encoding_pass or self.is_first_test_decoding_step:
+        if self.is_input_encoding_pass:
             return
         this_layer_prompt_keys = self.cur_layer_key_value_placeholder[0]
         this_layer_prompt_values = self.cur_layer_key_value_placeholder[1]
