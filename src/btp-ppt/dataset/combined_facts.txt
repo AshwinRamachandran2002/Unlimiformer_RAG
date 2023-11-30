@@ -3,4 +3,4 @@ You are a helpful assistant. Answer with short responses according to the questi
 <</SYS>>
 
 Below is a list of facts in the format (Fact: <PERSON> is <ACTION>).
-Fact: Emma is Singing, Fact: Liam is Bowling, Fact: Olivia is Laughing
+Fact: Emma is Singing, Fact: Liam is Bowling
